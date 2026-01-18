@@ -86,7 +86,7 @@ export default function LoginPage() {
           </form>
           <div className="mt-4 text-center text-sm text-muted-foreground">
             アカウントをお持ちでない方は{' '}
-            <Link href="/signup" className="text-blue-600 hover:underline">
+            <Link href="/auth/signup" className="text-blue-600 hover:underline">
               新規登録
             </Link>
           </div>

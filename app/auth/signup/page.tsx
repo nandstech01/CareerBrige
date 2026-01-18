@@ -41,7 +41,7 @@ export default function SignupPage() {
         throw new Error(data.error || '登録に失敗しました')
       }
 
-      router.push('/login?registered=true')
+      router.push('/auth/login?registered=true')
     } catch (err) {
       setError(err instanceof Error ? err.message : 'エラーが発生しました')
     } finally {
@@ -125,7 +125,7 @@ export default function SignupPage() {
           </form>
           <div className="mt-4 text-center text-sm text-muted-foreground">
             既にアカウントをお持ちの方は{' '}
-            <Link href="/login" className="text-blue-600 hover:underline">
+            <Link href="/auth/login" className="text-blue-600 hover:underline">
               ログイン
             </Link>
           </div>
