@@ -33,31 +33,26 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
-  // 認証が必要なパスのリスト
-  const protectedPaths = [
-    '/dashboard',
-    '/profile',
-    '/jobs',
-    '/applications',
-    '/messages',
-    '/contracts',
-    '/billing',
+  // 認証が必要なパスのリスト（prefixマッチ）
+  const protectedPrefixes = [
+    '/engineer',
+    '/company',
     '/admin',
     '/onboarding',
   ]
 
-  const isProtectedPath = protectedPaths.some((path) =>
-    request.nextUrl.pathname.includes(path)
+  const isProtectedPath = protectedPrefixes.some((prefix) =>
+    request.nextUrl.pathname.startsWith(prefix)
   )
 
   if (isProtectedPath && !user) {
     const url = request.nextUrl.clone()
-    url.pathname = '/login'
+    url.pathname = '/auth/login'
     return NextResponse.redirect(url)
   }
 
   // ログイン済みユーザーが認証ページにアクセスした場合
-  if (user && (request.nextUrl.pathname === '/login' || request.nextUrl.pathname === '/signup')) {
+  if (user && (request.nextUrl.pathname === '/auth/login' || request.nextUrl.pathname === '/auth/signup')) {
     const url = request.nextUrl.clone()
     url.pathname = '/onboarding'
     return NextResponse.redirect(url)
