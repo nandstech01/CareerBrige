@@ -31,13 +31,13 @@ export async function POST(request: Request) {
       .from('profiles')
       .select('role')
       .eq('id', data.user.id)
-      .single()
+      .single<{ role: string }>()
 
     return NextResponse.json({
       message: 'ログインしました',
       user: data.user,
       session: data.session,
-      role: profile?.role || 'engineer',
+      role: profile?.role ?? 'engineer',
     })
   } catch (error) {
     console.error('Login error:', error)
