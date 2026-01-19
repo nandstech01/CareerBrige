@@ -16,7 +16,7 @@ import { Zap, LogOut, User, LayoutDashboard, Menu, X } from 'lucide-react'
 import type { ProfileWithDetails } from '@/types'
 
 interface NavbarProps {
-  variant?: 'default' | 'engineer' | 'company'
+  variant?: 'default' | 'engineer' | 'company' | 'admin'
 }
 
 export function Navbar({ variant = 'default' }: NavbarProps) {
@@ -67,7 +67,18 @@ export function Navbar({ variant = 'default' }: NavbarProps) {
     { href: '/company/billing', label: '請求・支払い' },
   ]
 
-  const links = variant === 'engineer' ? engineerLinks : variant === 'company' ? companyLinks : []
+  const adminLinks = [
+    { href: '/admin/dashboard', label: 'ダッシュボード' },
+    { href: '/admin/users', label: 'ユーザー管理' },
+    { href: '/admin/jobs', label: '案件管理' },
+    { href: '/admin/contracts', label: '契約管理' },
+    { href: '/admin/skills', label: 'スキル管理' },
+  ]
+
+  const links = variant === 'engineer' ? engineerLinks
+    : variant === 'company' ? companyLinks
+    : variant === 'admin' ? adminLinks
+    : []
 
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + '/')
 
@@ -131,14 +142,20 @@ export function Navbar({ variant = 'default' }: NavbarProps) {
                       <p className="text-xs text-midnight-400">{profile.email}</p>
                     </div>
                     <DropdownMenuSeparator className="bg-midnight-600" />
+                    {profile.role !== 'admin' && (
+                      <DropdownMenuItem asChild className="hover:bg-midnight-700 focus:bg-midnight-700 cursor-pointer">
+                        <Link href={profile.role === 'engineer' ? '/engineer/profile' : '/company/profile'} className="flex items-center gap-2">
+                          <User className="w-4 h-4 text-midnight-400" />
+                          <span>プロフィール</span>
+                        </Link>
+                      </DropdownMenuItem>
+                    )}
                     <DropdownMenuItem asChild className="hover:bg-midnight-700 focus:bg-midnight-700 cursor-pointer">
-                      <Link href={profile.role === 'engineer' ? '/engineer/profile' : '/company/profile'} className="flex items-center gap-2">
-                        <User className="w-4 h-4 text-midnight-400" />
-                        <span>プロフィール</span>
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild className="hover:bg-midnight-700 focus:bg-midnight-700 cursor-pointer">
-                      <Link href={profile.role === 'engineer' ? '/engineer/dashboard' : '/company/dashboard'} className="flex items-center gap-2">
+                      <Link href={
+                        profile.role === 'admin' ? '/admin/dashboard'
+                          : profile.role === 'engineer' ? '/engineer/dashboard'
+                          : '/company/dashboard'
+                      } className="flex items-center gap-2">
                         <LayoutDashboard className="w-4 h-4 text-midnight-400" />
                         <span>ダッシュボード</span>
                       </Link>
