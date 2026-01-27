@@ -21,14 +21,14 @@ interface Skill {
 }
 
 const categories = [
-  { value: 'language', label: 'プログラミング言語', color: 'text-cyan-bright', bg: 'bg-cyan-glow/10', border: 'border-cyan-glow/30' },
-  { value: 'framework', label: 'フレームワーク', color: 'text-purple-400', bg: 'bg-purple-500/10', border: 'border-purple-500/30' },
-  { value: 'ml', label: '機械学習', color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/30' },
-  { value: 'genai', label: '生成AI', color: 'text-gold-bright', bg: 'bg-gold-bright/10', border: 'border-gold-bright/30' },
-  { value: 'cloud', label: 'クラウド', color: 'text-blue-400', bg: 'bg-blue-500/10', border: 'border-blue-500/30' },
-  { value: 'database', label: 'データベース', color: 'text-orange-400', bg: 'bg-orange-500/10', border: 'border-orange-500/30' },
-  { value: 'devops', label: 'DevOps', color: 'text-pink-400', bg: 'bg-pink-500/10', border: 'border-pink-500/30' },
-  { value: 'other', label: 'その他', color: 'text-midnight-400', bg: 'bg-midnight-700/50', border: 'border-midnight-600/50' },
+  { value: 'language', label: 'プログラミング言語', color: 'text-sky-600 dark:text-cyan-400', bg: 'bg-sky-500/10 dark:bg-cyan-500/10', border: 'border-sky-500/30 dark:border-cyan-500/30' },
+  { value: 'framework', label: 'フレームワーク', color: 'text-purple-600 dark:text-purple-400', bg: 'bg-purple-500/10', border: 'border-purple-500/30' },
+  { value: 'ml', label: '機械学習', color: 'text-emerald-600 dark:text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/30' },
+  { value: 'genai', label: '生成AI', color: 'text-orange-600 dark:text-orange-400', bg: 'bg-orange-500/10', border: 'border-orange-500/30' },
+  { value: 'cloud', label: 'クラウド', color: 'text-blue-600 dark:text-blue-400', bg: 'bg-blue-500/10', border: 'border-blue-500/30' },
+  { value: 'database', label: 'データベース', color: 'text-amber-600 dark:text-orange-400', bg: 'bg-amber-500/10 dark:bg-orange-500/10', border: 'border-amber-500/30 dark:border-orange-500/30' },
+  { value: 'devops', label: 'DevOps', color: 'text-pink-600 dark:text-pink-400', bg: 'bg-pink-500/10', border: 'border-pink-500/30' },
+  { value: 'other', label: 'その他', color: 'text-slate-500 dark:text-slate-400', bg: 'bg-slate-200/50 dark:bg-slate-700/50', border: 'border-slate-300/50 dark:border-slate-600/50' },
 ]
 
 export default function AdminSkillsPage() {
@@ -140,20 +140,20 @@ export default function AdminSkillsPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="font-display text-3xl font-bold text-white">スキルマスタ管理</h1>
-          <p className="text-midnight-400 mt-1">スキルの追加・削除・カテゴリ管理</p>
+          <h1 className="font-display text-3xl font-bold text-slate-900 dark:text-white">スキルマスタ管理</h1>
+          <p className="text-slate-500 dark:text-slate-400 mt-1">スキルの追加・削除・カテゴリ管理</p>
         </div>
         <div className="flex gap-3">
           <button
             onClick={() => setCsvDialogOpen(true)}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-midnight-800/50 border border-midnight-600/50 text-midnight-300 hover:text-white hover:border-midnight-500 transition-all"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-600/50 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:border-slate-300 dark:hover:border-slate-500 transition-all"
           >
             <Upload className="w-4 h-4" />
             <span className="font-medium">CSVインポート</span>
           </button>
           <button
             onClick={() => setDialogOpen(true)}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-all"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-sky-500/20 dark:bg-purple-500/20 border border-sky-500/30 dark:border-purple-500/30 text-sky-600 dark:text-purple-400 hover:bg-sky-500/30 dark:hover:bg-purple-500/30 transition-all"
           >
             <Plus className="w-4 h-4" />
             <span className="font-medium">スキル追加</span>
@@ -166,31 +166,31 @@ export default function AdminSkillsPage() {
         <div className="flex flex-col md:flex-row gap-4">
           <form onSubmit={handleSearch} className="flex-1 flex gap-3">
             <div className="relative flex-1">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-midnight-500" />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 dark:text-slate-500" />
               <input
                 type="text"
                 placeholder="スキル名で検索..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 rounded-xl bg-midnight-800/50 border border-midnight-600/50 text-white placeholder:text-midnight-500 focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-600/50 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-sky-500 dark:focus:border-purple-500/50 focus:ring-2 focus:ring-sky-500/20 dark:focus:ring-purple-500/20 transition-all"
               />
             </div>
             <button
               type="submit"
-              className="px-6 py-3 rounded-xl bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-all font-medium"
+              className="px-6 py-3 rounded-xl bg-sky-500/20 dark:bg-purple-500/20 border border-sky-500/30 dark:border-purple-500/30 text-sky-600 dark:text-purple-400 hover:bg-sky-500/30 dark:hover:bg-purple-500/30 transition-all font-medium"
             >
               検索
             </button>
           </form>
           <div className="relative">
-            <div className="flex items-center gap-2 text-midnight-400">
+            <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
               <Filter className="w-4 h-4" />
               <span className="text-sm">カテゴリ:</span>
             </div>
             <select
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
-              className="mt-2 w-full md:w-52 px-4 py-3 rounded-xl bg-midnight-800/50 border border-midnight-600/50 text-white focus:outline-none focus:border-purple-500/50 appearance-none cursor-pointer"
+              className="mt-2 w-full md:w-52 px-4 py-3 rounded-xl bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-600/50 text-slate-900 dark:text-white focus:outline-none focus:border-sky-500 dark:focus:border-purple-500/50 appearance-none cursor-pointer"
             >
               <option value="all">全て</option>
               {categories.map((cat) => (
@@ -203,26 +203,26 @@ export default function AdminSkillsPage() {
 
       {/* Skills Table */}
       <div className="glass-card rounded-2xl overflow-hidden">
-        <div className="p-6 border-b border-midnight-700/50">
+        <div className="p-6 border-b border-slate-200 dark:border-slate-700/50">
           <div className="flex items-center gap-3">
-            <Code2 className="w-5 h-5 text-cyan-bright" />
-            <span className="text-white font-medium">{skills.length}件のスキル</span>
+            <Code2 className="w-5 h-5 text-sky-600 dark:text-cyan-400" />
+            <span className="text-slate-900 dark:text-white font-medium">{skills.length}件のスキル</span>
           </div>
         </div>
         {loading ? (
           <div className="p-12 flex flex-col items-center justify-center">
-            <Loader2 className="w-8 h-8 text-purple-400 animate-spin mb-4" />
-            <p className="text-midnight-400">読み込み中...</p>
+            <Loader2 className="w-8 h-8 text-sky-500 dark:text-purple-400 animate-spin mb-4" />
+            <p className="text-slate-500 dark:text-slate-400">読み込み中...</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-midnight-700/50 bg-midnight-800/30">
-                  <th className="text-left py-4 px-6 text-sm font-semibold text-midnight-400">スキル名</th>
-                  <th className="text-left py-4 px-6 text-sm font-semibold text-midnight-400">カテゴリ</th>
-                  <th className="text-left py-4 px-6 text-sm font-semibold text-midnight-400">作成日</th>
-                  <th className="text-right py-4 px-6 text-sm font-semibold text-midnight-400">操作</th>
+                <tr className="border-b border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-800/30">
+                  <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-400">スキル名</th>
+                  <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-400">カテゴリ</th>
+                  <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-400">作成日</th>
+                  <th className="text-right py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-400">操作</th>
                 </tr>
               </thead>
               <tbody>
@@ -231,23 +231,23 @@ export default function AdminSkillsPage() {
                   return (
                     <tr
                       key={skill.id}
-                      className="border-b border-midnight-700/30 last:border-0 hover:bg-midnight-800/20 transition-colors"
+                      className="border-b border-slate-200/50 dark:border-slate-700/30 last:border-0 hover:bg-slate-50 dark:hover:bg-slate-800/20 transition-colors"
                     >
                       <td className="py-4 px-6">
-                        <span className="font-medium text-white">{skill.name}</span>
+                        <span className="font-medium text-slate-900 dark:text-white">{skill.name}</span>
                       </td>
                       <td className="py-4 px-6">
                         <span className={`inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-medium ${cat.bg} ${cat.color} border ${cat.border}`}>
                           {cat.label}
                         </span>
                       </td>
-                      <td className="py-4 px-6 text-sm text-midnight-400">
+                      <td className="py-4 px-6 text-sm text-slate-500 dark:text-slate-400">
                         {new Date(skill.created_at).toLocaleDateString('ja-JP')}
                       </td>
                       <td className="py-4 px-6 text-right">
                         <button
                           onClick={() => handleDelete(skill.id)}
-                          className="p-2 rounded-lg text-midnight-400 hover:text-red-400 hover:bg-red-500/10 transition-colors"
+                          className="p-2 rounded-lg text-slate-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-500/10 transition-colors"
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>
@@ -258,8 +258,8 @@ export default function AdminSkillsPage() {
                 {skills.length === 0 && (
                   <tr>
                     <td colSpan={4} className="py-12 text-center">
-                      <Code2 className="w-12 h-12 text-midnight-600 mx-auto mb-3" />
-                      <p className="text-midnight-500">スキルが見つかりません</p>
+                      <Code2 className="w-12 h-12 text-slate-300 dark:text-slate-600 mx-auto mb-3" />
+                      <p className="text-slate-400 dark:text-slate-500">スキルが見つかりません</p>
                     </td>
                   </tr>
                 )}
@@ -273,27 +273,27 @@ export default function AdminSkillsPage() {
       {dialogOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div
-            className="absolute inset-0 bg-midnight-900/80 backdrop-blur-sm"
+            className="absolute inset-0 bg-slate-900/50 dark:bg-slate-900/80 backdrop-blur-sm"
             onClick={() => setDialogOpen(false)}
           />
-          <div className="relative glass-card rounded-2xl max-w-md w-full p-6 animate-scale-in">
+          <div className="relative bg-white dark:bg-slate-800 rounded-2xl max-w-md w-full p-6 animate-scale-in shadow-xl border border-slate-200 dark:border-slate-700">
             <button
               onClick={() => setDialogOpen(false)}
-              className="absolute top-4 right-4 p-2 text-midnight-400 hover:text-white transition-colors"
+              className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
 
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-xl bg-purple-500/20 flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-purple-400" />
+              <div className="w-10 h-10 rounded-xl bg-sky-500/20 dark:bg-purple-500/20 flex items-center justify-center">
+                <Sparkles className="w-5 h-5 text-sky-600 dark:text-purple-400" />
               </div>
-              <h2 className="font-display text-xl font-bold text-white">新規スキル追加</h2>
+              <h2 className="font-display text-xl font-bold text-slate-900 dark:text-white">新規スキル追加</h2>
             </div>
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-midnight-200 mb-2">
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2">
                   スキル名
                 </label>
                 <input
@@ -301,17 +301,17 @@ export default function AdminSkillsPage() {
                   value={newSkill.name}
                   onChange={(e) => setNewSkill({ ...newSkill, name: e.target.value })}
                   placeholder="例: Python"
-                  className="w-full px-4 py-3 rounded-xl bg-midnight-800/50 border border-midnight-600/50 text-white placeholder:text-midnight-500 focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                  className="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600/50 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-sky-500 dark:focus:border-purple-500/50 focus:ring-2 focus:ring-sky-500/20 dark:focus:ring-purple-500/20 transition-all"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-midnight-200 mb-2">
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2">
                   カテゴリ
                 </label>
                 <select
                   value={newSkill.category}
                   onChange={(e) => setNewSkill({ ...newSkill, category: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl bg-midnight-800/50 border border-midnight-600/50 text-white focus:outline-none focus:border-purple-500/50"
+                  className="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600/50 text-slate-900 dark:text-white focus:outline-none focus:border-sky-500 dark:focus:border-purple-500/50"
                 >
                   {categories.map((cat) => (
                     <option key={cat.value} value={cat.value}>{cat.label}</option>
@@ -321,7 +321,7 @@ export default function AdminSkillsPage() {
               <button
                 onClick={handleCreate}
                 disabled={!newSkill.name.trim()}
-                className="w-full px-6 py-3 rounded-xl bg-gradient-to-r from-purple-500 to-purple-600 text-white font-medium hover:from-purple-600 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                className="w-full px-6 py-3 rounded-xl bg-gradient-to-r from-sky-500 to-sky-600 dark:from-purple-500 dark:to-purple-600 text-white font-medium hover:from-sky-600 hover:to-sky-700 dark:hover:from-purple-600 dark:hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
               >
                 追加
               </button>
@@ -334,31 +334,31 @@ export default function AdminSkillsPage() {
       {csvDialogOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div
-            className="absolute inset-0 bg-midnight-900/80 backdrop-blur-sm"
+            className="absolute inset-0 bg-slate-900/50 dark:bg-slate-900/80 backdrop-blur-sm"
             onClick={() => setCsvDialogOpen(false)}
           />
-          <div className="relative glass-card rounded-2xl max-w-lg w-full p-6 animate-scale-in">
+          <div className="relative bg-white dark:bg-slate-800 rounded-2xl max-w-lg w-full p-6 animate-scale-in shadow-xl border border-slate-200 dark:border-slate-700">
             <button
               onClick={() => setCsvDialogOpen(false)}
-              className="absolute top-4 right-4 p-2 text-midnight-400 hover:text-white transition-colors"
+              className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
 
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-xl bg-cyan-glow/20 flex items-center justify-center">
-                <Upload className="w-5 h-5 text-cyan-bright" />
+              <div className="w-10 h-10 rounded-xl bg-sky-500/20 dark:bg-cyan-500/20 flex items-center justify-center">
+                <Upload className="w-5 h-5 text-sky-600 dark:text-cyan-400" />
               </div>
-              <h2 className="font-display text-xl font-bold text-white">CSVインポート</h2>
+              <h2 className="font-display text-xl font-bold text-slate-900 dark:text-white">CSVインポート</h2>
             </div>
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-midnight-200 mb-2">
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2">
                   CSV形式（スキル名,カテゴリ）
                 </label>
                 <textarea
-                  className="w-full h-40 px-4 py-3 rounded-xl bg-midnight-800/50 border border-midnight-600/50 text-white placeholder:text-midnight-500 font-mono text-sm focus:outline-none focus:border-cyan-glow/50 focus:ring-2 focus:ring-cyan-glow/20 transition-all resize-none"
+                  className="w-full h-40 px-4 py-3 rounded-xl bg-slate-100 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600/50 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 font-mono text-sm focus:outline-none focus:border-sky-500 dark:focus:border-cyan-500/50 focus:ring-2 focus:ring-sky-500/20 dark:focus:ring-cyan-500/20 transition-all resize-none"
                   placeholder={`Python,language
 PyTorch,ml
 React,framework`}
@@ -366,15 +366,15 @@ React,framework`}
                   onChange={(e) => setCsvContent(e.target.value)}
                 />
               </div>
-              <div className="p-3 rounded-xl bg-midnight-800/30 border border-midnight-700/50">
-                <p className="text-xs text-midnight-400">
-                  <span className="text-midnight-300 font-medium">カテゴリ:</span> language, framework, ml, genai, cloud, database, devops, other
+              <div className="p-3 rounded-xl bg-slate-100 dark:bg-slate-700/30 border border-slate-200 dark:border-slate-600/50">
+                <p className="text-xs text-slate-500 dark:text-slate-400">
+                  <span className="text-slate-700 dark:text-slate-300 font-medium">カテゴリ:</span> language, framework, ml, genai, cloud, database, devops, other
                 </p>
               </div>
               <button
                 onClick={handleCsvImport}
                 disabled={!csvContent.trim()}
-                className="w-full px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-cyan-600 text-white font-medium hover:from-cyan-600 hover:to-cyan-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                className="w-full px-6 py-3 rounded-xl bg-gradient-to-r from-sky-500 to-cyan-500 dark:from-cyan-500 dark:to-cyan-600 text-white font-medium hover:from-sky-600 hover:to-cyan-600 dark:hover:from-cyan-600 dark:hover:to-cyan-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
               >
                 インポート
               </button>

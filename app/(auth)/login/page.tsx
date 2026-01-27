@@ -3,7 +3,9 @@
 import { Suspense, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import { Zap, Mail, Lock, ArrowRight, Loader2, Users, Building2 } from 'lucide-react'
+import Image from 'next/image'
+import { Mail, Lock, ArrowRight, Loader2, Users, Building2 } from 'lucide-react'
+import { ThemeToggle } from '@/components/ThemeToggle'
 
 function LoginContent() {
   const router = useRouter()
@@ -33,7 +35,6 @@ function LoginContent() {
         throw new Error(data.error || 'ログインに失敗しました')
       }
 
-      // ロールに応じてリダイレクト先を決定
       const role = data.role || 'engineer'
       let redirectPath = '/engineer/dashboard'
       if (role === 'admin') {
@@ -52,38 +53,50 @@ function LoginContent() {
   }
 
   return (
-    <div className="min-h-screen bg-midnight-900 flex overflow-hidden">
-      {/* Background Effects - Minimized */}
+    <div className="min-h-screen bg-slate-50 dark:bg-[#0B1120] flex overflow-hidden transition-colors">
+      {/* Background Effects */}
       <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute inset-0 bg-mesh-gradient opacity-40" />
-        <div className="absolute inset-0 grid-pattern opacity-15" />
-        <div className="orb orb-cyan w-[400px] h-[400px] -top-40 -left-40 opacity-15" />
+        <div className="absolute inset-0 opacity-30 dark:opacity-40"
+          style={{
+            backgroundImage: 'linear-gradient(to right, rgba(14, 165, 233, 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(14, 165, 233, 0.05) 1px, transparent 1px)',
+            backgroundSize: '60px 60px'
+          }}
+        />
+        <div className="absolute -top-40 -left-40 w-[400px] h-[400px] bg-sky-500/10 dark:bg-sky-500/15 rounded-full blur-[100px]" />
+        <div className="absolute -bottom-40 -right-40 w-[400px] h-[400px] bg-orange-500/10 dark:bg-orange-500/15 rounded-full blur-[100px]" />
+      </div>
+
+      {/* Theme Toggle */}
+      <div className="fixed top-4 right-4 z-50">
+        <ThemeToggle />
       </div>
 
       {/* Left Side - Branding */}
       <div className="hidden lg:flex lg:w-1/2 relative z-10 flex-col justify-between p-12">
-        <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-12 h-12 rounded-xl bg-cyan-gradient flex items-center justify-center shadow-glow">
-            <Zap className="w-6 h-6 text-midnight-900" />
-          </div>
-          <span className="text-3xl font-display font-bold text-white tracking-tight">
-            Career<span className="gradient-text-cyan">Bridge</span>
-          </span>
+        <Link href="/" className="flex items-center hover:opacity-90 transition-opacity">
+          <Image
+            src="/logo.png"
+            alt="キャリアブリッジ"
+            width={200}
+            height={44}
+            className="h-11 w-auto"
+            priority
+          />
         </Link>
 
         <div className="max-w-md">
-          <h1 className="font-display text-4xl font-bold text-white mb-6 leading-tight">
+          <h1 className="text-4xl font-bold text-slate-900 dark:text-white mb-6 leading-tight">
             最適なマッチングで、
             <br />
-            <span className="gradient-text">キャリアを加速</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-cyan-400">キャリアを加速</span>
           </h1>
-          <p className="text-midnight-300 text-lg leading-relaxed">
+          <p className="text-slate-600 dark:text-slate-300 text-lg leading-relaxed">
             CareerBridgeは、求職者と企業を高精度でマッチング。
             あなたに合った働き方を見つけましょう。
           </p>
         </div>
 
-        <div className="text-midnight-400 text-sm">
+        <div className="text-slate-500 dark:text-slate-400 text-sm">
           &copy; 2024 CareerBridge. All rights reserved.
         </div>
       </div>
@@ -92,37 +105,39 @@ function LoginContent() {
       <div className="flex-1 flex items-center justify-center p-6 lg:p-12 relative z-10">
         <div className="w-full max-w-md">
           {/* Mobile Logo */}
-          <Link href="/" className="flex lg:hidden items-center gap-3 mb-12 justify-center">
-            <div className="w-10 h-10 rounded-xl bg-cyan-gradient flex items-center justify-center shadow-glow">
-              <Zap className="w-5 h-5 text-midnight-900" />
-            </div>
-            <span className="text-2xl font-display font-bold text-white tracking-tight">
-              Career<span className="gradient-text-cyan">Bridge</span>
-            </span>
+          <Link href="/" className="flex lg:hidden items-center mb-12 justify-center hover:opacity-90 transition-opacity">
+            <Image
+              src="/logo.png"
+              alt="キャリアブリッジ"
+              width={180}
+              height={40}
+              className="h-10 w-auto"
+              priority
+            />
           </Link>
 
-          <div className="glass-card rounded-3xl p-8 md:p-10">
+          <div className="bg-white dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200 dark:border-slate-700/50 rounded-2xl p-8 md:p-10 shadow-xl">
             <div className="text-center mb-8">
               <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full mb-4 ${
                 isCompany
-                  ? 'bg-gold-bright/10 border border-gold-bright/30'
-                  : 'bg-cyan-glow/10 border border-cyan-glow/30'
+                  ? 'bg-orange-500/10 border border-orange-500/30'
+                  : 'bg-sky-500/10 border border-sky-500/30'
               }`}>
                 {isCompany ? (
-                  <Building2 className="w-4 h-4 text-gold-bright" />
+                  <Building2 className="w-4 h-4 text-orange-500" />
                 ) : (
-                  <Users className="w-4 h-4 text-cyan-bright" />
+                  <Users className="w-4 h-4 text-sky-500" />
                 )}
                 <span className={`text-sm font-medium ${
-                  isCompany ? 'text-gold-bright' : 'text-cyan-bright'
+                  isCompany ? 'text-orange-600 dark:text-orange-400' : 'text-sky-600 dark:text-sky-400'
                 }`}>
                   {isCompany ? '企業ログイン' : 'エンジニアログイン'}
                 </span>
               </div>
-              <h2 className="font-display text-2xl font-bold text-white mb-2">
+              <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
                 おかえりなさい
               </h2>
-              <p className="text-midnight-400">
+              <p className="text-slate-500 dark:text-slate-400">
                 アカウントにログインしてください
               </p>
             </div>
@@ -130,23 +145,23 @@ function LoginContent() {
             <form onSubmit={handleSubmit} className="space-y-6">
               {registered && (
                 <div className="p-4 rounded-xl bg-green-500/10 border border-green-500/20">
-                  <p className="text-sm text-green-400">
+                  <p className="text-sm text-green-600 dark:text-green-400">
                     ✅ 登録が完了しました！ログインしてください。
                   </p>
                 </div>
               )}
               {error && (
                 <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20">
-                  <p className="text-sm text-red-400">{error}</p>
+                  <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
                 </div>
               )}
 
               <div className="space-y-2">
-                <label htmlFor="email" className="block text-sm font-medium text-midnight-200">
+                <label htmlFor="email" className="block text-sm font-medium text-slate-700 dark:text-slate-200">
                   メールアドレス
                 </label>
                 <div className="relative">
-                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-midnight-400" />
+                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                   <input
                     id="email"
                     type="email"
@@ -154,17 +169,17 @@ function LoginContent() {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="you@example.com"
                     required
-                    className="w-full pl-12 pr-4 py-3.5 rounded-xl bg-midnight-800/50 border border-midnight-600/50 text-white placeholder:text-midnight-500 focus:outline-none focus:border-cyan-glow/50 focus:ring-2 focus:ring-cyan-glow/20 transition-all duration-250 ease-out-expo input-focus"
+                    className="w-full pl-12 pr-4 py-3.5 rounded-xl bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-600/50 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 transition-all"
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="password" className="block text-sm font-medium text-midnight-200">
+                <label htmlFor="password" className="block text-sm font-medium text-slate-700 dark:text-slate-200">
                   パスワード
                 </label>
                 <div className="relative">
-                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-midnight-400" />
+                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                   <input
                     id="password"
                     type="password"
@@ -172,7 +187,7 @@ function LoginContent() {
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••"
                     required
-                    className="w-full pl-12 pr-4 py-3.5 rounded-xl bg-midnight-800/50 border border-midnight-600/50 text-white placeholder:text-midnight-500 focus:outline-none focus:border-cyan-glow/50 focus:ring-2 focus:ring-cyan-glow/20 transition-all duration-250 ease-out-expo input-focus"
+                    className="w-full pl-12 pr-4 py-3.5 rounded-xl bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-600/50 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 transition-all"
                   />
                 </div>
               </div>
@@ -180,7 +195,7 @@ function LoginContent() {
               <button
                 type="submit"
                 disabled={loading}
-                className="btn-premium hover-scale w-full disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white py-3.5 rounded-xl font-bold shadow-lg hover:shadow-[0_0_20px_rgba(249,115,22,0.4)] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <span className="flex items-center justify-center gap-2">
                   {loading ? (
@@ -199,27 +214,27 @@ function LoginContent() {
             </form>
 
             <div className="mt-8 space-y-4 text-center">
-              <p className="text-midnight-400 text-sm">
+              <p className="text-slate-500 dark:text-slate-400 text-sm">
                 アカウントをお持ちでない方は{' '}
                 <Link
                   href={isCompany ? '/signup?role=company' : '/signup?role=engineer'}
-                  className="text-cyan-bright hover:text-cyan-soft transition-colors duration-250 ease-out-expo font-medium link-underline"
+                  className="text-sky-600 dark:text-sky-400 hover:text-sky-500 transition-colors font-medium"
                 >
                   新規登録
                 </Link>
               </p>
-              <p className="text-midnight-500 text-sm">
+              <p className="text-slate-400 dark:text-slate-500 text-sm">
                 {isCompany ? (
                   <>
                     エンジニアの方は{' '}
-                    <Link href="/login" className="text-cyan-bright hover:text-cyan-soft transition-colors duration-250 ease-out-expo font-medium link-underline">
+                    <Link href="/login" className="text-sky-600 dark:text-sky-400 hover:text-sky-500 transition-colors font-medium">
                       エンジニアログイン
                     </Link>
                   </>
                 ) : (
                   <>
                     企業の方は{' '}
-                    <Link href="/login?role=company" className="text-gold-bright hover:text-gold-soft transition-colors duration-250 ease-out-expo font-medium link-underline">
+                    <Link href="/login?role=company" className="text-orange-600 dark:text-orange-400 hover:text-orange-500 transition-colors font-medium">
                       企業ログイン
                     </Link>
                   </>
@@ -236,8 +251,8 @@ function LoginContent() {
 export default function LoginPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-midnight-900 flex items-center justify-center">
-        <Loader2 className="w-8 h-8 text-cyan-bright animate-spin" />
+      <div className="min-h-screen bg-slate-50 dark:bg-[#0B1120] flex items-center justify-center">
+        <Loader2 className="w-8 h-8 text-sky-500 animate-spin" />
       </div>
     }>
       <LoginContent />

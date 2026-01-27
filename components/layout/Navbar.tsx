@@ -13,7 +13,8 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { NotificationBell } from '@/components/notifications/NotificationBell'
-import { Zap, LogOut, User, LayoutDashboard, Menu, X } from 'lucide-react'
+import { ThemeToggle } from '@/components/ThemeToggle'
+import { LogOut, User, LayoutDashboard, Menu, X } from 'lucide-react'
 import type { ProfileWithDetails } from '@/types'
 
 interface NavbarProps {
@@ -84,7 +85,7 @@ export function Navbar({ variant = 'default' }: NavbarProps) {
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + '/')
 
   return (
-    <header className="sticky top-0 z-50 bg-midnight-900/95 backdrop-blur-xl border-b border-midnight-700/50">
+    <header className="sticky top-0 z-50 bg-white/95 dark:bg-[#0B1120]/95 backdrop-blur-xl border-b border-slate-200 dark:border-slate-700/50 transition-colors">
       <div className="container mx-auto px-4 md:px-6">
         <div className="h-16 flex items-center justify-between">
           {/* Logo */}
@@ -109,8 +110,8 @@ export function Navbar({ variant = 'default' }: NavbarProps) {
                     href={link.href}
                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                       isActive(link.href)
-                        ? 'bg-cyan-glow/10 text-cyan-bright'
-                        : 'text-midnight-300 hover:text-white hover:bg-midnight-800/50'
+                        ? 'bg-sky-500/10 text-sky-600 dark:text-sky-400'
+                        : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/50'
                     }`}
                   >
                     {link.label}
@@ -122,49 +123,51 @@ export function Navbar({ variant = 'default' }: NavbarProps) {
 
           {/* Right Side */}
           <div className="flex items-center gap-3">
+            <ThemeToggle />
+
             {loading ? (
-              <div className="w-9 h-9 bg-midnight-700 rounded-full animate-pulse" />
+              <div className="w-9 h-9 bg-slate-200 dark:bg-slate-700 rounded-full animate-pulse" />
             ) : profile ? (
               <>
                 <NotificationBell />
 
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <button className="relative h-9 w-9 rounded-full ring-2 ring-midnight-600 hover:ring-cyan-glow/50 transition-all duration-200">
+                    <button className="relative h-9 w-9 rounded-full ring-2 ring-slate-200 dark:ring-slate-600 hover:ring-sky-500/50 transition-all duration-200">
                       <Avatar className="h-9 w-9">
                         <AvatarImage src={profile.avatar_url || undefined} alt={profile.display_name} />
-                        <AvatarFallback className="bg-gradient-to-br from-cyan-glow to-cyan-bright text-midnight-900 font-semibold text-sm">
+                        <AvatarFallback className="bg-gradient-to-br from-sky-500 to-cyan-500 text-white font-semibold text-sm">
                           {profile.display_name.slice(0, 2).toUpperCase()}
                         </AvatarFallback>
                       </Avatar>
                     </button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-56 bg-midnight-800 border-midnight-600 text-white">
+                  <DropdownMenuContent align="end" className="w-56 bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-600 text-slate-900 dark:text-white">
                     <div className="px-3 py-2">
-                      <p className="text-sm font-medium text-white">{profile.display_name}</p>
-                      <p className="text-xs text-midnight-400">{profile.email}</p>
+                      <p className="text-sm font-medium text-slate-900 dark:text-white">{profile.display_name}</p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">{profile.email}</p>
                     </div>
-                    <DropdownMenuSeparator className="bg-midnight-600" />
+                    <DropdownMenuSeparator className="bg-slate-200 dark:bg-slate-600" />
                     {profile.role !== 'admin' && (
-                      <DropdownMenuItem asChild className="hover:bg-midnight-700 focus:bg-midnight-700 cursor-pointer">
+                      <DropdownMenuItem asChild className="hover:bg-slate-100 dark:hover:bg-slate-700 focus:bg-slate-100 dark:focus:bg-slate-700 cursor-pointer">
                         <Link href={profile.role === 'engineer' ? '/engineer/profile' : '/company/profile'} className="flex items-center gap-2">
-                          <User className="w-4 h-4 text-midnight-400" />
+                          <User className="w-4 h-4 text-slate-400" />
                           <span>プロフィール</span>
                         </Link>
                       </DropdownMenuItem>
                     )}
-                    <DropdownMenuItem asChild className="hover:bg-midnight-700 focus:bg-midnight-700 cursor-pointer">
+                    <DropdownMenuItem asChild className="hover:bg-slate-100 dark:hover:bg-slate-700 focus:bg-slate-100 dark:focus:bg-slate-700 cursor-pointer">
                       <Link href={
                         profile.role === 'admin' ? '/admin/dashboard'
                           : profile.role === 'engineer' ? '/engineer/dashboard'
                           : '/company/dashboard'
                       } className="flex items-center gap-2">
-                        <LayoutDashboard className="w-4 h-4 text-midnight-400" />
+                        <LayoutDashboard className="w-4 h-4 text-slate-400" />
                         <span>ダッシュボード</span>
                       </Link>
                     </DropdownMenuItem>
-                    <DropdownMenuSeparator className="bg-midnight-600" />
-                    <DropdownMenuItem onClick={handleLogout} className="hover:bg-red-500/10 focus:bg-red-500/10 text-red-400 cursor-pointer">
+                    <DropdownMenuSeparator className="bg-slate-200 dark:bg-slate-600" />
+                    <DropdownMenuItem onClick={handleLogout} className="hover:bg-red-500/10 focus:bg-red-500/10 text-red-500 dark:text-red-400 cursor-pointer">
                       <LogOut className="w-4 h-4 mr-2" />
                       <span>ログアウト</span>
                     </DropdownMenuItem>
@@ -174,7 +177,7 @@ export function Navbar({ variant = 'default' }: NavbarProps) {
                 {/* Mobile Menu Button */}
                 <button
                   onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                  className="lg:hidden p-2 text-midnight-300 hover:text-white transition-colors"
+                  className="lg:hidden p-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors"
                 >
                   {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
                 </button>
@@ -182,13 +185,13 @@ export function Navbar({ variant = 'default' }: NavbarProps) {
             ) : (
               <div className="flex items-center gap-3">
                 <Link href="/login">
-                  <button className="px-4 py-2 text-sm text-midnight-200 hover:text-white font-medium transition-colors">
+                  <button className="px-4 py-2 text-sm text-slate-600 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white font-medium transition-colors">
                     ログイン
                   </button>
                 </Link>
                 <Link href="/signup">
-                  <button className="btn-premium px-5 py-2 text-sm">
-                    <span>新規登録</span>
+                  <button className="px-5 py-2 text-sm bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-lg shadow-lg hover:shadow-[0_0_15px_rgba(249,115,22,0.4)] transition-all">
+                    新規登録
                   </button>
                 </Link>
               </div>
@@ -198,7 +201,7 @@ export function Navbar({ variant = 'default' }: NavbarProps) {
 
         {/* Mobile Navigation */}
         {mobileMenuOpen && profile && links.length > 0 && (
-          <nav className="lg:hidden py-4 border-t border-midnight-700/50">
+          <nav className="lg:hidden py-4 border-t border-slate-200 dark:border-slate-700/50">
             <div className="flex flex-col gap-1">
               {links.map((link) => (
                 <Link
@@ -207,8 +210,8 @@ export function Navbar({ variant = 'default' }: NavbarProps) {
                   onClick={() => setMobileMenuOpen(false)}
                   className={`px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 ${
                     isActive(link.href)
-                      ? 'bg-cyan-glow/10 text-cyan-bright'
-                      : 'text-midnight-300 hover:text-white hover:bg-midnight-800/50'
+                      ? 'bg-sky-500/10 text-sky-600 dark:text-sky-400'
+                      : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/50'
                   }`}
                 >
                   {link.label}

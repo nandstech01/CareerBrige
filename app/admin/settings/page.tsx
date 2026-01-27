@@ -95,11 +95,11 @@ export default function AdminSettingsPage() {
     return (
       <div className="space-y-8 animate-fade-in-up">
         <div>
-          <h1 className="font-display text-3xl font-bold text-white">システム設定</h1>
-          <p className="text-midnight-400 mt-1">プラットフォーム全体の設定管理</p>
+          <h1 className="font-display text-3xl font-bold text-slate-900 dark:text-white">システム設定</h1>
+          <p className="text-slate-500 dark:text-slate-400 mt-1">プラットフォーム全体の設定管理</p>
         </div>
         <div className="flex items-center justify-center py-24">
-          <Loader2 className="w-8 h-8 text-purple-400 animate-spin" />
+          <Loader2 className="w-8 h-8 text-sky-500 dark:text-purple-400 animate-spin" />
         </div>
       </div>
     )
@@ -110,13 +110,13 @@ export default function AdminSettingsPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="font-display text-3xl font-bold text-white">システム設定</h1>
-          <p className="text-midnight-400 mt-1">プラットフォーム全体の設定管理</p>
+          <h1 className="font-display text-3xl font-bold text-slate-900 dark:text-white">システム設定</h1>
+          <p className="text-slate-500 dark:text-slate-400 mt-1">プラットフォーム全体の設定管理</p>
         </div>
         <button
           onClick={handleSave}
           disabled={saving}
-          className="flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-purple-500 to-purple-600 text-white font-medium hover:from-purple-600 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg shadow-purple-500/20"
+          className="flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-sky-500 to-sky-600 dark:from-purple-500 dark:to-purple-600 text-white font-medium hover:from-sky-600 hover:to-sky-700 dark:hover:from-purple-600 dark:hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg shadow-sky-500/20 dark:shadow-purple-500/20"
         >
           {saving ? (
             <>
@@ -134,20 +134,20 @@ export default function AdminSettingsPage() {
 
       {/* Platform Fee Settings */}
       <div className="glass-card rounded-2xl overflow-hidden">
-        <div className="p-6 border-b border-midnight-700/50">
+        <div className="p-6 border-b border-slate-200 dark:border-slate-700/50">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gold-bright/10 flex items-center justify-center">
-              <Percent className="w-5 h-5 text-gold-bright" />
+            <div className="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center">
+              <Percent className="w-5 h-5 text-orange-600 dark:text-orange-400" />
             </div>
             <div>
-              <h2 className="font-display text-lg font-semibold text-white">手数料設定</h2>
-              <p className="text-sm text-midnight-400">プラットフォーム手数料のデフォルト値</p>
+              <h2 className="font-display text-lg font-semibold text-slate-900 dark:text-white">手数料設定</h2>
+              <p className="text-sm text-slate-500 dark:text-slate-400">プラットフォーム手数料のデフォルト値</p>
             </div>
           </div>
         </div>
         <div className="p-6">
           <div className="max-w-md">
-            <label className="block text-sm font-medium text-midnight-200 mb-2">
+            <label className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2">
               デフォルト手数料率
             </label>
             <div className="flex items-center gap-3">
@@ -158,11 +158,11 @@ export default function AdminSettingsPage() {
                 step="0.1"
                 value={feeRate}
                 onChange={(e) => setFeeRate(e.target.value)}
-                className="w-32 px-4 py-3 rounded-xl bg-midnight-800/50 border border-midnight-600/50 text-white text-xl font-bold focus:outline-none focus:border-gold-bright/50 focus:ring-2 focus:ring-gold-bright/20 transition-all"
+                className="w-32 px-4 py-3 rounded-xl bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-600/50 text-slate-900 dark:text-white text-xl font-bold focus:outline-none focus:border-orange-500/50 focus:ring-2 focus:ring-orange-500/20 transition-all"
               />
-              <span className="text-2xl font-bold text-gold-bright">%</span>
+              <span className="text-2xl font-bold text-orange-600 dark:text-orange-400">%</span>
             </div>
-            <p className="text-sm text-midnight-500 mt-3">
+            <p className="text-sm text-slate-400 dark:text-slate-500 mt-3">
               契約時にこの手数料率がデフォルトで適用されます（個別に変更可能）
             </p>
           </div>
@@ -171,14 +171,14 @@ export default function AdminSettingsPage() {
 
       {/* Match Score Weights */}
       <div className="glass-card rounded-2xl overflow-hidden">
-        <div className="p-6 border-b border-midnight-700/50">
+        <div className="p-6 border-b border-slate-200 dark:border-slate-700/50">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-cyan-glow/10 flex items-center justify-center">
-              <Scale className="w-5 h-5 text-cyan-bright" />
+            <div className="w-10 h-10 rounded-xl bg-sky-500/10 dark:bg-cyan-500/10 flex items-center justify-center">
+              <Scale className="w-5 h-5 text-sky-600 dark:text-cyan-400" />
             </div>
             <div>
-              <h2 className="font-display text-lg font-semibold text-white">マッチスコア重み設定</h2>
-              <p className="text-sm text-midnight-400">案件とエンジニアのマッチングスコア計算時の重み係数</p>
+              <h2 className="font-display text-lg font-semibold text-slate-900 dark:text-white">マッチスコア重み設定</h2>
+              <p className="text-sm text-slate-500 dark:text-slate-400">案件とエンジニアのマッチングスコア計算時の重み係数</p>
             </div>
           </div>
         </div>
@@ -188,14 +188,14 @@ export default function AdminSettingsPage() {
               const config = weightLabels[key] || { label: key, description: '', icon: Scale }
               const Icon = config.icon
               return (
-                <div key={key} className="p-4 rounded-xl bg-midnight-800/30 border border-midnight-700/50">
+                <div key={key} className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50">
                   <div className="flex items-center gap-3 mb-3">
                     <div className="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center">
-                      <Icon className="w-4 h-4 text-purple-400" />
+                      <Icon className="w-4 h-4 text-purple-600 dark:text-purple-400" />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-white">{config.label}</label>
-                      <p className="text-xs text-midnight-500">{config.description}</p>
+                      <label className="block text-sm font-medium text-slate-900 dark:text-white">{config.label}</label>
+                      <p className="text-xs text-slate-400 dark:text-slate-500">{config.description}</p>
                     </div>
                   </div>
                   <input
@@ -205,7 +205,7 @@ export default function AdminSettingsPage() {
                     step="0.1"
                     value={value}
                     onChange={(e) => setWeights({ ...weights, [key]: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-lg bg-midnight-800/50 border border-midnight-600/50 text-white font-medium focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                    className="w-full px-4 py-2.5 rounded-lg bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-600/50 text-slate-900 dark:text-white font-medium focus:outline-none focus:border-sky-500 dark:focus:border-purple-500/50 focus:ring-2 focus:ring-sky-500/20 dark:focus:ring-purple-500/20 transition-all"
                   />
                 </div>
               )
@@ -213,16 +213,16 @@ export default function AdminSettingsPage() {
           </div>
 
           {/* Formula Display */}
-          <div className="mt-6 p-4 rounded-xl bg-gradient-to-r from-purple-500/10 to-cyan-glow/10 border border-purple-500/20">
+          <div className="mt-6 p-4 rounded-xl bg-gradient-to-r from-sky-500/10 dark:from-purple-500/10 to-cyan-500/10 border border-sky-500/20 dark:border-purple-500/20">
             <div className="flex items-center gap-2 mb-3">
-              <Info className="w-4 h-4 text-purple-400" />
-              <h4 className="font-medium text-white text-sm">計算式</h4>
+              <Info className="w-4 h-4 text-sky-600 dark:text-purple-400" />
+              <h4 className="font-medium text-slate-900 dark:text-white text-sm">計算式</h4>
             </div>
-            <code className="block text-xs text-midnight-300 font-mono leading-relaxed">
-              マッチスコア = (スキル一致度 × <span className="text-cyan-bright">{weights.skill_overlap || '1.5'}</span>) +
-              (予算適合度 × <span className="text-cyan-bright">{weights.budget_fit || '1.0'}</span>) +
-              (稼働適合度 × <span className="text-cyan-bright">{weights.availability_fit || '1.0'}</span>) +
-              (リモート適合度 × <span className="text-cyan-bright">{weights.remote_fit || '0.5'}</span>)
+            <code className="block text-xs text-slate-600 dark:text-slate-300 font-mono leading-relaxed">
+              マッチスコア = (スキル一致度 × <span className="text-sky-600 dark:text-cyan-400">{weights.skill_overlap || '1.5'}</span>) +
+              (予算適合度 × <span className="text-sky-600 dark:text-cyan-400">{weights.budget_fit || '1.0'}</span>) +
+              (稼働適合度 × <span className="text-sky-600 dark:text-cyan-400">{weights.availability_fit || '1.0'}</span>) +
+              (リモート適合度 × <span className="text-sky-600 dark:text-cyan-400">{weights.remote_fit || '0.5'}</span>)
             </code>
           </div>
         </div>
@@ -230,33 +230,33 @@ export default function AdminSettingsPage() {
 
       {/* System Info */}
       <div className="glass-card rounded-2xl overflow-hidden">
-        <div className="p-6 border-b border-midnight-700/50">
+        <div className="p-6 border-b border-slate-200 dark:border-slate-700/50">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center">
-              <Server className="w-5 h-5 text-emerald-400" />
+              <Server className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
             </div>
             <div>
-              <h2 className="font-display text-lg font-semibold text-white">システム情報</h2>
-              <p className="text-sm text-midnight-400">プラットフォームの基本情報</p>
+              <h2 className="font-display text-lg font-semibold text-slate-900 dark:text-white">システム情報</h2>
+              <p className="text-sm text-slate-500 dark:text-slate-400">プラットフォームの基本情報</p>
             </div>
           </div>
         </div>
         <div className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="p-4 rounded-xl bg-midnight-800/30 border border-midnight-700/50">
-              <p className="text-xs text-midnight-500 mb-1">バージョン</p>
-              <p className="font-mono text-lg font-bold text-white">1.0.0</p>
+            <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50">
+              <p className="text-xs text-slate-400 dark:text-slate-500 mb-1">バージョン</p>
+              <p className="font-mono text-lg font-bold text-slate-900 dark:text-white">1.0.0</p>
             </div>
-            <div className="p-4 rounded-xl bg-midnight-800/30 border border-midnight-700/50">
-              <p className="text-xs text-midnight-500 mb-1">環境</p>
+            <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50">
+              <p className="text-xs text-slate-400 dark:text-slate-500 mb-1">環境</p>
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <p className="font-mono text-lg font-bold text-emerald-400">{process.env.NODE_ENV}</p>
+                <div className="w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse" />
+                <p className="font-mono text-lg font-bold text-emerald-600 dark:text-emerald-400">{process.env.NODE_ENV}</p>
               </div>
             </div>
-            <div className="p-4 rounded-xl bg-midnight-800/30 border border-midnight-700/50">
-              <p className="text-xs text-midnight-500 mb-1">フレームワーク</p>
-              <p className="font-mono text-lg font-bold text-white">Next.js 13</p>
+            <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50">
+              <p className="text-xs text-slate-400 dark:text-slate-500 mb-1">フレームワーク</p>
+              <p className="font-mono text-lg font-bold text-slate-900 dark:text-white">Next.js 13</p>
             </div>
           </div>
         </div>
