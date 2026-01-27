@@ -2,25 +2,28 @@
 
 import { memo } from 'react'
 import Link from 'next/link'
-import { Mail, LogIn, ShieldCheck } from 'lucide-react'
+import { MessageCircle, LogIn, ShieldCheck, Clock } from 'lucide-react'
 
 const AnimatedCTACard = memo(function AnimatedCTACard() {
   return (
     <div className="relative z-40 w-full max-w-3xl mx-auto px-4 -mt-8 animate-fade-in-up animation-delay-400">
       <div className="bg-white dark:bg-slate-900/90 backdrop-blur-xl border border-slate-200 dark:border-slate-700/50 rounded-2xl p-6 md:p-8 shadow-xl text-center transform hover:scale-[1.01] transition-transform duration-300">
         <h3 className="text-lg md:text-xl font-bold text-slate-900 dark:text-white mb-5">
-          プロフィールを作成して{' '}
-          <span className="text-sky-500 underline decoration-2 underline-offset-4 decoration-dotted">非公開求人</span>
-          {' '}にアクセス
+          最短{' '}
+          <span className="text-green-500 underline decoration-2 underline-offset-4 decoration-dotted">10秒</span>
+          {' '}で応募完了
         </h3>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
           <Link
-            href="/signup"
-            className="w-full sm:w-auto bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-6 py-3 rounded-lg font-bold shadow-lg hover:shadow-[0_0_20px_rgba(249,115,22,0.4)] transition-all flex items-center justify-center gap-2 group"
+            href="/apply"
+            className="w-full sm:w-auto bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-8 py-4 rounded-lg font-bold shadow-lg hover:shadow-[0_0_20px_rgba(34,197,94,0.4)] transition-all flex flex-col items-center justify-center gap-1 group text-lg"
           >
-            <Mail className="w-5 h-5 group-hover:rotate-12 transition-transform" />
-            メールで登録
+            <span className="flex items-center gap-2">
+              <MessageCircle className="w-6 h-6 group-hover:scale-110 transition-transform" />
+              かんたんLINE応募
+            </span>
+            <span className="text-xs font-normal opacity-90">最短10秒で完了</span>
           </Link>
           <Link
             href="/login"
@@ -31,10 +34,16 @@ const AnimatedCTACard = memo(function AnimatedCTACard() {
           </Link>
         </div>
 
-        <p className="text-xs text-slate-500 dark:text-slate-400 mt-4 flex items-center justify-center gap-1">
-          <ShieldCheck className="w-4 h-4 text-green-500" />
-          2分で完了・安全な暗号化通信
-        </p>
+        <div className="flex flex-wrap items-center justify-center gap-4 mt-4 text-xs text-slate-500 dark:text-slate-400">
+          <span className="flex items-center gap-1">
+            <Clock className="w-4 h-4 text-green-500" />
+            最短10秒
+          </span>
+          <span className="flex items-center gap-1">
+            <ShieldCheck className="w-4 h-4 text-green-500" />
+            安全な通信
+          </span>
+        </div>
       </div>
     </div>
   )

@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>かんたんLINE応募 | CareerBridge</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      min-height: 100vh;
+      padding: 20px;
+      color: #e2e8f0;
+    }
+
+    .container {
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #22c55e;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: #94a3b8;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: #22c55e;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      margin-top: 12px;
+    }
+
+    .form-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #e2e8f0;
+      margin-bottom: 8px;
+    }
+
+    .required {
+      color: #ef4444;
+      margin-left: 4px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input:focus,
+    select:focus {
+      outline: none;
+      border-color: #22c55e;
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+    }
+
+    select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 40px;
+    }
+
+    select option {
+      background: #1e293b;
+      color: #fff;
+    }
+
+    .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+      border: 1px solid transparent;
+    }
+
+    .checkbox-item:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .checkbox-item.checked {
+      background: rgba(34, 197, 94, 0.1);
+      border-color: rgba(34, 197, 94, 0.3);
+    }
+
+    .checkbox-item input {
+      width: 18px;
+      height: 18px;
+      accent-color: #22c55e;
+      cursor: pointer;
+    }
+
+    .checkbox-item span {
+      font-size: 14px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      color: #94a3b8;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 16px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #fff;
+      background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(34, 197, 94, 0.3);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .submit-btn svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    .footer a {
+      color: #22c55e;
+      text-decoration: none;
+    }
+
+    /* 成功メッセージ */
+    .success-message {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .success-message.show {
+      display: block;
+    }
+
+    .success-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+
+    .success-icon svg {
+      width: 40px;
+      height: 40px;
+      color: #fff;
+    }
+
+    .success-title {
+      font-size: 24px;
+      font-weight: bold;
+      color: #22c55e;
+      margin-bottom: 12px;
+    }
+
+    .success-text {
+      color: #94a3b8;
+      line-height: 1.6;
+    }
+
+    /* ローディング */
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #fff;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* エラーメッセージ */
+    .error-message {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #ef4444;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .error-message.show {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo">CareerBridge</div>
+      <div class="subtitle">かんたんLINE応募フォーム</div>
+      <div class="badge">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M12 6v6l4 2"/>
+        </svg>
+        30秒で完了
+      </div>
+    </div>
+
+    <div class="form-card">
+      <div id="error-message" class="error-message"></div>
+
+      <form id="application-form">
+        <!-- 基本情報 -->
+        <div class="section-title">基本情報</div>
+
+        <div class="form-group">
+          <label>氏名<span class="required">*</span></label>
+          <input type="text" id="name" name="name" placeholder="山田 太郎" required>
+        </div>
+
+        <div class="form-group">
+          <label>年齢<span class="required">*</span></label>
+          <input type="number" id="age" name="age" placeholder="28" min="18" max="99" required>
+        </div>
+
+        <div class="form-group">
+          <label>性別<span class="required">*</span></label>
+          <select id="gender" name="gender" required>
+            <option value="">選択してください</option>
+            <option value="男性">男性</option>
+            <option value="女性">女性</option>
+            <option value="その他">その他</option>
+            <option value="回答しない">回答しない</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>都道府県<span class="required">*</span></label>
+          <select id="prefecture" name="prefecture" required>
+            <option value="">選択してください</option>
+            <option value="北海道">北海道</option>
+            <option value="青森県">青森県</option>
+            <option value="岩手県">岩手県</option>
+            <option value="宮城県">宮城県</option>
+            <option value="秋田県">秋田県</option>
+            <option value="山形県">山形県</option>
+            <option value="福島県">福島県</option>
+            <option value="茨城県">茨城県</option>
+            <option value="栃木県">栃木県</option>
+            <option value="群馬県">群馬県</option>
+            <option value="埼玉県">埼玉県</option>
+            <option value="千葉県">千葉県</option>
+            <option value="東京都">東京都</option>
+            <option value="神奈川県">神奈川県</option>
+            <option value="新潟県">新潟県</option>
+            <option value="富山県">富山県</option>
+            <option value="石川県">石川県</option>
+            <option value="福井県">福井県</option>
+            <option value="山梨県">山梨県</option>
+            <option value="長野県">長野県</option>
+            <option value="岐阜県">岐阜県</option>
+            <option value="静岡県">静岡県</option>
+            <option value="愛知県">愛知県</option>
+            <option value="三重県">三重県</option>
+            <option value="滋賀県">滋賀県</option>
+            <option value="京都府">京都府</option>
+            <option value="大阪府">大阪府</option>
+            <option value="兵庫県">兵庫県</option>
+            <option value="奈良県">奈良県</option>
+            <option value="和歌山県">和歌山県</option>
+            <option value="鳥取県">鳥取県</option>
+            <option value="島根県">島根県</option>
+            <option value="岡山県">岡山県</option>
+            <option value="広島県">広島県</option>
+            <option value="山口県">山口県</option>
+            <option value="徳島県">徳島県</option>
+            <option value="香川県">香川県</option>
+            <option value="愛媛県">愛媛県</option>
+            <option value="高知県">高知県</option>
+            <option value="福岡県">福岡県</option>
+            <option value="佐賀県">佐賀県</option>
+            <option value="長崎県">長崎県</option>
+            <option value="熊本県">熊本県</option>
+            <option value="大分県">大分県</option>
+            <option value="宮崎県">宮崎県</option>
+            <option value="鹿児島県">鹿児島県</option>
+            <option value="沖縄県">沖縄県</option>
+          </select>
+        </div>
+
+        <!-- チェックボックス項目 -->
+        <div class="section-title" style="margin-top: 28px;">その他の情報</div>
+
+        <div class="form-group">
+          <label>転居可否</label>
+          <div class="checkbox-group">
+            <label class="checkbox-item" id="relocate-item">
+              <input type="checkbox" id="canRelocate" name="canRelocate">
+              <span>転居可能</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>履歴書有無</label>
+          <div class="checkbox-group">
+            <label class="checkbox-item" id="resume-item">
+              <input type="checkbox" id="hasResume" name="hasResume">
+              <span>履歴書あり</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>転職温度（複数選択可）</label>
+          <div class="checkbox-group">
+            <label class="checkbox-item">
+              <input type="checkbox" name="jobTemperature" value="すぐに転職したい">
+              <span>すぐに転職したい</span>
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="jobTemperature" value="良い求人があれば">
+              <span>良い求人があれば</span>
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="jobTemperature" value="情報収集中">
+              <span>情報収集中</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>LINE ID（任意）</label>
+          <input type="text" id="lineId" name="lineId" placeholder="@example">
+        </div>
+
+        <button type="submit" class="submit-btn" id="submit-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+          </svg>
+          応募する
+        </button>
+      </form>
+
+      <!-- 成功メッセージ -->
+      <div id="success-message" class="success-message">
+        <div class="success-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 6L9 17l-5-5"/>
+          </svg>
+        </div>
+        <div class="success-title">応募完了！</div>
+        <div class="success-text">
+          ご応募ありがとうございます。<br>
+          担当者より2営業日以内にご連絡いたします。
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>&copy; 2024 CareerBridge. All rights reserved.</p>
+      <p><a href="https://careerbridge.jp" target="_blank">careerbridge.jp</a></p>
+    </div>
+  </div>
+
+  <script>
+    // チェックボックスのスタイル更新
+    document.querySelectorAll('.checkbox-item input').forEach(checkbox => {
+      checkbox.addEventListener('change', function() {
+        this.closest('.checkbox-item').classList.toggle('checked', this.checked);
+      });
+    });
+
+    // フォーム送信
+    document.getElementById('application-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const submitBtn = document.getElementById('submit-btn');
+      const errorMessage = document.getElementById('error-message');
+
+      // ボタンをローディング状態に
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="loading"></span> 送信中...';
+      errorMessage.classList.remove('show');
+
+      // フォームデータを収集
+      const formData = {
+        name: document.getElementById('name').value,
+        age: document.getElementById('age').value,
+        gender: document.getElementById('gender').value,
+        prefecture: document.getElementById('prefecture').value,
+        canRelocate: document.getElementById('canRelocate').checked,
+        hasResume: document.getElementById('hasResume').checked,
+        jobTemperature: Array.from(document.querySelectorAll('input[name="jobTemperature"]:checked'))
+          .map(cb => cb.value).join(', '),
+        lineId: document.getElementById('lineId').value
+      };
+
+      // GASにデータを送信
+      google.script.run
+        .withSuccessHandler(function(response) {
+          if (response.success) {
+            // 成功
+            document.getElementById('application-form').style.display = 'none';
+            document.getElementById('success-message').classList.add('show');
+          } else {
+            // エラー
+            errorMessage.textContent = response.message;
+            errorMessage.classList.add('show');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg> 応募する';
+          }
+        })
+        .withFailureHandler(function(error) {
+          errorMessage.textContent = 'エラーが発生しました。もう一度お試しください。';
+          errorMessage.classList.add('show');
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg> 応募する';
+        })
+        .submitForm(formData);
+    });
+  </script>
+</body>
+</html>
