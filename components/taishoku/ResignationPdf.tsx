@@ -175,6 +175,7 @@ interface ResignationPdfProps {
 export function ResignationPdf({ data, onDownloadComplete }: ResignationPdfProps) {
   const [isGenerating, setIsGenerating] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [iosMessage, setIosMessage] = useState<string | null>(null)
 
   // コンポーネントマウント時にフォントを登録
   useEffect(() => {
@@ -184,6 +185,7 @@ export function ResignationPdf({ data, onDownloadComplete }: ResignationPdfProps
   const handleDownload = useCallback(async () => {
     setIsGenerating(true)
     setError(null)
+    setIosMessage(null)
 
     try {
       // フォント登録を確認
@@ -192,31 +194,31 @@ export function ResignationPdf({ data, onDownloadComplete }: ResignationPdfProps
       // PDFを生成
       const pdfBlob = await pdf(<ResignationDocument data={data} />).toBlob()
 
-      // ファイル名（日本語を避けてASCIIのみ）
+      // ファイル名
       const fileName = `taishokutodoke_${new Date().toISOString().split('T')[0]}.pdf`
 
-      // iOS Safari対応: navigator.msSaveBlobがある場合はそれを使用
-      if (typeof window !== 'undefined' && (window.navigator as Navigator & { msSaveBlob?: (blob: Blob, fileName: string) => boolean }).msSaveBlob) {
-        (window.navigator as Navigator & { msSaveBlob: (blob: Blob, fileName: string) => boolean }).msSaveBlob(pdfBlob, fileName)
+      // iOS検出
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+
+      // Blob URLを作成
+      const url = URL.createObjectURL(pdfBlob)
+
+      if (isIOS) {
+        // iOSの場合: 新しいタブでPDFを開く
+        window.open(url, '_blank')
         setIsGenerating(false)
-        onDownloadComplete?.()
+        // ユーザーに保存方法を案内（青いメッセージ）
+        setIosMessage('PDFが新しいタブで開きました。画面下の共有ボタン（□↑）をタップして「"ファイル"に保存」を選択してください。')
         return
       }
 
-      // 通常のダウンロード処理
-      const url = URL.createObjectURL(pdfBlob)
+      // PC/Androidの場合: 通常のダウンロード
       const link = document.createElement('a')
       link.href = url
       link.download = fileName
       link.style.display = 'none'
       document.body.appendChild(link)
-
-      // クリックイベントを明示的にディスパッチ
-      link.dispatchEvent(new MouseEvent('click', {
-        bubbles: true,
-        cancelable: true,
-        view: window
-      }))
+      link.click()
 
       // クリーンアップを遅延
       setTimeout(() => {
@@ -249,6 +251,12 @@ export function ResignationPdf({ data, onDownloadComplete }: ResignationPdfProps
             </p>
           </div>
         </div>
+
+        {iosMessage && (
+          <div className="mb-4 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+            <p className="text-sm text-blue-600 dark:text-blue-400">{iosMessage}</p>
+          </div>
+        )}
 
         {error && (
           <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
