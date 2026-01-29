@@ -359,10 +359,8 @@ export default function ResignationPage() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       {/* キャリア相談ボタン */}
-                      <a
-                        href="https://lin.ee/B7yynyF"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                      <Link
+                        href="/apply"
                         className="flex flex-col items-center gap-3 p-6 bg-[#06C755]/10 dark:bg-[#06C755]/20 border border-[#06C755]/30 rounded-xl hover:bg-[#06C755]/20 dark:hover:bg-[#06C755]/30 transition-all group"
                       >
                         <div className="w-12 h-12 bg-[#06C755] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -372,9 +370,9 @@ export default function ResignationPage() {
                           キャリア相談
                         </span>
                         <span className="text-xs text-slate-600 dark:text-slate-400">
-                          LINEで専門家に相談
+                          専門家に相談する
                         </span>
-                      </a>
+                      </Link>
 
                       {/* 履歴書作成ボタン */}
                       <Link
