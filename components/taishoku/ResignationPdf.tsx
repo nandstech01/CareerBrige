@@ -10,11 +10,41 @@ import {
   pdf,
   Font
 } from '@react-pdf/renderer'
-import { Download, Loader2, FileText } from 'lucide-react'
+import { Download, Loader2, FileText, Share } from 'lucide-react'
 import type { ResignationData } from './ResignationForm'
 
 // フォント登録フラグ
 let fontRegistered = false
+
+// Blob を Base64 データURLに変換
+function blobToBase64(blob: Blob): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onloadend = () => {
+      if (typeof reader.result === 'string') {
+        resolve(reader.result)
+      } else {
+        reject(new Error('Failed to convert blob to base64'))
+      }
+    }
+    reader.onerror = reject
+    reader.readAsDataURL(blob)
+  })
+}
+
+// iOS/Safari 検出
+function detectBrowser() {
+  if (typeof navigator === 'undefined') {
+    return { isIOS: false, isSafari: false }
+  }
+
+  const ua = navigator.userAgent
+  const isIOS = /iPad|iPhone|iPod/.test(ua) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) // iPad OS 13+
+  const isSafari = /^((?!chrome|android).)*safari/i.test(ua)
+
+  return { isIOS, isSafari }
+}
 
 // フォントを動的に登録する関数
 function registerFonts() {
@@ -195,24 +225,106 @@ export function ResignationPdf({ data, onDownloadComplete }: ResignationPdfProps
       const pdfBlob = await pdf(<ResignationDocument data={data} />).toBlob()
 
       // ファイル名
-      const fileName = `taishokutodoke_${new Date().toISOString().split('T')[0]}.pdf`
+      const fileName = `退職届_${data.employeeName}_${new Date().toISOString().split('T')[0]}.pdf`
 
-      // iOS検出
-      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+      // ブラウザ検出
+      const { isIOS, isSafari } = detectBrowser()
 
-      // Blob URLを作成
-      const url = URL.createObjectURL(pdfBlob)
+      // iOS または Safari の場合: Base64 データURLを使用
+      if (isIOS || isSafari) {
+        // Base64 に変換
+        const base64Url = await blobToBase64(pdfBlob)
 
-      if (isIOS) {
-        // iOSの場合: 新しいタブでPDFを開く
-        window.open(url, '_blank')
+        // Web Share API が使える場合（iOS Safari で推奨）
+        if (isIOS && navigator.share && navigator.canShare) {
+          try {
+            const file = new File([pdfBlob], fileName, { type: 'application/pdf' })
+            const shareData = { files: [file] }
+
+            if (navigator.canShare(shareData)) {
+              await navigator.share(shareData)
+              setIsGenerating(false)
+              onDownloadComplete?.()
+              return
+            }
+          } catch {
+            // Share API が失敗した場合は別の方法を試す
+            console.log('Share API failed, trying alternative method')
+          }
+        }
+
+        // 新しいウィンドウでBase64 PDFを開く
+        const newWindow = window.open()
+        if (newWindow) {
+          newWindow.document.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+              <title>${fileName}</title>
+              <meta name="viewport" content="width=device-width, initial-scale=1">
+              <style>
+                body { margin: 0; padding: 0; background: #f5f5f5; }
+                .container {
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  padding: 20px;
+                  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+                }
+                .message {
+                  background: #e8f4fd;
+                  border: 1px solid #b3d9f7;
+                  border-radius: 12px;
+                  padding: 16px;
+                  margin-bottom: 20px;
+                  max-width: 400px;
+                  text-align: center;
+                }
+                .message h3 { margin: 0 0 8px; color: #1976d2; font-size: 16px; }
+                .message p { margin: 0; color: #555; font-size: 14px; line-height: 1.5; }
+                .pdf-frame {
+                  width: 100%;
+                  max-width: 800px;
+                  height: calc(100vh - 200px);
+                  border: none;
+                  background: white;
+                  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                }
+                .download-link {
+                  display: inline-block;
+                  margin-top: 16px;
+                  padding: 12px 24px;
+                  background: #00bcd4;
+                  color: white;
+                  text-decoration: none;
+                  border-radius: 8px;
+                  font-weight: bold;
+                }
+              </style>
+            </head>
+            <body>
+              <div class="container">
+                <div class="message">
+                  <h3>📄 PDFを保存するには</h3>
+                  <p>画面下の <strong>共有ボタン（□↑）</strong>をタップして<br>「"ファイル"に保存」を選択してください</p>
+                </div>
+                <iframe class="pdf-frame" src="${base64Url}"></iframe>
+                <a class="download-link" href="${base64Url}" download="${fileName}">ダウンロードを試す</a>
+              </div>
+            </body>
+            </html>
+          `)
+          newWindow.document.close()
+        }
+
         setIsGenerating(false)
-        // ユーザーに保存方法を案内（青いメッセージ）
-        setIosMessage('PDFが新しいタブで開きました。画面下の共有ボタン（□↑）をタップして「"ファイル"に保存」を選択してください。')
+        setIosMessage('新しいタブでPDFが開きました。共有ボタン（□↑）から「"ファイル"に保存」を選んでください。')
+        onDownloadComplete?.()
         return
       }
 
-      // PC/Androidの場合: 通常のダウンロード
+      // PC (Chrome, Firefox, Edge等) の場合: Blob URLで通常ダウンロード
+      const url = URL.createObjectURL(pdfBlob)
       const link = document.createElement('a')
       link.href = url
       link.download = fileName
@@ -253,8 +365,18 @@ export function ResignationPdf({ data, onDownloadComplete }: ResignationPdfProps
         </div>
 
         {iosMessage && (
-          <div className="mb-4 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
-            <p className="text-sm text-blue-600 dark:text-blue-400">{iosMessage}</p>
+          <div className="mb-4 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+            <div className="flex items-start gap-3">
+              <Share className="w-5 h-5 text-blue-500 mt-0.5 shrink-0" />
+              <div>
+                <p className="text-sm font-medium text-blue-700 dark:text-blue-300 mb-1">
+                  保存方法
+                </p>
+                <p className="text-sm text-blue-600 dark:text-blue-400">
+                  {iosMessage}
+                </p>
+              </div>
+            </div>
           </div>
         )}
 
