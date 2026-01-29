@@ -192,17 +192,37 @@ export function ResignationPdf({ data, onDownloadComplete }: ResignationPdfProps
       // PDFを生成
       const pdfBlob = await pdf(<ResignationDocument data={data} />).toBlob()
 
-      // Blobから直接ダウンロード（より確実な方法）
+      // ファイル名（日本語を避けてASCIIのみ）
+      const fileName = `taishokutodoke_${new Date().toISOString().split('T')[0]}.pdf`
+
+      // iOS Safari対応: navigator.msSaveBlobがある場合はそれを使用
+      if (typeof window !== 'undefined' && (window.navigator as Navigator & { msSaveBlob?: (blob: Blob, fileName: string) => boolean }).msSaveBlob) {
+        (window.navigator as Navigator & { msSaveBlob: (blob: Blob, fileName: string) => boolean }).msSaveBlob(pdfBlob, fileName)
+        setIsGenerating(false)
+        onDownloadComplete?.()
+        return
+      }
+
+      // 通常のダウンロード処理
       const url = URL.createObjectURL(pdfBlob)
       const link = document.createElement('a')
       link.href = url
-      link.download = `退職届_${data.employeeName}_${new Date().toISOString().split('T')[0]}.pdf`
+      link.download = fileName
+      link.style.display = 'none'
       document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
 
-      // URLを解放
-      setTimeout(() => URL.revokeObjectURL(url), 100)
+      // クリックイベントを明示的にディスパッチ
+      link.dispatchEvent(new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+        view: window
+      }))
+
+      // クリーンアップを遅延
+      setTimeout(() => {
+        document.body.removeChild(link)
+        URL.revokeObjectURL(url)
+      }, 1000)
 
       setIsGenerating(false)
       onDownloadComplete?.()

@@ -308,17 +308,36 @@ export function ResumePdf({ resume, onDownloadComplete }: ResumePdfProps) {
       // PDFを生成
       const blob = await pdf(<ResumeDocument resume={resume} />).toBlob()
 
-      // Blobから直接ダウンロード
+      // ファイル名（日本語を避けてASCIIのみ）
+      const fileName = `rirekisho_${new Date().toISOString().split('T')[0]}.pdf`
+
+      // iOS Safari対応: navigator.msSaveBlobがある場合はそれを使用
+      if (typeof window !== 'undefined' && (window.navigator as Navigator & { msSaveBlob?: (blob: Blob, fileName: string) => boolean }).msSaveBlob) {
+        (window.navigator as Navigator & { msSaveBlob: (blob: Blob, fileName: string) => boolean }).msSaveBlob(blob, fileName)
+        onDownloadComplete?.()
+        return
+      }
+
+      // 通常のダウンロード処理
       const url = URL.createObjectURL(blob)
       const link = document.createElement('a')
       link.href = url
-      link.download = `履歴書_${resume.personalInfo.name || 'unnamed'}_${new Date().toISOString().split('T')[0]}.pdf`
+      link.download = fileName
+      link.style.display = 'none'
       document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
 
-      // URLを解放
-      setTimeout(() => URL.revokeObjectURL(url), 100)
+      // クリックイベントを明示的にディスパッチ
+      link.dispatchEvent(new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+        view: window
+      }))
+
+      // クリーンアップを遅延
+      setTimeout(() => {
+        document.body.removeChild(link)
+        URL.revokeObjectURL(url)
+      }, 1000)
 
       onDownloadComplete?.()
     } catch (err) {
