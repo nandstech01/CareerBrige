@@ -48,7 +48,6 @@ function formatDateJapanese(dateString: string): string {
 
 export default function ResignationPage() {
   const [currentStep, setCurrentStep] = useState(1)
-  const [downloadCompleted, setDownloadCompleted] = useState(false)
 
   // フォームデータ
   const [formData, setFormData] = useState<ResignationData>({
@@ -66,21 +65,11 @@ export default function ResignationPage() {
     setCurrentStep(2)
   }, [])
 
-  // Step 2: プレビュー確認 → PDFダウンロードへ
-  const handleConfirmPreview = useCallback(() => {
-    setCurrentStep(3)
-  }, [])
-
-  // Step 3: PDF出力完了
-  const handleDownloadComplete = useCallback(() => {
-    setDownloadCompleted(true)
-  }, [])
 
   // 前のステップに戻る
   const handleBack = useCallback(() => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1)
-      setDownloadCompleted(false)
     }
   }, [currentStep])
 
@@ -152,7 +141,7 @@ export default function ResignationPage() {
         </div>
 
         {/* Back Button */}
-        {currentStep > 1 && !downloadCompleted && (
+        {currentStep === 2 && (
           <button
             onClick={handleBack}
             className="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-brand-cyan transition-colors mb-6"
@@ -270,129 +259,95 @@ export default function ResignationPage() {
                 >
                   戻って修正
                 </button>
-                <button
-                  onClick={handleConfirmPreview}
-                  className="flex-1 py-3 bg-gradient-to-r from-brand-cyan to-brand-cyan-dark text-white font-semibold rounded-lg shadow-lg hover:shadow-xl hover:shadow-brand-cyan/25 transition-all flex items-center justify-center gap-2"
-                >
-                  <Download className="w-5 h-5" />
-                  PDFダウンロード
-                </button>
               </div>
+
+              {/* PDFダウンロード - ダウンロード成功でStep 3へ */}
+              <ResignationPdf
+                data={formData}
+                onDownloadComplete={() => setCurrentStep(3)}
+              />
             </div>
           )}
 
-          {/* Step 3: PDFダウンロード */}
+          {/* Step 3: ダウンロード完了 */}
           {currentStep === 3 && (
             <div className="space-y-6">
-              {!downloadCompleted ? (
-                <>
-                  {/* ヘッダー */}
-                  <div className="text-center mb-8">
-                    <div className="w-16 h-16 bg-brand-cyan/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <FileText className="w-8 h-8 text-brand-cyan" />
-                    </div>
-                    <h2 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">
-                      退職届をダウンロード
-                    </h2>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">
-                      PDFファイルをダウンロードして印刷してください
-                    </p>
-                  </div>
+              {/* ダウンロード完了 */}
+              <div className="text-center mb-8">
+                <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Check className="w-8 h-8 text-green-600 dark:text-green-400" />
+                </div>
+                <h2 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">
+                  ダウンロードが完了しました
+                </h2>
+                <p className="text-sm text-slate-600 dark:text-slate-400">
+                  退職届のPDFファイルがダウンロードされました
+                </p>
+              </div>
 
-                  {/* PDF出力 */}
-                  <ResignationPdf
-                    data={formData}
-                    onDownloadComplete={handleDownloadComplete}
-                  />
+              {/* 注意事項 */}
+              <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4">
+                <h4 className="text-sm font-semibold text-amber-800 dark:text-amber-300 mb-2">
+                  ご注意ください
+                </h4>
+                <ul className="text-sm text-amber-700 dark:text-amber-400 space-y-1">
+                  <li>• 印刷後、[印]の箇所に実際の印鑑を押印してください</li>
+                  <li>• 退職届は直属の上司に手渡しで提出するのが一般的です</li>
+                  <li>• コピーを取って控えを残しておくことをお勧めします</li>
+                </ul>
+              </div>
 
-                  {/* 戻るボタン */}
-                  <button
-                    onClick={handleBack}
-                    className="w-full py-3 border border-slate-300 dark:border-midnight-600 text-slate-700 dark:text-slate-300 font-medium rounded-lg hover:bg-slate-50 dark:hover:bg-midnight-700 transition-all"
+              {/* 再ダウンロード */}
+              <ResignationPdf
+                data={formData}
+                onDownloadComplete={() => {}}
+              />
+
+              {/* 次のステップ: 転職動線 */}
+              <div className="pt-6 space-y-4">
+                <div className="text-center">
+                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
+                    退職が決まったら、次は転職準備！
+                  </h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">
+                    専門スタッフがあなたの転職をサポートします
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {/* キャリア相談ボタン */}
+                  <Link
+                    href="/apply"
+                    className="flex flex-col items-center gap-3 p-6 bg-[#06C755]/10 dark:bg-[#06C755]/20 border border-[#06C755]/30 rounded-xl hover:bg-[#06C755]/20 dark:hover:bg-[#06C755]/30 transition-all group"
                   >
-                    内容を修正する
-                  </button>
-                </>
-              ) : (
-                <>
-                  {/* ダウンロード完了 */}
-                  <div className="text-center mb-8">
-                    <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Check className="w-8 h-8 text-green-600 dark:text-green-400" />
+                    <div className="w-12 h-12 bg-[#06C755] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <MessageCircle className="w-6 h-6 text-white" />
                     </div>
-                    <h2 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">
-                      ダウンロードが完了しました
-                    </h2>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">
-                      退職届のPDFファイルがダウンロードされました
-                    </p>
-                  </div>
+                    <span className="text-base font-semibold text-slate-900 dark:text-white">
+                      キャリア相談
+                    </span>
+                    <span className="text-xs text-slate-600 dark:text-slate-400">
+                      専門家に相談する
+                    </span>
+                  </Link>
 
-                  {/* 注意事項 */}
-                  <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4">
-                    <h4 className="text-sm font-semibold text-amber-800 dark:text-amber-300 mb-2">
-                      ご注意ください
-                    </h4>
-                    <ul className="text-sm text-amber-700 dark:text-amber-400 space-y-1">
-                      <li>• 印刷後、[印]の箇所に実際の印鑑を押印してください</li>
-                      <li>• 退職届は直属の上司に手渡しで提出するのが一般的です</li>
-                      <li>• コピーを取って控えを残しておくことをお勧めします</li>
-                    </ul>
-                  </div>
-
-                  {/* 再ダウンロード */}
-                  <ResignationPdf
-                    data={formData}
-                    onDownloadComplete={() => {}}
-                  />
-
-                  {/* 次のステップ: 転職動線 */}
-                  <div className="pt-6 space-y-4">
-                    <div className="text-center">
-                      <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
-                        退職が決まったら、次は転職準備！
-                      </h3>
-                      <p className="text-sm text-slate-600 dark:text-slate-400">
-                        専門スタッフがあなたの転職をサポートします
-                      </p>
+                  {/* 履歴書作成ボタン */}
+                  <Link
+                    href="/taishoku-support/resume"
+                    className="flex flex-col items-center gap-3 p-6 bg-brand-cyan/10 dark:bg-brand-cyan/20 border border-brand-cyan/30 rounded-xl hover:bg-brand-cyan/20 dark:hover:bg-brand-cyan/30 transition-all group"
+                  >
+                    <div className="w-12 h-12 bg-brand-cyan rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <FileText className="w-6 h-6 text-white" />
                     </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      {/* キャリア相談ボタン */}
-                      <Link
-                        href="/apply"
-                        className="flex flex-col items-center gap-3 p-6 bg-[#06C755]/10 dark:bg-[#06C755]/20 border border-[#06C755]/30 rounded-xl hover:bg-[#06C755]/20 dark:hover:bg-[#06C755]/30 transition-all group"
-                      >
-                        <div className="w-12 h-12 bg-[#06C755] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                          <MessageCircle className="w-6 h-6 text-white" />
-                        </div>
-                        <span className="text-base font-semibold text-slate-900 dark:text-white">
-                          キャリア相談
-                        </span>
-                        <span className="text-xs text-slate-600 dark:text-slate-400">
-                          専門家に相談する
-                        </span>
-                      </Link>
-
-                      {/* 履歴書作成ボタン */}
-                      <Link
-                        href="/taishoku-support/resume"
-                        className="flex flex-col items-center gap-3 p-6 bg-brand-cyan/10 dark:bg-brand-cyan/20 border border-brand-cyan/30 rounded-xl hover:bg-brand-cyan/20 dark:hover:bg-brand-cyan/30 transition-all group"
-                      >
-                        <div className="w-12 h-12 bg-brand-cyan rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                          <FileText className="w-6 h-6 text-white" />
-                        </div>
-                        <span className="text-base font-semibold text-slate-900 dark:text-white">
-                          履歴書を作成
-                        </span>
-                        <span className="text-xs text-slate-600 dark:text-slate-400">
-                          AIが自動で作成
-                        </span>
-                      </Link>
-                    </div>
-                  </div>
-                </>
-              )}
+                    <span className="text-base font-semibold text-slate-900 dark:text-white">
+                      履歴書を作成
+                    </span>
+                    <span className="text-xs text-slate-600 dark:text-slate-400">
+                      AIが自動で作成
+                    </span>
+                  </Link>
+                </div>
+              </div>
             </div>
           )}
         </div>

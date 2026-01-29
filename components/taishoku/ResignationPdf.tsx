@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import {
   Document,
   Page,
@@ -13,20 +13,34 @@ import {
 import { Download, Loader2, FileText } from 'lucide-react'
 import type { ResignationData } from './ResignationForm'
 
-// フォント登録（ローカルフォントを使用）
-Font.register({
-  family: 'Noto Sans JP',
-  fonts: [
-    {
-      src: '/fonts/NotoSansJP-Regular.ttf',
-      fontWeight: 400,
-    },
-    {
-      src: '/fonts/NotoSansJP-Bold.ttf',
-      fontWeight: 700,
-    },
-  ],
-})
+// フォント登録フラグ
+let fontRegistered = false
+
+// フォントを動的に登録する関数
+function registerFonts() {
+  if (fontRegistered) return
+
+  // ブラウザ環境では window.location.origin を使用
+  const baseUrl = typeof window !== 'undefined'
+    ? window.location.origin
+    : ''
+
+  Font.register({
+    family: 'Noto Sans JP',
+    fonts: [
+      {
+        src: `${baseUrl}/fonts/NotoSansJP-Regular.ttf`,
+        fontWeight: 400,
+      },
+      {
+        src: `${baseUrl}/fonts/NotoSansJP-Bold.ttf`,
+        fontWeight: 700,
+      },
+    ],
+  })
+
+  fontRegistered = true
+}
 
 // 日付をフォーマット（2026-01-29 → 2026年1月29日）
 function formatDateJapanese(dateString: string): string {
@@ -45,7 +59,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     backgroundColor: '#ffffff',
   },
-  // タイトル「退職届」
   title: {
     fontSize: 24,
     fontWeight: 'bold',
@@ -53,7 +66,6 @@ const styles = StyleSheet.create({
     marginBottom: 40,
     letterSpacing: 8,
   },
-  // 提出日（右寄せ）
   dateSection: {
     textAlign: 'right',
     marginBottom: 30,
@@ -61,7 +73,6 @@ const styles = StyleSheet.create({
   dateText: {
     fontSize: 12,
   },
-  // 宛名セクション（左寄せ）
   addressSection: {
     marginBottom: 30,
   },
@@ -72,7 +83,6 @@ const styles = StyleSheet.create({
   representativeName: {
     fontSize: 12,
   },
-  // 差出人セクション（右寄せ）
   senderSection: {
     textAlign: 'right',
     marginBottom: 30,
@@ -94,23 +104,19 @@ const styles = StyleSheet.create({
     marginLeft: 8,
     color: '#666666',
   },
-  // 本文セクション
   bodySection: {
     marginTop: 20,
   },
-  // 「私儀」（右寄せ）
   shigiText: {
     textAlign: 'right',
     fontSize: 12,
     marginBottom: 20,
   },
-  // 本文
   bodyText: {
     fontSize: 12,
     lineHeight: 2,
     textAlign: 'left',
   },
-  // 「以上」（右寄せ）
   ijouText: {
     textAlign: 'right',
     fontSize: 12,
@@ -123,7 +129,6 @@ function ResignationDocument({ data }: { data: ResignationData }) {
   const submissionDateFormatted = formatDateJapanese(data.submissionDate)
   const resignationDateFormatted = formatDateJapanese(data.resignationDate)
 
-  // 部署・課の表示
   const departmentDisplay = data.section
     ? `${data.department} ${data.section}`
     : data.department
@@ -131,21 +136,17 @@ function ResignationDocument({ data }: { data: ResignationData }) {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-        {/* タイトル */}
         <Text style={styles.title}>退職届</Text>
 
-        {/* 提出日（右寄せ） */}
         <View style={styles.dateSection}>
           <Text style={styles.dateText}>{submissionDateFormatted}</Text>
         </View>
 
-        {/* 宛名（左寄せ） */}
         <View style={styles.addressSection}>
           <Text style={styles.companyName}>{data.companyName}</Text>
           <Text style={styles.representativeName}>代表取締役 {data.representativeName}殿</Text>
         </View>
 
-        {/* 差出人（右寄せ） */}
         <View style={styles.senderSection}>
           <Text style={styles.senderDepartment}>{departmentDisplay}</Text>
           <View style={styles.senderNameContainer}>
@@ -154,17 +155,11 @@ function ResignationDocument({ data }: { data: ResignationData }) {
           </View>
         </View>
 
-        {/* 本文 */}
         <View style={styles.bodySection}>
-          {/* 私儀（右寄せ） */}
           <Text style={styles.shigiText}>私儀</Text>
-
-          {/* 本文 */}
           <Text style={styles.bodyText}>
             このたび一身上の都合により、{resignationDateFormatted}をもって退職いたします。
           </Text>
-
-          {/* 以上（右寄せ） */}
           <Text style={styles.ijouText}>以上</Text>
         </View>
       </Page>
@@ -179,38 +174,41 @@ interface ResignationPdfProps {
 
 export function ResignationPdf({ data, onDownloadComplete }: ResignationPdfProps) {
   const [isGenerating, setIsGenerating] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  // コンポーネントマウント時にフォントを登録
+  useEffect(() => {
+    registerFonts()
+  }, [])
 
   const handleDownload = useCallback(async () => {
     setIsGenerating(true)
+    setError(null)
+
     try {
+      // フォント登録を確認
+      registerFonts()
+
       // PDFを生成
       const pdfBlob = await pdf(<ResignationDocument data={data} />).toBlob()
 
-      // BlobをBase64に変換してダウンロード
-      const reader = new FileReader()
-      reader.onloadend = () => {
-        const base64data = reader.result as string
+      // Blobから直接ダウンロード（より確実な方法）
+      const url = URL.createObjectURL(pdfBlob)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = `退職届_${data.employeeName}_${new Date().toISOString().split('T')[0]}.pdf`
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
 
-        // ダウンロードリンクを作成
-        const link = document.createElement('a')
-        link.href = base64data
-        link.download = `taishokutodoke_${new Date().toISOString().split('T')[0]}.pdf`
-        document.body.appendChild(link)
-        link.click()
-        document.body.removeChild(link)
+      // URLを解放
+      setTimeout(() => URL.revokeObjectURL(url), 100)
 
-        setIsGenerating(false)
-        onDownloadComplete?.()
-      }
-      reader.onerror = () => {
-        console.error('FileReader error')
-        alert('PDFの生成に失敗しました。もう一度お試しください。')
-        setIsGenerating(false)
-      }
-      reader.readAsDataURL(pdfBlob)
-    } catch (error) {
-      console.error('PDF generation error:', error)
-      alert('PDFの生成に失敗しました。もう一度お試しください。')
+      setIsGenerating(false)
+      onDownloadComplete?.()
+    } catch (err) {
+      console.error('PDF generation error:', err)
+      setError('PDFの生成に失敗しました。ページを再読み込みしてもう一度お試しください。')
       setIsGenerating(false)
     }
   }, [data, onDownloadComplete])
@@ -231,6 +229,12 @@ export function ResignationPdf({ data, onDownloadComplete }: ResignationPdfProps
             </p>
           </div>
         </div>
+
+        {error && (
+          <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+            <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+          </div>
+        )}
 
         <button
           onClick={handleDownload}

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import {
   Document,
   Page,
@@ -13,20 +13,34 @@ import {
 import { Download, Loader2, FileText } from 'lucide-react'
 import type { ResumeData } from '@/lib/gemini'
 
-// フォント登録（ローカルフォントを使用）
-Font.register({
-  family: 'Noto Sans JP',
-  fonts: [
-    {
-      src: '/fonts/NotoSansJP-Regular.ttf',
-      fontWeight: 400,
-    },
-    {
-      src: '/fonts/NotoSansJP-Bold.ttf',
-      fontWeight: 700,
-    },
-  ],
-})
+// フォント登録フラグ
+let fontRegistered = false
+
+// フォントを動的に登録する関数
+function registerFonts() {
+  if (fontRegistered) return
+
+  // ブラウザ環境では window.location.origin を使用
+  const baseUrl = typeof window !== 'undefined'
+    ? window.location.origin
+    : ''
+
+  Font.register({
+    family: 'Noto Sans JP',
+    fonts: [
+      {
+        src: `${baseUrl}/fonts/NotoSansJP-Regular.ttf`,
+        fontWeight: 400,
+      },
+      {
+        src: `${baseUrl}/fonts/NotoSansJP-Bold.ttf`,
+        fontWeight: 700,
+      },
+    ],
+  })
+
+  fontRegistered = true
+}
 
 // PDFスタイル定義
 const styles = StyleSheet.create({
@@ -276,14 +290,25 @@ interface ResumePdfProps {
 
 export function ResumePdf({ resume, onDownloadComplete }: ResumePdfProps) {
   const [isGenerating, setIsGenerating] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  // コンポーネントマウント時にフォントを登録
+  useEffect(() => {
+    registerFonts()
+  }, [])
 
   const handleDownload = useCallback(async () => {
     setIsGenerating(true)
+    setError(null)
+
     try {
+      // フォント登録を確認
+      registerFonts()
+
       // PDFを生成
       const blob = await pdf(<ResumeDocument resume={resume} />).toBlob()
 
-      // ダウンロードリンクを作成
+      // Blobから直接ダウンロード
       const url = URL.createObjectURL(blob)
       const link = document.createElement('a')
       link.href = url
@@ -291,12 +316,14 @@ export function ResumePdf({ resume, onDownloadComplete }: ResumePdfProps) {
       document.body.appendChild(link)
       link.click()
       document.body.removeChild(link)
-      URL.revokeObjectURL(url)
+
+      // URLを解放
+      setTimeout(() => URL.revokeObjectURL(url), 100)
 
       onDownloadComplete?.()
-    } catch (error) {
-      console.error('PDF generation error:', error)
-      alert('PDFの生成に失敗しました。もう一度お試しください。')
+    } catch (err) {
+      console.error('PDF generation error:', err)
+      setError('PDFの生成に失敗しました。ページを再読み込みしてもう一度お試しください。')
     } finally {
       setIsGenerating(false)
     }
@@ -318,6 +345,12 @@ export function ResumePdf({ resume, onDownloadComplete }: ResumePdfProps) {
             </p>
           </div>
         </div>
+
+        {error && (
+          <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+            <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+          </div>
+        )}
 
         <button
           onClick={handleDownload}
