@@ -127,7 +127,7 @@ export default function ResignationPage() {
                     )}
                   </div>
                   <span
-                    className={`mt-2 text-xs font-medium ${
+                    className={`mt-2 text-xs font-medium whitespace-nowrap ${
                       currentStep >= step.id
                         ? 'text-slate-900 dark:text-white'
                         : 'text-slate-500 dark:text-slate-400'
