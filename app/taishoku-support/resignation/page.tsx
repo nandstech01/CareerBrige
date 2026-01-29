@@ -215,9 +215,8 @@ export default function ResignationPage() {
                     <p className="text-sm text-slate-700 dark:text-slate-300">
                       {departmentDisplay}
                     </p>
-                    <p className="text-sm text-slate-700 dark:text-slate-300">
-                      {formData.employeeName}{' '}
-                      <span className="text-slate-400 dark:text-slate-500">[印]</span>
+                    <p className="text-sm text-slate-700 dark:text-slate-300 whitespace-nowrap">
+                      {formData.employeeName} <span className="text-slate-400 dark:text-slate-500">[印]</span>
                     </p>
                   </div>
 
@@ -239,56 +238,44 @@ export default function ResignationPage() {
               </div>
 
               {/* 入力内容サマリー */}
-              <div className="space-y-3">
+              <div className="space-y-2">
                 <h4 className="text-sm font-medium text-slate-700 dark:text-slate-300">
                   入力内容
                 </h4>
-                <div className="grid grid-cols-2 gap-3 text-sm">
-                  <div className="flex items-center gap-2">
-                    <Calendar className="w-4 h-4 text-slate-400" />
+                <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
+                  <div className="flex items-center gap-1 whitespace-nowrap">
                     <span className="text-slate-500 dark:text-slate-400">提出日:</span>
-                    <span className="text-slate-900 dark:text-white">
-                      {formatDateJapanese(formData.submissionDate)}
-                    </span>
+                    <span className="text-slate-900 dark:text-white">{formatDateJapanese(formData.submissionDate)}</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Calendar className="w-4 h-4 text-slate-400" />
+                  <div className="flex items-center gap-1 whitespace-nowrap">
                     <span className="text-slate-500 dark:text-slate-400">退職日:</span>
-                    <span className="text-slate-900 dark:text-white">
-                      {formatDateJapanese(formData.resignationDate)}
-                    </span>
+                    <span className="text-slate-900 dark:text-white">{formatDateJapanese(formData.resignationDate)}</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Building2 className="w-4 h-4 text-slate-400" />
-                    <span className="text-slate-500 dark:text-slate-400">会社:</span>
-                    <span className="text-slate-900 dark:text-white truncate">
-                      {formData.companyName}
-                    </span>
+                  <div className="flex items-center gap-1">
+                    <span className="text-slate-500 dark:text-slate-400 shrink-0">会社:</span>
+                    <span className="text-slate-900 dark:text-white truncate">{formData.companyName}</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <User className="w-4 h-4 text-slate-400" />
+                  <div className="flex items-center gap-1 whitespace-nowrap">
                     <span className="text-slate-500 dark:text-slate-400">氏名:</span>
-                    <span className="text-slate-900 dark:text-white">
-                      {formData.employeeName}
-                    </span>
+                    <span className="text-slate-900 dark:text-white">{formData.employeeName}</span>
                   </div>
                 </div>
               </div>
 
               {/* ボタン */}
-              <div className="flex gap-4">
+              <div className="flex flex-col sm:flex-row gap-3">
                 <button
                   onClick={handleBack}
-                  className="flex-1 py-4 border border-slate-300 dark:border-midnight-600 text-slate-700 dark:text-slate-300 font-semibold rounded-lg hover:bg-slate-50 dark:hover:bg-midnight-700 transition-all"
+                  className="flex-1 py-3 border border-slate-300 dark:border-midnight-600 text-slate-700 dark:text-slate-300 font-semibold rounded-lg hover:bg-slate-50 dark:hover:bg-midnight-700 transition-all"
                 >
                   戻って修正
                 </button>
                 <button
                   onClick={handleConfirmPreview}
-                  className="flex-1 py-4 bg-gradient-to-r from-brand-cyan to-brand-cyan-dark text-white font-semibold rounded-lg shadow-lg hover:shadow-xl hover:shadow-brand-cyan/25 transition-all flex items-center justify-center gap-2"
+                  className="flex-1 py-3 bg-gradient-to-r from-brand-cyan to-brand-cyan-dark text-white font-semibold rounded-lg shadow-lg hover:shadow-xl hover:shadow-brand-cyan/25 transition-all flex items-center justify-center gap-2"
                 >
                   <Download className="w-5 h-5" />
-                  PDFダウンロードへ
+                  PDFダウンロード
                 </button>
               </div>
             </div>
