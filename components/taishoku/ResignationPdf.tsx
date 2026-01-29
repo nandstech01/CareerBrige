@@ -13,16 +13,16 @@ import {
 import { Download, Loader2, FileText } from 'lucide-react'
 import type { ResignationData } from './ResignationForm'
 
-// フォント登録（Google Fonts の Noto Sans JP）
+// フォント登録（ローカルフォントを使用）
 Font.register({
   family: 'Noto Sans JP',
   fonts: [
     {
-      src: 'https://fonts.gstatic.com/s/notosansjp/v56/-F6jfjtqLzI2JPCgQBnw7HFyzSD-AsregP8VFBEj75s.ttf',
+      src: '/fonts/NotoSansJP-Regular.ttf',
       fontWeight: 400,
     },
     {
-      src: 'https://fonts.gstatic.com/s/notosansjp/v56/-F6jfjtqLzI2JPCgQBnw7HFyzSD-AsregP8VFPYk75s.ttf',
+      src: '/fonts/NotoSansJP-Bold.ttf',
       fontWeight: 700,
     },
   ],

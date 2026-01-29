@@ -177,6 +177,31 @@ const config: Config = {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(15px)' },
         },
+        // Enhanced animations for taishoku-support
+        'gradient-x': {
+          '0%, 100%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+        },
+        'pulse-soft': {
+          '0%, 100%': { opacity: '0.4' },
+          '50%': { opacity: '0.8' },
+        },
+        'float-gentle': {
+          '0%, 100%': { transform: 'translateY(0) rotate(0deg)' },
+          '50%': { transform: 'translateY(-20px) rotate(3deg)' },
+        },
+        'shimmer-slow': {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(100%)' },
+        },
+        'scale-pulse': {
+          '0%, 100%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(1.05)' },
+        },
+        'border-flow': {
+          '0%': { backgroundPosition: '0% 0%' },
+          '100%': { backgroundPosition: '200% 0%' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
@@ -197,6 +222,13 @@ const config: Config = {
         // 軽量フロートアニメーション
         'float-slow': 'float-slow 6s ease-in-out infinite',
         'float-slow-reverse': 'float-slow-reverse 7s ease-in-out infinite',
+        // Enhanced animations for taishoku-support
+        'gradient-x': 'gradient-x 15s ease infinite',
+        'pulse-soft': 'pulse-soft 4s ease-in-out infinite',
+        'float-gentle': 'float-gentle 8s ease-in-out infinite',
+        'shimmer-slow': 'shimmer-slow 3s ease-in-out infinite',
+        'scale-pulse': 'scale-pulse 3s ease-in-out infinite',
+        'border-flow': 'border-flow 3s linear infinite',
       },
       boxShadow: {
         'glow-sm': '0 0 10px rgba(0, 212, 255, 0.2)',
