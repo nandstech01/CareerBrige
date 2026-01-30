@@ -254,8 +254,11 @@ export function VoiceRecorder({ onAudioReady, isProcessing }: VoiceRecorderProps
                 <Upload className="w-5 h-5" />
                 音声ファイルをアップロード
               </label>
-              <p className="text-xs text-slate-500 dark:text-slate-400 text-center mt-2">
-                MP3, WAV, WebM, M4A (最大25MB)
+              <p className="text-xs text-slate-600 dark:text-slate-400 text-center mt-2">
+                Zoom・Google Meetの録音ファイル（M4A/MP3）もアップロードできます
+              </p>
+              <p className="text-xs text-slate-500 dark:text-slate-400 text-center mt-1">
+                対応形式: MP3, WAV, WebM, OGG, M4A（最大25MB）
               </p>
             </div>
           </div>

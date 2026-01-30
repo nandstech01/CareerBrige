@@ -18,7 +18,7 @@ import { LogOut, User, LayoutDashboard, Menu, X } from 'lucide-react'
 import type { ProfileWithDetails } from '@/types'
 
 interface NavbarProps {
-  variant?: 'default' | 'engineer' | 'company' | 'admin'
+  variant?: 'default' | 'engineer' | 'company'
 }
 
 export function Navbar({ variant = 'default' }: NavbarProps) {
@@ -69,17 +69,8 @@ export function Navbar({ variant = 'default' }: NavbarProps) {
     { href: '/company/billing', label: '請求・支払い' },
   ]
 
-  const adminLinks = [
-    { href: '/admin/dashboard', label: 'ダッシュボード' },
-    { href: '/admin/users', label: 'ユーザー管理' },
-    { href: '/admin/jobs', label: '案件管理' },
-    { href: '/admin/contracts', label: '契約管理' },
-    { href: '/admin/skills', label: 'スキル管理' },
-  ]
-
   const links = variant === 'engineer' ? engineerLinks
     : variant === 'company' ? companyLinks
-    : variant === 'admin' ? adminLinks
     : []
 
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + '/')

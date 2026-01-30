@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import {
@@ -18,7 +18,6 @@ import { BasicInfoForm, type BasicInfo } from '@/components/taishoku/BasicInfoFo
 import { VoiceRecorder } from '@/components/taishoku/VoiceRecorder'
 import { ResumePreview } from '@/components/taishoku/ResumePreview'
 import { ResumePdf } from '@/components/taishoku/ResumePdf'
-import { LineCtaCard } from '@/components/taishoku/LineCtaCard'
 import type { ResumeData } from '@/lib/gemini'
 
 // ステップ定義
@@ -29,12 +28,22 @@ const STEPS = [
   { id: 4, title: '確認・出力', icon: FileText },
 ]
 
+// セッション情報の型
+interface SessionInfo {
+  id: string
+  sessionToken: string
+}
+
 export default function ResumePage() {
   const router = useRouter()
   const [currentStep, setCurrentStep] = useState(1)
   const [isProcessing, setIsProcessing] = useState(false)
   const [isRefining, setIsRefining] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  // セッション管理
+  const [sessionInfo, setSessionInfo] = useState<SessionInfo | null>(null)
+  const sessionInitialized = useRef(false)
 
   // フォームデータ
   const [basicInfo, setBasicInfo] = useState<BasicInfo>({
@@ -46,10 +55,73 @@ export default function ResumePage() {
   const [transcript, setTranscript] = useState<string>('')
   const [resume, setResume] = useState<ResumeData | null>(null)
 
+  // セッション初期化（ページ読み込み時に1回だけ）
+  useEffect(() => {
+    if (sessionInitialized.current) return
+    sessionInitialized.current = true
+
+    const initSession = async () => {
+      try {
+        // 既存セッションをsessionStorageから復元
+        const existingToken = sessionStorage.getItem('monitor_session_token')
+        const existingId = sessionStorage.getItem('monitor_session_id')
+        if (existingToken && existingId) {
+          setSessionInfo({ id: existingId, sessionToken: existingToken })
+          return
+        }
+
+        // 新しいセッションを作成
+        const response = await fetch('/api/monitor/sessions', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ source: 'public' }),
+        })
+
+        if (response.ok) {
+          const { session } = await response.json()
+          setSessionInfo({
+            id: session.id,
+            sessionToken: session.sessionToken,
+          })
+          sessionStorage.setItem('monitor_session_token', session.sessionToken)
+          sessionStorage.setItem('monitor_session_id', session.id)
+        }
+      } catch (err) {
+        // セッション初期化失敗はブロッキングにしない
+        console.error('Session init error (non-blocking):', err)
+      }
+    }
+
+    initSession()
+  }, [])
+
+  // セッション更新ヘルパー（非ブロッキング）
+  const updateSession = useCallback(
+    async (action: string, data?: Record<string, unknown>) => {
+      if (!sessionInfo) return
+      try {
+        await fetch(`/api/monitor/sessions/${sessionInfo.id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action,
+            sessionToken: sessionInfo.sessionToken,
+            data,
+          }),
+        })
+      } catch (err) {
+        console.error('Session update error (non-blocking):', err)
+      }
+    },
+    [sessionInfo]
+  )
+
   // Step 1: 基本情報入力完了
   const handleBasicInfoNext = useCallback(() => {
     setCurrentStep(2)
-  }, [])
+    // セッションに基本情報を保存
+    updateSession('basic_info', basicInfo as unknown as Record<string, unknown>)
+  }, [basicInfo, updateSession])
 
   // Step 2: 音声処理
   const handleAudioReady = useCallback(async (audioBlob: Blob, mimeType: string) => {
@@ -57,11 +129,14 @@ export default function ResumePage() {
     setError(null)
 
     try {
-      // 1. 音声を文字起こし
+      // 1. 音声を文字起こし（monitor APIを使用）
       const formData = new FormData()
       formData.append('audio', audioBlob, 'audio.webm')
+      if (sessionInfo?.sessionToken) {
+        formData.append('sessionToken', sessionInfo.sessionToken)
+      }
 
-      const transcribeResponse = await fetch('/api/taishoku/transcribe', {
+      const transcribeResponse = await fetch('/api/monitor/transcribe', {
         method: 'POST',
         body: formData,
       })
@@ -74,13 +149,14 @@ export default function ResumePage() {
       const { transcript: transcribedText } = await transcribeResponse.json()
       setTranscript(transcribedText)
 
-      // 2. 履歴書を生成
-      const generateResponse = await fetch('/api/taishoku/generate-resume', {
+      // 2. 履歴書を生成（monitor APIを使用）
+      const generateResponse = await fetch('/api/monitor/generate-resume', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           transcript: transcribedText,
           personalInfo: basicInfo,
+          sessionToken: sessionInfo?.sessionToken,
         }),
       })
 
@@ -98,7 +174,7 @@ export default function ResumePage() {
     } finally {
       setIsProcessing(false)
     }
-  }, [basicInfo])
+  }, [basicInfo, sessionInfo])
 
   // Step 3: 履歴書更新
   const handleResumeUpdate = useCallback((updatedResume: ResumeData) => {
@@ -111,13 +187,14 @@ export default function ResumePage() {
     setIsRefining(true)
 
     try {
-      const response = await fetch('/api/taishoku/generate-resume', {
+      const response = await fetch('/api/monitor/generate-resume', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           action: 'refine',
           currentResume: resume,
           instructions,
+          sessionToken: sessionInfo?.sessionToken,
         }),
       })
 
@@ -134,7 +211,7 @@ export default function ResumePage() {
     } finally {
       setIsRefining(false)
     }
-  }, [resume])
+  }, [resume, sessionInfo])
 
   // Step 3: 確認完了 → Step 4へ
   const handleConfirmResume = useCallback(() => {
@@ -146,15 +223,22 @@ export default function ResumePage() {
     if (!resume) return
 
     try {
-      // スプレッドシートに保存
+      // スプレッドシートに保存（二重書き込み維持）
       await fetch('/api/taishoku/save', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ resume }),
       })
 
-      // sessionStorageに名前を保存
+      // セッションを完了に更新
+      updateSession('complete')
+
+      // sessionStorageに名前とベース履歴書を保存
       sessionStorage.setItem('taishoku_user_name', resume.personalInfo.name)
+      sessionStorage.setItem('monitor_base_resume', JSON.stringify(resume))
+      // セッション情報をクリア（次回は新規セッション）
+      sessionStorage.removeItem('monitor_session_token')
+      sessionStorage.removeItem('monitor_session_id')
 
       // 完了ページへ遷移
       router.push('/monitor-program/complete')
@@ -162,9 +246,12 @@ export default function ResumePage() {
       console.error('Save error:', err)
       // エラーでも完了ページへ遷移
       sessionStorage.setItem('taishoku_user_name', resume.personalInfo.name)
+      sessionStorage.setItem('monitor_base_resume', JSON.stringify(resume))
+      sessionStorage.removeItem('monitor_session_token')
+      sessionStorage.removeItem('monitor_session_id')
       router.push('/monitor-program/complete')
     }
-  }, [resume, router])
+  }, [resume, router, updateSession])
 
   // 前のステップに戻る
   const handleBack = useCallback(() => {
@@ -211,7 +298,7 @@ export default function ResumePage() {
                     )}
                   </div>
                   <span
-                    className={`mt-2 text-xs font-medium ${
+                    className={`mt-2 text-xs font-medium whitespace-nowrap ${
                       currentStep >= step.id
                         ? 'text-slate-900 dark:text-white'
                         : 'text-slate-500 dark:text-slate-400'
@@ -317,9 +404,6 @@ export default function ResumePage() {
                 resume={resume}
                 onDownloadComplete={handleDownloadComplete}
               />
-
-              {/* LINE CTA */}
-              <LineCtaCard variant="compact" />
             </div>
           )}
         </div>

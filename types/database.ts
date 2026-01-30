@@ -15,6 +15,20 @@ export type InvoiceStatus = 'pending' | 'paid' | 'void' | 'failed'
 export type NotificationType = 'application' | 'message' | 'contract' | 'system' | 'scout'
 export type ScoutStatus = 'sent' | 'viewed' | 'replied' | 'declined'
 
+// Monitor Program types
+export type MonitorRole = 'owner' | 'admin' | 'staff' | 'viewer'
+export type MonitorSessionStatus =
+  | 'started'
+  | 'basic_info'
+  | 'recording'
+  | 'transcribing'
+  | 'generating'
+  | 'reviewing'
+  | 'completed'
+  | 'abandoned'
+export type MonitorSessionSource = 'public' | 'company_hearing'
+export type MonitorConsentType = 'data_collection' | 'ai_processing' | 'anonymized_ml'
+
 export interface Database {
   public: {
     Tables: {
@@ -538,6 +552,262 @@ export interface Database {
           updated_at?: string
         }
       }
+      // ─── Monitor Program Tables ───
+      monitor_workspaces: {
+        Row: {
+          id: string
+          company_name: string
+          slug: string
+          max_admin_accounts: number
+          max_general_accounts: number
+          max_api_calls_monthly: number
+          max_storage_bytes: number
+          is_active: boolean
+          settings: Json
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          company_name: string
+          slug: string
+          max_admin_accounts?: number
+          max_general_accounts?: number
+          max_api_calls_monthly?: number
+          max_storage_bytes?: number
+          is_active?: boolean
+          settings?: Json
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          company_name?: string
+          slug?: string
+          max_admin_accounts?: number
+          max_general_accounts?: number
+          max_api_calls_monthly?: number
+          max_storage_bytes?: number
+          is_active?: boolean
+          settings?: Json
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      monitor_workspace_members: {
+        Row: {
+          id: string
+          workspace_id: string
+          profile_id: string
+          monitor_role: MonitorRole
+          is_active: boolean
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          workspace_id: string
+          profile_id: string
+          monitor_role?: MonitorRole
+          is_active?: boolean
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          workspace_id?: string
+          profile_id?: string
+          monitor_role?: MonitorRole
+          is_active?: boolean
+          created_at?: string
+        }
+        Relationships: []
+      }
+      monitor_sessions: {
+        Row: {
+          id: string
+          workspace_id: string | null
+          created_by_profile_id: string | null
+          assigned_staff_id: string | null
+          session_token: string
+          status: MonitorSessionStatus
+          source: string
+          basic_info: Json | null
+          transcript: string | null
+          resume_data: Json | null
+          template_id: string | null
+          step_reached: number
+          ai_calls_count: number
+          pdf_downloaded: boolean
+          consent_given_at: string | null
+          consent_version: string | null
+          started_at: string
+          completed_at: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          workspace_id?: string | null
+          created_by_profile_id?: string | null
+          assigned_staff_id?: string | null
+          session_token: string
+          status?: MonitorSessionStatus
+          source?: string
+          basic_info?: Json | null
+          transcript?: string | null
+          resume_data?: Json | null
+          template_id?: string | null
+          step_reached?: number
+          ai_calls_count?: number
+          pdf_downloaded?: boolean
+          consent_given_at?: string | null
+          consent_version?: string | null
+          started_at?: string
+          completed_at?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          workspace_id?: string | null
+          created_by_profile_id?: string | null
+          assigned_staff_id?: string | null
+          session_token?: string
+          status?: MonitorSessionStatus
+          source?: string
+          basic_info?: Json | null
+          transcript?: string | null
+          resume_data?: Json | null
+          template_id?: string | null
+          step_reached?: number
+          ai_calls_count?: number
+          pdf_downloaded?: boolean
+          consent_given_at?: string | null
+          consent_version?: string | null
+          started_at?: string
+          completed_at?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      monitor_templates: {
+        Row: {
+          id: string
+          workspace_id: string | null
+          name: string
+          description: string | null
+          template_type: string
+          template_data: Json
+          is_default: boolean
+          is_active: boolean
+          created_by: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          workspace_id?: string | null
+          name: string
+          description?: string | null
+          template_type?: string
+          template_data: Json
+          is_default?: boolean
+          is_active?: boolean
+          created_by?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          workspace_id?: string | null
+          name?: string
+          description?: string | null
+          template_type?: string
+          template_data?: Json
+          is_default?: boolean
+          is_active?: boolean
+          created_by?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      monitor_operation_logs: {
+        Row: {
+          id: string
+          workspace_id: string | null
+          actor_profile_id: string | null
+          session_id: string | null
+          action: string
+          resource_type: string
+          resource_id: string | null
+          details: Json
+          ip_address: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          workspace_id?: string | null
+          actor_profile_id?: string | null
+          session_id?: string | null
+          action: string
+          resource_type: string
+          resource_id?: string | null
+          details?: Json
+          ip_address?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          workspace_id?: string | null
+          actor_profile_id?: string | null
+          session_id?: string | null
+          action?: string
+          resource_type?: string
+          resource_id?: string | null
+          details?: Json
+          ip_address?: string | null
+          created_at?: string
+        }
+        Relationships: []
+      }
+      monitor_consent_records: {
+        Row: {
+          id: string
+          session_id: string | null
+          profile_id: string | null
+          session_token: string | null
+          consent_type: string
+          consented: boolean
+          consent_version: string
+          ip_address: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          session_id?: string | null
+          profile_id?: string | null
+          session_token?: string | null
+          consent_type: string
+          consented: boolean
+          consent_version: string
+          ip_address?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          session_id?: string | null
+          profile_id?: string | null
+          session_token?: string | null
+          consent_type?: string
+          consented?: boolean
+          consent_version?: string
+          ip_address?: string | null
+          created_at?: string
+        }
+        Relationships: []
+      }
     }
     Enums: {
       user_role: UserRole
@@ -546,6 +816,10 @@ export interface Database {
       application_status: ApplicationStatus
       contract_status: ContractStatus
       invoice_status: InvoiceStatus
+      notification_type: NotificationType
+      scout_status: ScoutStatus
+      monitor_role: MonitorRole
+      monitor_session_status: MonitorSessionStatus
     }
   }
 }
