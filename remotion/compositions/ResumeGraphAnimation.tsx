@@ -70,39 +70,39 @@ interface NodeConfig {
 const NODES: NodeConfig[] = [
   {
     label: 'スキル解析',
-    icon: <BrainIcon size={84} />,
+    icon: <BrainIcon size={100} />,
     color: '#ef4444',
     glowColor: 'rgba(239, 68, 68, 0.6)',
-    badgeCount: '12',
-    x: 15,
-    y: 15,
+    badgeCount: '',
+    x: 22,
+    y: 22,
   },
   {
     label: '経歴データ',
-    icon: <DocumentIcon size={80} />,
+    icon: <DocumentIcon size={95} />,
     color: '#ec4899',
     glowColor: 'rgba(236, 72, 153, 0.6)',
-    badgeCount: '3',
-    x: 85,
-    y: 15,
+    badgeCount: '',
+    x: 78,
+    y: 22,
   },
   {
     label: '実績',
-    icon: <TrophyIcon size={80} />,
+    icon: <TrophyIcon size={95} />,
     color: '#3b82f6',
     glowColor: 'rgba(59, 130, 246, 0.6)',
-    badgeCount: '8',
-    x: 15,
-    y: 85,
+    badgeCount: '',
+    x: 22,
+    y: 78,
   },
   {
     label: '学歴',
-    icon: <GradCapIcon size={80} />,
+    icon: <GradCapIcon size={95} />,
     color: '#94a3b8',
     glowColor: 'rgba(148, 163, 184, 0.4)',
-    badgeCount: '2',
-    x: 85,
-    y: 85,
+    badgeCount: '',
+    x: 78,
+    y: 78,
   },
 ]
 
@@ -377,7 +377,7 @@ export const ResumeGraphAnimation: React.FC<ResumeGraphAnimationProps> = ({ them
               boxShadow: centerShadow,
             }}
           >
-            <PersonIcon size={96} />
+            <PersonIcon size={120} />
             {/* Verified badge */}
             <div
               style={{
@@ -403,23 +403,23 @@ export const ResumeGraphAnimation: React.FC<ResumeGraphAnimationProps> = ({ them
         {/* Label */}
         <div
           style={{
-            marginTop: 18,
-            padding: '6px 20px',
+            marginTop: 16,
+            padding: '5px 18px',
             borderRadius: 999,
             backgroundColor: labelBg,
             border: `1px solid ${labelBorder}`,
             backdropFilter: 'blur(12px)',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
+            boxShadow: isLight ? '0 2px 8px rgba(0,0,0,0.1)' : '0 4px 12px rgba(0,0,0,0.5)',
             opacity: centerLabelOpacity,
           }}
         >
           <span
             style={{
               color: labelColor,
-              fontSize: 15,
+              fontSize: 14,
               fontWeight: 700,
               letterSpacing: '0.05em',
-              fontFamily: 'system-ui, -apple-system, sans-serif',
+              fontFamily: "'Noto Sans JP', system-ui, sans-serif",
             }}
           >
             プロフィール
@@ -452,37 +452,12 @@ export const ResumeGraphAnimation: React.FC<ResumeGraphAnimationProps> = ({ them
             }}
           >
             <div style={{ position: 'relative' }}>
-              {/* Badge count */}
-              <div
-                style={{
-                  position: 'absolute',
-                  top: -16,
-                  right: -16,
-                  width: 46,
-                  height: 46,
-                  borderRadius: '50%',
-                  backgroundColor: node.color,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: 'white',
-                  fontSize: 18,
-                  fontWeight: 700,
-                  fontFamily: 'system-ui, sans-serif',
-                  border: `4px solid ${badgeBorder}`,
-                  zIndex: 30,
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.4)',
-                  transform: `scale(${badgeCountScales[i]})`,
-                }}
-              >
-                {node.badgeCount}
-              </div>
               {/* Node box */}
               <div
                 style={{
-                  width: 160,
-                  height: 160,
-                  borderRadius: 30,
+                  width: 140,
+                  height: 140,
+                  borderRadius: 28,
                   backgroundColor: nodeBg,
                   border: isLight ? `2px solid ${node.color}` : `1px solid ${node.color}50`,
                   display: 'flex',
@@ -497,19 +472,21 @@ export const ResumeGraphAnimation: React.FC<ResumeGraphAnimationProps> = ({ them
               </div>
             </div>
             {/* Label */}
-            <span
-              style={{
-                marginTop: 14,
-                fontSize: 16,
-                fontWeight: 700,
-                color: node.color,
-                letterSpacing: '0.08em',
-                opacity: 0.9,
-                fontFamily: 'system-ui, -apple-system, sans-serif',
-              }}
-            >
-              {node.label}
-            </span>
+            {node.label && (
+              <span
+                style={{
+                  marginTop: 12,
+                  fontSize: 15,
+                  fontWeight: 700,
+                  color: isLight ? node.color : node.color,
+                  letterSpacing: '0.06em',
+                  opacity: 0.85,
+                  fontFamily: "'Noto Sans JP', system-ui, sans-serif",
+                }}
+              >
+                {node.label}
+              </span>
+            )}
           </div>
         )
       })}
