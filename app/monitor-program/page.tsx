@@ -104,6 +104,17 @@ export default function TaishokuSupportPage() {
                   />
                 </div>
 
+                {/* Mobile only: diagram animation right after hero text */}
+                <div className="lg:hidden w-full max-w-[400px] mx-auto aspect-square">
+                  <VideoPlayer
+                    composition="resume-graph"
+                    autoPlay
+                    loop
+                    theme={currentTheme}
+                    className="w-full h-full"
+                  />
+                </div>
+
                 <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
                   <Link
                     href="/monitor-program/resume"
@@ -128,8 +139,8 @@ export default function TaishokuSupportPage() {
                 </div>
               </div>
 
-              <div className="flex-1 w-full max-w-[600px] lg:max-w-none relative">
-                {/* Remotion animation as background - no frame/border */}
+              <div className="hidden lg:block flex-1 w-full max-w-[600px] lg:max-w-none relative">
+                {/* Remotion animation - desktop only (mobile version shown inline above) */}
                 <div className="w-full aspect-square">
                   <VideoPlayer
                     composition="resume-graph"
