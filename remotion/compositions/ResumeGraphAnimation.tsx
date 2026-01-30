@@ -416,7 +416,7 @@ export const ResumeGraphAnimation: React.FC<ResumeGraphAnimationProps> = ({ them
           <span
             style={{
               color: labelColor,
-              fontSize: 22,
+              fontSize: 34,
               fontWeight: 700,
               letterSpacing: '0.05em',
               fontFamily: "'Noto Sans JP', system-ui, sans-serif",
@@ -476,7 +476,7 @@ export const ResumeGraphAnimation: React.FC<ResumeGraphAnimationProps> = ({ them
               <span
                 style={{
                   marginTop: 14,
-                  fontSize: 24,
+                  fontSize: 36,
                   fontWeight: 700,
                   color: isLight ? node.color : node.color,
                   letterSpacing: '0.04em',
