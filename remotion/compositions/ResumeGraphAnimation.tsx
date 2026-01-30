@@ -404,7 +404,7 @@ export const ResumeGraphAnimation: React.FC<ResumeGraphAnimationProps> = ({ them
         <div
           style={{
             marginTop: 16,
-            padding: '5px 18px',
+            padding: '8px 24px',
             borderRadius: 999,
             backgroundColor: labelBg,
             border: `1px solid ${labelBorder}`,
@@ -416,7 +416,7 @@ export const ResumeGraphAnimation: React.FC<ResumeGraphAnimationProps> = ({ them
           <span
             style={{
               color: labelColor,
-              fontSize: 14,
+              fontSize: 22,
               fontWeight: 700,
               letterSpacing: '0.05em',
               fontFamily: "'Noto Sans JP', system-ui, sans-serif",
@@ -475,12 +475,12 @@ export const ResumeGraphAnimation: React.FC<ResumeGraphAnimationProps> = ({ them
             {node.label && (
               <span
                 style={{
-                  marginTop: 12,
-                  fontSize: 15,
+                  marginTop: 14,
+                  fontSize: 24,
                   fontWeight: 700,
                   color: isLight ? node.color : node.color,
-                  letterSpacing: '0.06em',
-                  opacity: 0.85,
+                  letterSpacing: '0.04em',
+                  opacity: 0.9,
                   fontFamily: "'Noto Sans JP', system-ui, sans-serif",
                 }}
               >
