@@ -73,7 +73,7 @@ export default function TaishokuSupportPage() {
           </header>
 
           {/* Hero Section */}
-          <section className="relative bg-slate-50 dark:bg-[#101822] text-slate-900 dark:text-white overflow-hidden py-16 lg:py-24 transition-colors duration-200">
+          <section className="relative bg-slate-50 dark:bg-[#101822] text-slate-900 dark:text-white overflow-hidden py-8 lg:py-24 transition-colors duration-200">
             {/* Background Decoration */}
             <div
               className="absolute inset-0 z-0 opacity-0 dark:opacity-20"
@@ -94,7 +94,8 @@ export default function TaishokuSupportPage() {
                   AI Career Support
                 </div>
 
-                <div className="w-full max-w-2xl mx-auto lg:mx-0 aspect-[1080/600]">
+                {/* Desktop: single hero-text VideoPlayer with heading + description */}
+                <div className="hidden lg:block w-full max-w-2xl mx-auto lg:mx-0 aspect-[1080/600]">
                   <VideoPlayer
                     composition="hero-text"
                     autoPlay
@@ -104,15 +105,34 @@ export default function TaishokuSupportPage() {
                   />
                 </div>
 
-                {/* Mobile only: diagram animation right after hero text */}
-                <div className="lg:hidden w-full max-w-[400px] mx-auto aspect-square">
-                  <VideoPlayer
-                    composition="resume-graph"
-                    autoPlay
-                    loop
-                    theme={currentTheme}
-                    className="w-full h-full"
-                  />
+                {/* Mobile: heading → diagram → description (split layout) */}
+                <div className="lg:hidden flex flex-col gap-4">
+                  {/* Heading */}
+                  <h1 className="text-[2rem] leading-tight font-black tracking-tight text-slate-900 dark:text-white">
+                    退職後のキャリアを
+                    <br />
+                    確実なものへ
+                  </h1>
+
+                  {/* Diagram animation */}
+                  <div className="w-full max-w-[320px] mx-auto aspect-square">
+                    <VideoPlayer
+                      composition="resume-graph"
+                      autoPlay
+                      loop
+                      theme={currentTheme}
+                      className="w-full h-full"
+                    />
+                  </div>
+
+                  {/* Description */}
+                  <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                    通過率を高める「履歴書完成保証」プログラム。
+                    <br />
+                    最新のAI技術とプロの知見を融合したモニタープログラムで、
+                    <br />
+                    あなたの経験を最大限に評価される職務経歴書へ。
+                  </p>
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
