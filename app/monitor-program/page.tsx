@@ -89,8 +89,8 @@ export default function TaishokuSupportPage() {
 
             <div className="relative z-10 max-w-[1200px] mx-auto px-6 flex flex-col lg:flex-row items-center gap-12">
               <div className="flex-1 flex flex-col gap-6 text-center lg:text-left">
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-50 dark:bg-orange-500/15 border border-orange-300 dark:border-orange-400/30 text-orange-600 dark:text-orange-300 text-xs font-bold tracking-wide w-fit mx-auto lg:mx-0">
-                  <span className="material-symbols-outlined text-sm">verified</span>
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-slate-900 to-slate-700 dark:from-slate-100 dark:to-slate-300 text-white dark:text-slate-900 text-xs font-bold tracking-wide w-fit mx-auto lg:mx-0 shadow-sm">
+                  <span className="material-symbols-outlined text-sm text-amber-400 dark:text-amber-500">workspace_premium</span>
                   書類通過率UP｜履歴書完成保証
                 </div>
 
