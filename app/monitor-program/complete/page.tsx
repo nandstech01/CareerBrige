@@ -40,7 +40,7 @@ export default function CompletePage() {
         <div className="mt-8 space-y-4">
           {/* 再作成リンク */}
           <Link
-            href="/taishoku-support/resume"
+            href="/monitor-program/resume"
             className="flex items-center justify-between p-4 bg-white dark:bg-midnight-800 rounded-xl border border-slate-200 dark:border-midnight-600 hover:border-brand-cyan/50 transition-colors group"
           >
             <div className="flex items-center gap-3">
@@ -61,7 +61,7 @@ export default function CompletePage() {
 
           {/* トップページリンク */}
           <Link
-            href="/taishoku-support"
+            href="/monitor-program"
             className="flex items-center justify-between p-4 bg-white dark:bg-midnight-800 rounded-xl border border-slate-200 dark:border-midnight-600 hover:border-brand-cyan/50 transition-colors group"
           >
             <div className="flex items-center gap-3">

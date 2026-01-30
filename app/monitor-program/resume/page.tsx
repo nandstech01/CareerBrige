@@ -157,12 +157,12 @@ export default function ResumePage() {
       sessionStorage.setItem('taishoku_user_name', resume.personalInfo.name)
 
       // 完了ページへ遷移
-      router.push('/taishoku-support/complete')
+      router.push('/monitor-program/complete')
     } catch (err) {
       console.error('Save error:', err)
       // エラーでも完了ページへ遷移
       sessionStorage.setItem('taishoku_user_name', resume.personalInfo.name)
-      router.push('/taishoku-support/complete')
+      router.push('/monitor-program/complete')
     }
   }, [resume, router])
 
@@ -178,7 +178,7 @@ export default function ResumePage() {
       {/* Header */}
       <header className="sticky top-0 z-50 bg-white/80 dark:bg-midnight-900/80 backdrop-blur-lg border-b border-slate-200 dark:border-midnight-700">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/taishoku-support" className="flex items-center gap-2">
+          <Link href="/monitor-program" className="flex items-center gap-2">
             <span className="text-xl font-bold text-brand-cyan">CareerBridge</span>
             <span className="text-xs px-2 py-1 bg-brand-cyan/10 text-brand-cyan rounded-full font-medium">
               履歴書作成

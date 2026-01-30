@@ -83,7 +83,7 @@ export default function ResignationPage() {
       {/* Header */}
       <header className="sticky top-0 z-50 bg-white/80 dark:bg-midnight-900/80 backdrop-blur-lg border-b border-slate-200 dark:border-midnight-700">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/taishoku-support" className="flex items-center gap-2">
+          <Link href="/monitor-program" className="flex items-center gap-2">
             <span className="text-xl font-bold text-brand-cyan">CareerBridge</span>
             <span className="text-xs px-2 py-1 bg-brand-cyan/10 text-brand-cyan rounded-full font-medium">
               退職届作成
@@ -304,7 +304,7 @@ export default function ResignationPage() {
               />
 
               {/* 次のステップ: 転職動線 */}
-              <div className="pt-6 space-y-4">
+              <div className="pt-8 space-y-6">
                 <div className="text-center">
                   <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
                     退職が決まったら、次は転職準備！
@@ -314,37 +314,88 @@ export default function ResignationPage() {
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {/* キャリア相談ボタン */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  {/* キャリア相談ボタン - Primary CTA */}
                   <Link
                     href="/apply"
-                    className="flex flex-col items-center gap-3 p-6 bg-[#06C755]/10 dark:bg-[#06C755]/20 border border-[#06C755]/30 rounded-xl hover:bg-[#06C755]/20 dark:hover:bg-[#06C755]/30 transition-all group"
+                    className="group relative flex flex-col items-center gap-4 p-7 rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#06C755]/25"
                   >
-                    <div className="w-12 h-12 bg-[#06C755] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <MessageCircle className="w-6 h-6 text-white" />
+                    {/* グラデーション背景 */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#06C755]/15 via-[#06C755]/10 to-emerald-500/5 dark:from-[#06C755]/25 dark:via-[#06C755]/15 dark:to-emerald-500/10" />
+
+                    {/* グラスモーフィズム効果 */}
+                    <div className="absolute inset-0 backdrop-blur-[2px]" />
+
+                    {/* アニメーションボーダー */}
+                    <div className="absolute inset-0 rounded-2xl border-2 border-[#06C755]/30 dark:border-[#06C755]/40 group-hover:border-[#06C755]/60 transition-colors duration-300" />
+
+                    {/* ホバー時のシマー効果 */}
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" />
                     </div>
-                    <span className="text-base font-semibold text-slate-900 dark:text-white">
-                      キャリア相談
-                    </span>
-                    <span className="text-xs text-slate-600 dark:text-slate-400">
-                      専門家に相談する
-                    </span>
+
+                    {/* アイコン */}
+                    <div className="relative z-10">
+                      <div className="w-16 h-16 bg-gradient-to-br from-[#06C755] to-emerald-600 rounded-2xl flex items-center justify-center shadow-lg shadow-[#06C755]/30 group-hover:shadow-xl group-hover:shadow-[#06C755]/40 group-hover:scale-105 transition-all duration-300">
+                        <MessageCircle className="w-8 h-8 text-white" />
+                      </div>
+                      {/* グロー効果 */}
+                      <div className="absolute inset-0 w-16 h-16 bg-[#06C755] rounded-2xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-300 -z-10" />
+                    </div>
+
+                    {/* テキスト */}
+                    <div className="relative z-10 text-center">
+                      <span className="block text-lg font-bold text-slate-900 dark:text-white mb-1 group-hover:text-[#06C755] dark:group-hover:text-[#06C755] transition-colors duration-300">
+                        キャリア相談
+                      </span>
+                      <span className="block text-sm text-slate-600 dark:text-slate-400">
+                        専門家に相談する
+                      </span>
+                    </div>
+
+                    {/* 推奨バッジ */}
+                    <div className="absolute top-3 right-3 px-2 py-1 bg-[#06C755] text-white text-[10px] font-bold rounded-full shadow-sm">
+                      おすすめ
+                    </div>
                   </Link>
 
-                  {/* 履歴書作成ボタン */}
+                  {/* 履歴書作成ボタン - Secondary CTA */}
                   <Link
-                    href="/taishoku-support/resume"
-                    className="flex flex-col items-center gap-3 p-6 bg-brand-cyan/10 dark:bg-brand-cyan/20 border border-brand-cyan/30 rounded-xl hover:bg-brand-cyan/20 dark:hover:bg-brand-cyan/30 transition-all group"
+                    href="/monitor-program/resume"
+                    className="group relative flex flex-col items-center gap-4 p-7 rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl hover:shadow-brand-cyan/20"
                   >
-                    <div className="w-12 h-12 bg-brand-cyan rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <FileText className="w-6 h-6 text-white" />
+                    {/* グラデーション背景 */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/10 via-brand-cyan/5 to-sky-500/5 dark:from-brand-cyan/20 dark:via-brand-cyan/10 dark:to-sky-500/10" />
+
+                    {/* グラスモーフィズム効果 */}
+                    <div className="absolute inset-0 backdrop-blur-[2px]" />
+
+                    {/* ボーダー */}
+                    <div className="absolute inset-0 rounded-2xl border border-brand-cyan/25 dark:border-brand-cyan/35 group-hover:border-brand-cyan/50 transition-colors duration-300" />
+
+                    {/* ホバー時のシマー効果 */}
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" />
                     </div>
-                    <span className="text-base font-semibold text-slate-900 dark:text-white">
-                      履歴書を作成
-                    </span>
-                    <span className="text-xs text-slate-600 dark:text-slate-400">
-                      AIが自動で作成
-                    </span>
+
+                    {/* アイコン */}
+                    <div className="relative z-10">
+                      <div className="w-16 h-16 bg-gradient-to-br from-brand-cyan to-sky-600 rounded-2xl flex items-center justify-center shadow-lg shadow-brand-cyan/25 group-hover:shadow-xl group-hover:shadow-brand-cyan/35 group-hover:scale-105 transition-all duration-300">
+                        <FileText className="w-8 h-8 text-white" />
+                      </div>
+                      {/* グロー効果 */}
+                      <div className="absolute inset-0 w-16 h-16 bg-brand-cyan rounded-2xl blur-xl opacity-20 group-hover:opacity-40 transition-opacity duration-300 -z-10" />
+                    </div>
+
+                    {/* テキスト */}
+                    <div className="relative z-10 text-center">
+                      <span className="block text-lg font-bold text-slate-900 dark:text-white mb-1 group-hover:text-brand-cyan dark:group-hover:text-brand-cyan transition-colors duration-300">
+                        履歴書を作成
+                      </span>
+                      <span className="block text-sm text-slate-600 dark:text-slate-400">
+                        AIが自動で作成
+                      </span>
+                    </div>
                   </Link>
                 </div>
               </div>

@@ -1,0 +1,486 @@
+'use client'
+
+import Link from 'next/link'
+import Image from 'next/image'
+import { useTheme } from 'next-themes'
+import { useEffect, useState } from 'react'
+import { ThemeToggle } from '@/components/ThemeToggle'
+import VideoPlayer from '@/components/video/VideoPlayer'
+
+export default function TaishokuSupportPage() {
+  const { theme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => { setMounted(true) }, [])
+  const currentTheme = (mounted ? theme : 'light') as 'light' | 'dark'
+
+  return (
+    <>
+      {/* Font & Icon imports */}
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link crossOrigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap"
+        rel="stylesheet"
+      />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
+        rel="stylesheet"
+      />
+
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+            summary::-webkit-details-marker { display: none; }
+            .star-filled { font-variation-settings: 'FILL' 1; }
+          `,
+        }}
+      />
+
+      <div
+        className="bg-[#f6f7f8] dark:bg-[#101822] text-slate-900 dark:text-slate-50 transition-colors duration-200"
+        style={{ fontFamily: "'Manrope', 'Noto Sans JP', sans-serif" }}
+      >
+        <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+          {/* Navbar */}
+          <header className="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#101822]/90 backdrop-blur-md">
+            <div className="flex items-center justify-between px-6 py-4 max-w-[1200px] mx-auto w-full">
+              <Link href="/" className="flex items-center hover:opacity-90 transition-opacity">
+                <Image
+                  src="/logo.png"
+                  alt="キャリアブリッジ"
+                  width={220}
+                  height={48}
+                  className="h-12 w-auto"
+                  priority
+                />
+              </Link>
+              <div className="hidden md:flex gap-3 items-center">
+                <ThemeToggle />
+                <button className="px-5 py-2.5 rounded-lg text-sm font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                  ログイン
+                </button>
+                <button className="px-5 py-2.5 rounded-lg bg-[#3CC8E8] text-white text-sm font-bold shadow-md hover:bg-[#2BB8D8] transition-all hover:shadow-lg">
+                  会員登録
+                </button>
+              </div>
+              <div className="md:hidden flex items-center gap-2">
+                <ThemeToggle />
+                <button className="text-slate-700 dark:text-slate-200">
+                  <span className="material-symbols-outlined">menu</span>
+                </button>
+              </div>
+            </div>
+          </header>
+
+          {/* Hero Section */}
+          <section className="relative bg-slate-50 dark:bg-[#101822] text-slate-900 dark:text-white overflow-hidden py-16 lg:py-24 transition-colors duration-200">
+            {/* Background Decoration */}
+            <div
+              className="absolute inset-0 z-0 opacity-0 dark:opacity-20"
+              data-alt="Abstract blue gradient background pattern representing data flow"
+              style={{
+                backgroundImage:
+                  "url('https://images.unsplash.com/photo-1557683316-973673baf926?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')",
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+              }}
+            />
+            <div className="absolute inset-0 z-0 bg-gradient-to-r from-slate-50 via-slate-50/90 to-blue-100/40 dark:from-[#101822] dark:via-[#101822]/90 dark:to-blue-900/40" />
+
+            <div className="relative z-10 max-w-[1200px] mx-auto px-6 flex flex-col lg:flex-row items-center gap-12">
+              <div className="flex-1 flex flex-col gap-6 text-center lg:text-left">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-500/20 border border-blue-300 dark:border-blue-400/30 text-blue-600 dark:text-blue-300 text-xs font-semibold uppercase tracking-wider w-fit mx-auto lg:mx-0">
+                  <span className="material-symbols-outlined text-sm">auto_awesome</span>
+                  AI Career Support
+                </div>
+
+                <div className="w-full max-w-2xl mx-auto lg:mx-0 aspect-[1080/600]">
+                  <VideoPlayer
+                    composition="hero-text"
+                    autoPlay
+                    loop
+                    theme={currentTheme}
+                    className="w-full h-full"
+                  />
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
+                  <Link
+                    href="/monitor-program/resume"
+                    className="flex items-center justify-center gap-2 h-14 px-8 rounded-xl bg-[#F97316] hover:bg-orange-500 text-white text-base font-bold shadow-[0_0_20px_rgba(249,115,22,0.4)] transition-all hover:scale-105"
+                  >
+                    モニタープログラムに参加する（無料）
+                    <span className="material-symbols-outlined">arrow_forward</span>
+                  </Link>
+                </div>
+
+                <div className="flex items-center justify-center lg:justify-start gap-4 text-xs text-slate-500 dark:text-slate-400 pt-2">
+                  <div className="flex items-center gap-1">
+                    <span className="material-symbols-outlined text-sm text-green-400">lock</span>
+                    SSL Secure
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <span className="material-symbols-outlined text-sm text-green-400">
+                      verified_user
+                    </span>
+                    Privacy Protected
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex-1 w-full max-w-[600px] lg:max-w-none relative">
+                {/* Remotion animation as background - no frame/border */}
+                <div className="w-full aspect-square">
+                  <VideoPlayer
+                    composition="resume-graph"
+                    autoPlay
+                    loop
+                    theme={currentTheme}
+                    className="w-full h-full"
+                  />
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Features (Bento Grid) */}
+          <section className="py-20 px-6 max-w-[1200px] mx-auto w-full">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
+                CareerBridgeの3つの強み
+              </h2>
+              <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+                確実な書類作成と高いセキュリティで、あなたの再出発をサポートします。
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Card 1 */}
+              <div className="glass-card bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-sm hover:shadow-xl transition-shadow border border-slate-100 dark:border-slate-700 flex flex-col gap-4">
+                <div className="w-12 h-12 rounded-xl bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center text-[#3CC8E8] mb-2">
+                  <span className="material-symbols-outlined text-3xl">description</span>
+                </div>
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white">履歴書完成保証</h3>
+                <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+                  AIとプロの添削により、企業に響く完成度の高い応募書類を確実に作成します。納得いくまで何度でも修正可能です。
+                </p>
+              </div>
+
+              {/* Card 2 */}
+              <div className="glass-card bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-sm hover:shadow-xl transition-shadow border border-slate-100 dark:border-slate-700 flex flex-col gap-4">
+                <div className="w-12 h-12 rounded-xl bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400 mb-2">
+                  <span className="material-symbols-outlined text-3xl">trending_up</span>
+                </div>
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white">通過率アップ</h3>
+                <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+                  採用トレンドを分析したAIアルゴリズムにより、書類選考の通過率を大幅に改善。あなたの強みを数値化してアピールします。
+                </p>
+              </div>
+
+              {/* Card 3 */}
+              <div className="glass-card bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-sm hover:shadow-xl transition-shadow border border-slate-100 dark:border-slate-700 flex flex-col gap-4">
+                <div className="w-12 h-12 rounded-xl bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 dark:text-purple-400 mb-2">
+                  <span className="material-symbols-outlined text-3xl">verified_user</span>
+                </div>
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white">
+                  万全のセキュリティ
+                </h3>
+                <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+                  金融機関レベルのデータ暗号化技術を採用。個人情報は厳重に保護され、外部に漏れる心配はありません。
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* How It Works (Timeline) */}
+          <section className="py-20 bg-slate-50 dark:bg-slate-900 border-y border-slate-200 dark:border-slate-800">
+            <div className="max-w-[1000px] mx-auto px-6">
+              <div className="text-center mb-16">
+                <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">
+                  ご利用の流れ
+                </h2>
+                <p className="text-slate-600 dark:text-slate-400">
+                  最短3ステップで、あなたの書類が完成します。
+                </p>
+              </div>
+
+              <div className="relative md:grid md:grid-cols-3 md:gap-8">
+                {/* Connecting Line (Desktop) */}
+                <div className="hidden md:block absolute top-8 left-[16%] right-[16%] h-0.5 bg-slate-200 dark:bg-slate-700 -z-10" />
+
+                {/* Step 1 */}
+                <div className="flex flex-col items-center text-center group mb-12 md:mb-0">
+                  <div className="w-16 h-16 rounded-full bg-white dark:bg-slate-800 border-4 border-slate-50 dark:border-slate-900 shadow-md flex items-center justify-center text-[#3CC8E8] z-10 mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <span className="material-symbols-outlined text-3xl">app_registration</span>
+                  </div>
+                  <span className="text-[#3CC8E8] font-bold text-sm tracking-wider uppercase mb-2">
+                    Step 1
+                  </span>
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
+                    会員登録
+                  </h3>
+                  <p className="text-slate-600 dark:text-slate-400 text-sm max-w-[240px]">
+                    メールアドレスだけで簡単に登録。すぐにサービスを開始できます。
+                  </p>
+                </div>
+
+                {/* Step 2 */}
+                <div className="flex flex-col items-center text-center group mb-12 md:mb-0">
+                  <div className="w-16 h-16 rounded-full bg-white dark:bg-slate-800 border-4 border-slate-50 dark:border-slate-900 shadow-md flex items-center justify-center text-[#3CC8E8] z-10 mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <span className="material-symbols-outlined text-3xl">headset_mic</span>
+                  </div>
+                  <span className="text-[#3CC8E8] font-bold text-sm tracking-wider uppercase mb-2">
+                    Step 2
+                  </span>
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
+                    オンラインヒアリング
+                  </h3>
+                  <p className="text-slate-600 dark:text-slate-400 text-sm max-w-[240px]">
+                    AIチャットまたは担当者とチャット形式で、これまでの経験をお話しください。
+                  </p>
+                </div>
+
+                {/* Step 3 */}
+                <div className="flex flex-col items-center text-center group">
+                  <div className="w-16 h-16 rounded-full bg-white dark:bg-slate-800 border-4 border-slate-50 dark:border-slate-900 shadow-md flex items-center justify-center text-[#3CC8E8] z-10 mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <span className="material-symbols-outlined text-3xl">file_download</span>
+                  </div>
+                  <span className="text-[#3CC8E8] font-bold text-sm tracking-wider uppercase mb-2">
+                    Step 3
+                  </span>
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
+                    ドラフト受け取り
+                  </h3>
+                  <p className="text-slate-600 dark:text-slate-400 text-sm max-w-[240px]">
+                    プロが作成した職務経歴書のドラフトを受け取り、確認・修正して完成です。
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Reviews */}
+          <section className="py-20 px-6 max-w-[1200px] mx-auto w-full">
+            <h2 className="text-3xl font-bold text-center text-slate-900 dark:text-white mb-12">
+              利用者の声
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* Review 1 */}
+              <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col justify-between h-full">
+                <div>
+                  <div className="flex items-center gap-1 text-yellow-400 mb-4">
+                    {[...Array(5)].map((_, i) => (
+                      <span
+                        key={i}
+                        className="material-symbols-outlined text-xl star-filled"
+                      >
+                        star
+                      </span>
+                    ))}
+                  </div>
+                  <p className="text-slate-700 dark:text-slate-300 text-base leading-relaxed mb-6">
+                    「退職後の不安の中、これほど質の高い書類が短期間で完成するとは思いませんでした。自信を持って応募できました。」
+                  </p>
+                </div>
+                <div className="flex items-center gap-4 pt-4 border-t border-slate-100 dark:border-slate-700">
+                  <div
+                    className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-600 bg-cover bg-center"
+                    data-alt="Portrait of a professional man"
+                    style={{
+                      backgroundImage:
+                        "url('https://lh3.googleusercontent.com/aida-public/AB6AXuDXDkWKWOtCCPJIylVfC-j-khNXZ7KGjM2Me0OzKO5jGd8RL2YHozZfQ3hBBZe3WTCR0Dj8_5yacMjPFbDob96wFmlkvtZGPNMWexsdtOb54u1kIQ1uqIZUtC_9MTqqRcQeEhUpDMMNpip1or1N7T765qUgLCZSQ3gymQ70CYctjwFWgxrRGc4AmBv2ba_hWUaHACxxe6sc3LQr6ms-6Z0syMQxg_OVewnMZULY6iCHlfWSoZK0EFf0Z2h45yGvWyzO-xTrWGX5w554')",
+                    }}
+                  />
+                  <div>
+                    <p className="text-sm font-bold text-slate-900 dark:text-white">
+                      30代・前職営業
+                    </p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">2023年10月利用</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Review 2 */}
+              <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col justify-between h-full">
+                <div>
+                  <div className="flex items-center gap-1 text-yellow-400 mb-4">
+                    {[...Array(5)].map((_, i) => (
+                      <span
+                        key={i}
+                        className="material-symbols-outlined text-xl star-filled"
+                      >
+                        star
+                      </span>
+                    ))}
+                  </div>
+                  <p className="text-slate-700 dark:text-slate-300 text-base leading-relaxed mb-6">
+                    「自分の強みが何なのか分からなかったのですが、AIと担当者のおかげで明確な言葉になりました。面接でもスムーズに話せました。」
+                  </p>
+                </div>
+                <div className="flex items-center gap-4 pt-4 border-t border-slate-100 dark:border-slate-700">
+                  <div
+                    className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-600 bg-cover bg-center"
+                    data-alt="Portrait of a professional woman"
+                    style={{
+                      backgroundImage:
+                        "url('https://lh3.googleusercontent.com/aida-public/AB6AXuAqAzMjqO82KyTIxikbAtsKIcgverw_Jkr9PIfuNYNAn9NPeLneh4-x8WAOYMyLWlEEIVyc0m6194eN8HO2Kudk06SRLCGGuKv5uDokCkAlJ2WSE3E6EN_JVobXIf7s6dpU_CODrbcGJ36o83nQkERhPO4WBsCLpiCIKzqibpHV3rpUoAhwV63agGyS5XAjjxXWEzZbaz8FRn2OBB1sS17Mp1b_Lg-77ptgS_BxvzHEf-7c2OupuXeEAe01EBYprcANPsw-0BVJ9Hdh')",
+                    }}
+                  />
+                  <div>
+                    <p className="text-sm font-bold text-slate-900 dark:text-white">
+                      20代・事務職
+                    </p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">2023年9月利用</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Review 3 */}
+              <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col justify-between h-full">
+                <div>
+                  <div className="flex items-center gap-1 text-yellow-400 mb-4">
+                    {[...Array(4)].map((_, i) => (
+                      <span
+                        key={i}
+                        className="material-symbols-outlined text-xl star-filled"
+                      >
+                        star
+                      </span>
+                    ))}
+                    <span className="material-symbols-outlined text-xl star-filled opacity-50">
+                      star
+                    </span>
+                  </div>
+                  <p className="text-slate-700 dark:text-slate-300 text-base leading-relaxed mb-6">
+                    「セキュリティ面がしっかりしているのが決め手でした。安心して相談できました。ドラフトの質も非常に高かったです。」
+                  </p>
+                </div>
+                <div className="flex items-center gap-4 pt-4 border-t border-slate-100 dark:border-slate-700">
+                  <div
+                    className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-600 bg-cover bg-center"
+                    data-alt="Portrait of a middle-aged professional man"
+                    style={{
+                      backgroundImage:
+                        "url('https://lh3.googleusercontent.com/aida-public/AB6AXuCH1jBvOoawUhYESwXafA_eB2BHrDlTnwUeopbI9qqFNGq3gERrtNVWqrQcxUSXgr41k1gbTuXfqm4G_9t7j2l9rZT9fGDPPG_D5YyPVdB9Gbjy1YTRjE9Dcuw4s6lvoupbdHdL4KaUdE7bRGnnvunwSfJwAuhhWimlox389maXh05BxsxW1DFzWrUzMbpADp9HqH95-z23LGJ5wDf6-tzFqrDSaVQX0z8j1-mY0EQHcWh9k0fP7S9e5VcuCANKtO2frN4iT8DYpQdU')",
+                    }}
+                  />
+                  <div>
+                    <p className="text-sm font-bold text-slate-900 dark:text-white">
+                      40代・元企画職
+                    </p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">2023年11月利用</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* FAQ Section */}
+          <section className="py-20 px-6 max-w-[800px] mx-auto w-full">
+            <h2 className="text-3xl font-bold text-center text-slate-900 dark:text-white mb-12">
+              よくあるご質問
+            </h2>
+
+            <div className="flex flex-col gap-4">
+              <details className="group bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+                <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
+                  <span className="text-lg font-bold text-slate-900 dark:text-white">
+                    本当に無料で利用できますか？
+                  </span>
+                  <span className="material-symbols-outlined transition-transform group-open:rotate-180">
+                    expand_more
+                  </span>
+                </summary>
+                <div className="px-6 pb-6 text-slate-600 dark:text-slate-400 leading-relaxed">
+                  はい、モニタープログラム期間中は全ての機能を無料でご利用いただけます。追加料金が発生することはございませんので、ご安心ください。
+                </div>
+              </details>
+
+              <details className="group bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+                <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
+                  <span className="text-lg font-bold text-slate-900 dark:text-white">
+                    退職前でも利用できますか？
+                  </span>
+                  <span className="material-symbols-outlined transition-transform group-open:rotate-180">
+                    expand_more
+                  </span>
+                </summary>
+                <div className="px-6 pb-6 text-slate-600 dark:text-slate-400 leading-relaxed">
+                  はい、ご利用可能です。退職をご検討中の段階から、次のキャリアに向けた準備を始めることを推奨しております。
+                </div>
+              </details>
+
+              <details className="group bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+                <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
+                  <span className="text-lg font-bold text-slate-900 dark:text-white">
+                    作成した書類は編集できますか？
+                  </span>
+                  <span className="material-symbols-outlined transition-transform group-open:rotate-180">
+                    expand_more
+                  </span>
+                </summary>
+                <div className="px-6 pb-6 text-slate-600 dark:text-slate-400 leading-relaxed">
+                  はい、Word形式およびPDF形式でお渡ししますので、ご自身で自由に編集・加筆していただくことが可能です。
+                </div>
+              </details>
+            </div>
+          </section>
+
+          {/* CTA Section */}
+          <section className="py-20 bg-[#3CC8E8]/5 dark:bg-slate-900/50">
+            <div className="max-w-[800px] mx-auto px-6 text-center">
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-6">
+                あなたのキャリアを、次のステージへ。
+              </h2>
+              <p className="text-lg text-slate-600 dark:text-slate-300 mb-8">
+                まずは無料のモニタープログラムにご参加ください。
+              </p>
+              <Link
+                href="/monitor-program/resume"
+                className="inline-flex items-center justify-center gap-2 h-14 px-10 rounded-xl bg-[#F97316] hover:bg-orange-500 text-white text-lg font-bold shadow-lg shadow-orange-500/30 transition-all hover:scale-105"
+              >
+                今すぐ無料で登録する
+                <span className="material-symbols-outlined">arrow_forward</span>
+              </Link>
+            </div>
+          </section>
+
+          {/* Footer */}
+          <footer className="bg-[#101822] text-slate-400 py-12 border-t border-slate-800">
+            <div className="max-w-[1200px] mx-auto px-6">
+              <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-8">
+                <Link href="/" className="flex items-center hover:opacity-90 transition-opacity">
+                  <Image
+                    src="/logo.png"
+                    alt="キャリアブリッジ"
+                    width={160}
+                    height={36}
+                    className="h-8 w-auto dark:brightness-0 dark:invert"
+                  />
+                </Link>
+                <div className="flex flex-wrap justify-center gap-6 text-sm font-medium">
+                  <Link href="#" className="hover:text-white transition-colors">
+                    運営会社
+                  </Link>
+                  <Link href="/privacy" className="hover:text-white transition-colors">
+                    プライバシーポリシー
+                  </Link>
+                  <Link href="/terms" className="hover:text-white transition-colors">
+                    利用規約
+                  </Link>
+                  <Link href="#" className="hover:text-white transition-colors">
+                    お問い合わせ
+                  </Link>
+                </div>
+              </div>
+              <div className="text-center text-xs text-slate-600">
+                &copy; 2023 CareerBridge Inc. All rights reserved.
+              </div>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </>
+  )
+}
