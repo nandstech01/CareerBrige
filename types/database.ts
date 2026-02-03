@@ -18,6 +18,13 @@ export type ScoutStatus = 'sent' | 'viewed' | 'replied' | 'declined'
 // Monitor Program types
 export type MonitorRole = 'owner' | 'admin' | 'staff' | 'viewer'
 export type MonitorSessionStatus =
+  | 'applied'
+  | 'scheduling'
+  | 'interview_waiting'
+  | 'interviewed'
+  | 'screening'
+  | 'decided'
+  | 'dropped'
   | 'started'
   | 'basic_info'
   | 'recording'
@@ -26,7 +33,7 @@ export type MonitorSessionStatus =
   | 'reviewing'
   | 'completed'
   | 'abandoned'
-export type MonitorSessionSource = 'public' | 'company_hearing'
+export type MonitorSessionSource = 'public' | 'company_hearing' | 'apply_form'
 export type MonitorConsentType = 'data_collection' | 'ai_processing' | 'anonymized_ml'
 
 export interface Database {

@@ -12,6 +12,8 @@ import {
   Sparkles,
   CheckCircle2,
   AlertCircle,
+  MessageSquare,
+  Save,
 } from 'lucide-react'
 
 interface SessionDetail {
@@ -24,6 +26,12 @@ interface SessionDetail {
     phone?: string
     age?: string
     prefecture?: string
+    gender?: string
+    canRelocate?: boolean
+    hasResume?: boolean
+    jobTemperature?: string
+    lineId?: string
+    admin_notes?: string
   } | null
   transcript: string | null
   resume_data: Record<string, unknown> | null
@@ -35,6 +43,16 @@ interface SessionDetail {
   created_at: string
   updated_at: string
 }
+
+const APPLY_STATUS_OPTIONS: { value: string; label: string; color: string }[] = [
+  { value: 'applied', label: '応募受付', color: 'bg-emerald-100 text-emerald-700 border-emerald-300' },
+  { value: 'scheduling', label: '日程調整中', color: 'bg-blue-100 text-blue-700 border-blue-300' },
+  { value: 'interview_waiting', label: '面談待ち', color: 'bg-yellow-100 text-yellow-700 border-yellow-300' },
+  { value: 'interviewed', label: '面談済み', color: 'bg-orange-100 text-orange-700 border-orange-300' },
+  { value: 'screening', label: '選考中', color: 'bg-teal-100 text-teal-700 border-teal-300' },
+  { value: 'decided', label: '決定済み', color: 'bg-rose-100 text-rose-700 border-rose-300' },
+  { value: 'dropped', label: '離脱', color: 'bg-gray-100 text-gray-500 border-gray-300' },
+]
 
 function formatDateTime(dateStr: string) {
   return new Date(dateStr).toLocaleString('ja-JP', {
@@ -52,23 +70,63 @@ export default function AdminSessionDetailPage() {
   const [session, setSession] = useState<SessionDetail | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [notes, setNotes] = useState('')
+  const [isSavingNotes, setIsSavingNotes] = useState(false)
+  const [isUpdatingStatus, setIsUpdatingStatus] = useState(false)
+
+  const fetchSession = async () => {
+    try {
+      const response = await fetch(`/api/monitor/admin/sessions?id=${sessionId}`)
+      if (!response.ok) throw new Error('Failed to fetch session')
+      const data = await response.json()
+      setSession(data.session)
+      setNotes((data.session?.basic_info as SessionDetail['basic_info'])?.admin_notes || '')
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'データの読み込みに失敗しました')
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   useEffect(() => {
-    const fetchSession = async () => {
-      try {
-        const response = await fetch(`/api/monitor/admin/sessions?id=${sessionId}`)
-        if (!response.ok) throw new Error('Failed to fetch session')
-        const data = await response.json()
-        setSession(data.session)
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'データの読み込みに失敗しました')
-      } finally {
-        setIsLoading(false)
-      }
-    }
-
     fetchSession()
   }, [sessionId])
+
+  const handleStatusUpdate = async (newStatus: string) => {
+    if (!session) return
+    setIsUpdatingStatus(true)
+    try {
+      const response = await fetch('/api/monitor/admin/sessions', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId: session.id, status: newStatus }),
+      })
+      if (!response.ok) throw new Error('Failed to update status')
+      await fetchSession()
+    } catch (err) {
+      console.error('Status update error:', err)
+    } finally {
+      setIsUpdatingStatus(false)
+    }
+  }
+
+  const handleSaveNotes = async () => {
+    if (!session) return
+    setIsSavingNotes(true)
+    try {
+      const response = await fetch('/api/monitor/admin/sessions', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId: session.id, status: session.status, notes }),
+      })
+      if (!response.ok) throw new Error('Failed to save notes')
+      await fetchSession()
+    } catch (err) {
+      console.error('Save notes error:', err)
+    } finally {
+      setIsSavingNotes(false)
+    }
+  }
 
   if (isLoading) {
     return (
@@ -123,7 +181,11 @@ export default function AdminSessionDetailPage() {
             )}
             <span className="text-sm text-slate-500">ステータス</span>
           </div>
-          <p className="font-semibold text-slate-900 dark:text-white capitalize">{session.status}</p>
+          <p className="font-semibold text-slate-900 dark:text-white capitalize">
+            {session.source === 'apply_form'
+              ? (APPLY_STATUS_OPTIONS.find(o => o.value === session.status)?.label || session.status)
+              : session.status}
+          </p>
         </div>
 
         <div className="bg-white dark:bg-midnight-800 rounded-xl border border-slate-200 dark:border-midnight-600 p-5">
@@ -146,6 +208,29 @@ export default function AdminSessionDetailPage() {
         </div>
       </div>
 
+      {/* Status Actions for apply_form sessions */}
+      {session.source === 'apply_form' && (
+        <div className="bg-white dark:bg-midnight-800 rounded-xl border border-slate-200 dark:border-midnight-600 p-6">
+          <h2 className="font-semibold text-slate-900 dark:text-white mb-4">面談ステータス</h2>
+          <div className="flex flex-wrap gap-2">
+            {APPLY_STATUS_OPTIONS.map((opt) => (
+              <button
+                key={opt.value}
+                onClick={() => handleStatusUpdate(opt.value)}
+                disabled={isUpdatingStatus || session.status === opt.value}
+                className={`px-4 py-2 rounded-full text-sm font-medium border transition-all ${
+                  session.status === opt.value
+                    ? `${opt.color} ring-2 ring-offset-1 ring-current`
+                    : `${opt.color} opacity-60 hover:opacity-100`
+                } disabled:cursor-not-allowed`}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Basic Info */}
       {session.basic_info && (
         <div className="bg-white dark:bg-midnight-800 rounded-xl border border-slate-200 dark:border-midnight-600 p-6">
@@ -158,10 +243,12 @@ export default function AdminSessionDetailPage() {
               <dt className="text-slate-500 dark:text-slate-400">氏名</dt>
               <dd className="font-medium text-slate-900 dark:text-white">{session.basic_info.name || '-'}</dd>
             </div>
-            <div>
-              <dt className="text-slate-500 dark:text-slate-400">電話番号</dt>
-              <dd className="font-medium text-slate-900 dark:text-white">{session.basic_info.phone || '-'}</dd>
-            </div>
+            {session.basic_info.phone !== undefined && (
+              <div>
+                <dt className="text-slate-500 dark:text-slate-400">電話番号</dt>
+                <dd className="font-medium text-slate-900 dark:text-white">{session.basic_info.phone || '-'}</dd>
+              </div>
+            )}
             <div>
               <dt className="text-slate-500 dark:text-slate-400">年齢</dt>
               <dd className="font-medium text-slate-900 dark:text-white">{session.basic_info.age || '-'}</dd>
@@ -170,9 +257,64 @@ export default function AdminSessionDetailPage() {
               <dt className="text-slate-500 dark:text-slate-400">都道府県</dt>
               <dd className="font-medium text-slate-900 dark:text-white">{session.basic_info.prefecture || '-'}</dd>
             </div>
+            {session.basic_info.gender && (
+              <div>
+                <dt className="text-slate-500 dark:text-slate-400">性別</dt>
+                <dd className="font-medium text-slate-900 dark:text-white">{session.basic_info.gender}</dd>
+              </div>
+            )}
+            {session.basic_info.canRelocate !== undefined && (
+              <div>
+                <dt className="text-slate-500 dark:text-slate-400">転居可否</dt>
+                <dd className="font-medium text-slate-900 dark:text-white">{session.basic_info.canRelocate ? '可能' : '不可'}</dd>
+              </div>
+            )}
+            {session.basic_info.hasResume !== undefined && (
+              <div>
+                <dt className="text-slate-500 dark:text-slate-400">履歴書有無</dt>
+                <dd className="font-medium text-slate-900 dark:text-white">{session.basic_info.hasResume ? 'あり' : 'なし'}</dd>
+              </div>
+            )}
+            {session.basic_info.jobTemperature && (
+              <div>
+                <dt className="text-slate-500 dark:text-slate-400">転職温度</dt>
+                <dd className="font-medium text-slate-900 dark:text-white">{session.basic_info.jobTemperature}</dd>
+              </div>
+            )}
+            {session.basic_info.lineId && (
+              <div>
+                <dt className="text-slate-500 dark:text-slate-400">LINE ID</dt>
+                <dd className="font-medium text-slate-900 dark:text-white">{session.basic_info.lineId}</dd>
+              </div>
+            )}
           </dl>
         </div>
       )}
+
+      {/* Notes */}
+      <div className="bg-white dark:bg-midnight-800 rounded-xl border border-slate-200 dark:border-midnight-600 p-6">
+        <h2 className="font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+          <MessageSquare className="w-5 h-5" />
+          メモ
+        </h2>
+        <textarea
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+          placeholder="管理者メモを入力..."
+          rows={4}
+          className="w-full px-4 py-3 bg-white dark:bg-midnight-700 border border-slate-200 dark:border-midnight-600 rounded-lg text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-brand-cyan focus:ring-1 focus:ring-brand-cyan resize-none text-sm"
+        />
+        <div className="mt-3 flex justify-end">
+          <button
+            onClick={handleSaveNotes}
+            disabled={isSavingNotes}
+            className="flex items-center gap-2 px-4 py-2 bg-brand-cyan text-white rounded-lg hover:bg-brand-cyan/90 transition-colors disabled:opacity-50 text-sm font-medium"
+          >
+            <Save className="w-4 h-4" />
+            {isSavingNotes ? '保存中...' : 'メモを保存'}
+          </button>
+        </div>
+      </div>
 
       {/* Transcript */}
       {session.transcript && (

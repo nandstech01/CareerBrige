@@ -12,6 +12,7 @@ function LoginContent() {
   const searchParams = useSearchParams()
   const isCompany = searchParams.get('role') === 'company'
   const registered = searchParams.get('registered') === 'true'
+  const redirectTo = searchParams.get('redirect')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -38,9 +39,14 @@ function LoginContent() {
       const role = data.role || 'engineer'
       let redirectPath = '/engineer/dashboard'
       if (role === 'admin') {
-        redirectPath = '/admin/dashboard'
+        redirectPath = '/admin/monitor/sessions'
       } else if (role === 'company') {
         redirectPath = '/company/dashboard'
+      }
+
+      // Use redirect param for non-admin users if provided
+      if (redirectTo && role !== 'admin') {
+        redirectPath = redirectTo
       }
 
       router.push(redirectPath)

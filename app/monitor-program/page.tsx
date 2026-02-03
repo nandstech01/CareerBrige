@@ -10,6 +10,7 @@ import VideoPlayer from '@/components/video/VideoPlayer'
 export default function TaishokuSupportPage() {
   const { theme } = useTheme()
   const [mounted, setMounted] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   useEffect(() => { setMounted(true) }, [])
   const currentTheme = (mounted ? theme : 'light') as 'light' | 'dark'
 
@@ -56,20 +57,44 @@ export default function TaishokuSupportPage() {
               </Link>
               <div className="hidden md:flex gap-3 items-center">
                 <ThemeToggle />
-                <button className="px-5 py-2.5 rounded-lg text-sm font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                <Link href="/login?redirect=/monitor-program" className="px-5 py-2.5 rounded-lg text-sm font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
                   ログイン
-                </button>
-                <button className="px-5 py-2.5 rounded-lg bg-[#3CC8E8] text-white text-sm font-bold shadow-md hover:bg-[#2BB8D8] transition-all hover:shadow-lg">
+                </Link>
+                <Link href="/signup?redirect=/monitor-program" className="px-5 py-2.5 rounded-lg bg-[#3CC8E8] text-white text-sm font-bold shadow-md hover:bg-[#2BB8D8] transition-all hover:shadow-lg">
                   会員登録
-                </button>
+                </Link>
               </div>
               <div className="md:hidden flex items-center gap-2">
                 <ThemeToggle />
-                <button className="text-slate-700 dark:text-slate-200">
-                  <span className="material-symbols-outlined">menu</span>
+                <button
+                  className="text-slate-700 dark:text-slate-200"
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                  aria-label="メニューを開く"
+                >
+                  <span className="material-symbols-outlined">{mobileMenuOpen ? 'close' : 'menu'}</span>
                 </button>
               </div>
             </div>
+
+            {/* Mobile Menu Drawer */}
+            {mobileMenuOpen && (
+              <div className="md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-[#101822] px-6 py-4 flex flex-col gap-3">
+                <Link
+                  href="/login?redirect=/monitor-program"
+                  className="block w-full text-center px-5 py-3 rounded-lg text-sm font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  ログイン
+                </Link>
+                <Link
+                  href="/signup?redirect=/monitor-program"
+                  className="block w-full text-center px-5 py-3 rounded-lg bg-[#3CC8E8] text-white text-sm font-bold shadow-md hover:bg-[#2BB8D8] transition-all"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  会員登録
+                </Link>
+              </div>
+            )}
           </header>
 
           {/* Hero Section */}

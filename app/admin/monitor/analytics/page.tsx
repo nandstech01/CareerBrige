@@ -235,6 +235,7 @@ export default function AdminMonitorAnalyticsPage() {
             <AdminSessionList
               sessions={data.recentSessions as never[]}
               total={data.stats.totalSessions}
+              viewMode="list"
             />
           </div>
         </div>

@@ -14,7 +14,7 @@ export function generateSessionToken(): string {
  */
 export async function createSession(params: {
   sessionToken: string
-  source?: 'public' | 'company_hearing'
+  source?: 'public' | 'company_hearing' | 'apply_form'
   workspaceId?: string | null
   createdByProfileId?: string | null
   assignedStaffId?: string | null
@@ -248,4 +248,79 @@ export async function listPublicSessions(options?: {
 
   if (error) throw new Error(`Failed to list sessions: ${error.message}`)
   return { sessions: data, total: count }
+}
+
+/**
+ * Create a session from the apply form (LINE応募)
+ */
+export async function createApplySession(formData: {
+  name: string
+  age: string
+  gender: string
+  prefecture: string
+  canRelocate: boolean
+  hasResume: boolean
+  jobTemperature: string
+  lineId: string
+}) {
+  const supabase = createMonitorAdminClient()
+
+  const { data, error } = await supabase
+    .from('monitor_sessions')
+    .insert({
+      session_token: generateSessionToken(),
+      source: 'apply_form',
+      workspace_id: null,
+      status: 'applied' as MonitorSessionStatus,
+      step_reached: 0,
+      basic_info: formData as unknown as Record<string, unknown>,
+    })
+    .select()
+    .single()
+
+  if (error) throw new Error(`Failed to create apply session: ${error.message}`)
+  return data
+}
+
+/**
+ * Update session status (admin use)
+ */
+export async function updateSessionStatus(
+  sessionId: string,
+  status: MonitorSessionStatus,
+  notes?: string
+) {
+  const supabase = createMonitorAdminClient()
+
+  // If notes provided, merge into basic_info
+  if (notes !== undefined) {
+    const session = await getSessionById(sessionId)
+    if (!session) throw new Error('Session not found')
+
+    const currentInfo = (session.basic_info || {}) as Record<string, unknown>
+    const updatedInfo = { ...currentInfo, admin_notes: notes }
+
+    const { data, error } = await supabase
+      .from('monitor_sessions')
+      .update({
+        status,
+        basic_info: updatedInfo,
+      })
+      .eq('id', sessionId)
+      .select()
+      .single()
+
+    if (error) throw new Error(`Failed to update session status: ${error.message}`)
+    return data
+  }
+
+  const { data, error } = await supabase
+    .from('monitor_sessions')
+    .update({ status })
+    .eq('id', sessionId)
+    .select()
+    .single()
+
+  if (error) throw new Error(`Failed to update session status: ${error.message}`)
+  return data
 }

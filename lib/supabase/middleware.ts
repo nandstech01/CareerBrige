@@ -61,15 +61,21 @@ export async function updateSession(request: NextRequest) {
   // ロールに応じて適切なダッシュボードにリダイレクト
   if (user && (request.nextUrl.pathname === '/login' || request.nextUrl.pathname === '/signup')) {
     const url = request.nextUrl.clone()
-    // user_metadataからロールを取得（サインアップ時に設定されている場合）
     const role = user.user_metadata?.role || 'engineer'
+    const redirectParam = request.nextUrl.searchParams.get('redirect')
+
     if (role === 'admin') {
-      url.pathname = '/admin/dashboard'
+      url.pathname = '/admin/monitor/sessions'
+    } else if (redirectParam) {
+      url.pathname = redirectParam
     } else if (role === 'company') {
       url.pathname = '/company/dashboard'
     } else {
       url.pathname = '/engineer/dashboard'
     }
+
+    // クエリパラメータをクリアして遷移先URLに漏れないようにする
+    url.search = ''
     return NextResponse.redirect(url)
   }
 

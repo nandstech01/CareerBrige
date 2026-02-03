@@ -69,6 +69,8 @@ export default function ApplyPage() {
     setError('')
 
     try {
+      const promises: Promise<unknown>[] = []
+
       // GAS APIが設定されている場合は送信（GETパラメータ方式）
       if (GAS_API_URL) {
         const params = new URLSearchParams({
@@ -83,15 +85,41 @@ export default function ApplyPage() {
         })
 
         // GETリクエストで送信（CORS回避）
-        await fetch(`${GAS_API_URL}?${params.toString()}`, {
-          method: 'GET',
-          mode: 'no-cors',
-        })
-        // no-corsモードではレスポンスを読めないので、成功とみなす
+        promises.push(
+          fetch(`${GAS_API_URL}?${params.toString()}`, {
+            method: 'GET',
+            mode: 'no-cors',
+          })
+        )
       }
 
-      // デモ用：常に成功
-      setIsSuccess(true)
+      // DB保存API
+      promises.push(
+        fetch('/api/apply', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: formData.name,
+            age: formData.age,
+            gender: formData.gender,
+            prefecture: formData.prefecture,
+            canRelocate: formData.canRelocate,
+            hasResume: formData.hasResume,
+            jobTemperature: formData.jobTemperature.join(', '),
+            lineId: formData.lineId,
+          }),
+        })
+      )
+
+      // 並列実行: どちらか一方でも成功すれば成功とする
+      const results = await Promise.allSettled(promises)
+      const anySuccess = results.some(r => r.status === 'fulfilled')
+
+      if (anySuccess) {
+        setIsSuccess(true)
+      } else {
+        setError('送信中にエラーが発生しました。もう一度お試しください。')
+      }
     } catch (err) {
       console.error('Submit error:', err)
       setError('送信中にエラーが発生しました。もう一度お試しください。')
