@@ -146,7 +146,7 @@ export function ResumePreview({ resume, onUpdate, onRefine, isRefining }: Resume
         <h2 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">
           履歴書プレビュー
         </h2>
-        <p className="text-sm text-slate-600 dark:text-slate-400">
+        <p className="text-sm text-slate-600 dark:text-slate-300">
           内容を確認・編集してください
         </p>
       </div>
@@ -194,7 +194,7 @@ export function ResumePreview({ resume, onUpdate, onRefine, isRefining }: Resume
           <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-3">
             {resume.personalInfo.name || '氏名未入力'}
           </h3>
-          <div className="flex flex-wrap gap-4 text-sm text-slate-600 dark:text-slate-400">
+          <div className="flex flex-wrap gap-4 text-sm text-slate-600 dark:text-slate-300">
             <span className="flex items-center gap-1">
               <Phone className="w-4 h-4" />
               {resume.personalInfo.phone || '電話番号未入力'}
@@ -307,7 +307,7 @@ export function ResumePreview({ resume, onUpdate, onRefine, isRefining }: Resume
                         <div className="font-medium text-slate-900 dark:text-white">
                           {work.companyName || '会社名未入力'}
                         </div>
-                        <div className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+                        <div className="text-sm text-slate-500 dark:text-slate-300 mt-1">
                           {work.period} {work.position && `/ ${work.position}`}
                         </div>
                         {work.description && (
@@ -321,7 +321,7 @@ export function ResumePreview({ resume, onUpdate, onRefine, isRefining }: Resume
                 ))}
               </div>
             ) : (
-              <p className="text-sm text-slate-500 dark:text-slate-400 italic">
+              <p className="text-sm text-slate-500 dark:text-slate-300 italic">
                 職歴情報がありません
               </p>
             )}
@@ -412,7 +412,7 @@ export function ResumePreview({ resume, onUpdate, onRefine, isRefining }: Resume
                         <div className="font-medium text-slate-900 dark:text-white">
                           {edu.schoolName || '学校名未入力'}
                         </div>
-                        <div className="text-sm text-slate-500 dark:text-slate-400">
+                        <div className="text-sm text-slate-500 dark:text-slate-300">
                           {edu.major} {edu.graduationYear && `(${edu.graduationYear}卒業)`}
                         </div>
                       </>
@@ -421,7 +421,7 @@ export function ResumePreview({ resume, onUpdate, onRefine, isRefining }: Resume
                 ))}
               </div>
             ) : (
-              <p className="text-sm text-slate-500 dark:text-slate-400 italic">
+              <p className="text-sm text-slate-500 dark:text-slate-300 italic">
                 学歴情報がありません
               </p>
             )}
@@ -472,7 +472,7 @@ export function ResumePreview({ resume, onUpdate, onRefine, isRefining }: Resume
                 ))}
               </div>
             ) : (
-              <p className="text-sm text-slate-500 dark:text-slate-400 italic">
+              <p className="text-sm text-slate-500 dark:text-slate-300 italic">
                 資格情報がありません
               </p>
             )}
@@ -523,7 +523,7 @@ export function ResumePreview({ resume, onUpdate, onRefine, isRefining }: Resume
                 ))}
               </div>
             ) : (
-              <p className="text-sm text-slate-500 dark:text-slate-400 italic">
+              <p className="text-sm text-slate-500 dark:text-slate-300 italic">
                 スキル情報がありません
               </p>
             )}
@@ -569,7 +569,7 @@ export function ResumePreview({ resume, onUpdate, onRefine, isRefining }: Resume
                 </p>
               </div>
             ) : (
-              <p className="text-sm text-slate-500 dark:text-slate-400 italic">
+              <p className="text-sm text-slate-500 dark:text-slate-300 italic">
                 自己PRがありません
               </p>
             )}

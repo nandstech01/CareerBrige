@@ -227,7 +227,7 @@ export function SourcePieChart({ data }: SourceChartProps) {
       </div>
       <div className="flex justify-center gap-4 mt-2">
         {chartData.map(d => (
-          <div key={d.name} className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400">
+          <div key={d.name} className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-300">
             <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: d.color }} />
             {d.name}: {d.value}件
           </div>
@@ -271,7 +271,7 @@ export function AiUsageStats({ totalAiCalls, avgAiCalls, pdfDownloads, avgComple
       <div className="grid grid-cols-2 gap-4">
         {items.map(item => (
           <div key={item.label} className="text-center p-3 rounded-lg bg-slate-50 dark:bg-midnight-700">
-            <p className="text-xs text-slate-500 dark:text-slate-400 mb-1">{item.label}</p>
+            <p className="text-xs text-slate-500 dark:text-slate-300 mb-1">{item.label}</p>
             <p className="text-xl font-bold text-slate-900 dark:text-white">{item.value}</p>
             <p className="text-[10px] text-slate-400">{item.sub}</p>
           </div>

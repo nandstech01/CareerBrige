@@ -358,7 +358,7 @@ export function ResignationPdf({ data, onDownloadComplete }: ResignationPdfProps
             <h3 className="font-semibold text-slate-900 dark:text-white">
               退職届PDFをダウンロード
             </h3>
-            <p className="text-sm text-slate-600 dark:text-slate-400">
+            <p className="text-sm text-slate-600 dark:text-slate-300">
               A4サイズのPDFファイルで保存されます
             </p>
           </div>
@@ -405,7 +405,7 @@ export function ResignationPdf({ data, onDownloadComplete }: ResignationPdfProps
         </button>
       </div>
 
-      <p className="text-xs text-slate-500 dark:text-slate-400 text-center">
+      <p className="text-xs text-slate-500 dark:text-slate-300 text-center">
         ※印鑑は[印]と表示されています。印刷後に実際の印鑑を押印してください。
       </p>
     </div>

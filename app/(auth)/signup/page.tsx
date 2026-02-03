@@ -107,7 +107,7 @@ function SignupContent() {
           </div>
         </div>
 
-        <div className="text-slate-500 dark:text-slate-400 text-sm">
+        <div className="text-slate-500 dark:text-slate-300 text-sm">
           &copy; 2024 CareerBridge. All rights reserved.
         </div>
       </div>
@@ -132,7 +132,7 @@ function SignupContent() {
               <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
                 アカウント作成
               </h2>
-              <p className="text-slate-500 dark:text-slate-400">
+              <p className="text-slate-500 dark:text-slate-300">
                 CareerBridgeに登録して始めましょう
               </p>
             </div>
@@ -299,7 +299,7 @@ function SignupContent() {
             </form>
 
             <div className="mt-8 text-center">
-              <p className="text-slate-500 dark:text-slate-400 text-sm">
+              <p className="text-slate-500 dark:text-slate-300 text-sm">
                 既にアカウントをお持ちの方は{' '}
                 <Link href="/login" className="text-sky-600 dark:text-sky-400 hover:text-sky-500 transition-colors font-medium">
                   ログイン

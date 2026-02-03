@@ -79,7 +79,7 @@ function SidebarSection({ section }: { section: NavSection }) {
       {section.title && (
         <button
           onClick={() => setOpen(!open)}
-          className="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
+          className="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
         >
           {section.title}
           <ChevronDown
@@ -100,7 +100,7 @@ function SidebarSection({ section }: { section: NavSection }) {
                   className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                     isActive
                       ? 'bg-brand-cyan/10 text-brand-cyan'
-                      : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-midnight-700 hover:text-slate-900 dark:hover:text-white'
+                      : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-midnight-700 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >
                   <item.icon className="w-5 h-5 flex-shrink-0" />

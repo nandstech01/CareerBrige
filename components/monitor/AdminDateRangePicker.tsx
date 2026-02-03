@@ -67,7 +67,7 @@ export function AdminDateRangePicker({ value, onChange }: AdminDateRangePickerPr
         <>
           <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />
           <div className="absolute right-0 mt-2 z-50 w-64 bg-white dark:bg-midnight-800 border border-slate-200 dark:border-midnight-600 rounded-xl shadow-lg p-3">
-            <p className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-2 px-1">
+            <p className="text-xs font-medium text-slate-500 dark:text-slate-300 mb-2 px-1">
               期間プリセット
             </p>
             <div className="space-y-1">
@@ -87,7 +87,7 @@ export function AdminDateRangePicker({ value, onChange }: AdminDateRangePickerPr
             </div>
 
             <div className="border-t border-slate-200 dark:border-midnight-600 mt-3 pt-3">
-              <p className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-2 px-1">
+              <p className="text-xs font-medium text-slate-500 dark:text-slate-300 mb-2 px-1">
                 カスタム期間
               </p>
               <div className="flex gap-2">
@@ -112,7 +112,7 @@ export function AdminDateRangePicker({ value, onChange }: AdminDateRangePickerPr
                     className={`flex-1 px-2 py-1 rounded text-xs transition-colors ${
                       value.granularity === g
                         ? 'bg-brand-cyan text-white'
-                        : 'bg-slate-100 dark:bg-midnight-700 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-midnight-600'
+                        : 'bg-slate-100 dark:bg-midnight-700 text-slate-500 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-midnight-600'
                     }`}
                   >
                     {{ day: '日', week: '週', month: '月' }[g]}

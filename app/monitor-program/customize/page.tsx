@@ -69,7 +69,7 @@ export default function CustomizePage() {
             <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
               まずベースの履歴書を作成してください
             </h2>
-            <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">
+            <p className="text-sm text-slate-600 dark:text-slate-300 mb-6">
               企業特化履歴書を作成するには、先にベースとなる履歴書が必要です。
             </p>
             <Link
@@ -113,7 +113,7 @@ export default function CustomizePage() {
                         ? 'bg-green-500 text-white'
                         : currentStep === step.id
                         ? 'bg-brand-cyan text-white shadow-lg shadow-brand-cyan/25'
-                        : 'bg-slate-200 dark:bg-midnight-700 text-slate-500 dark:text-slate-400'
+                        : 'bg-slate-200 dark:bg-midnight-700 text-slate-500 dark:text-slate-300'
                     }`}
                   >
                     <step.icon className="w-5 h-5" />
@@ -122,7 +122,7 @@ export default function CustomizePage() {
                     className={`mt-2 text-xs font-medium whitespace-nowrap ${
                       currentStep >= step.id
                         ? 'text-slate-900 dark:text-white'
-                        : 'text-slate-500 dark:text-slate-400'
+                        : 'text-slate-500 dark:text-slate-300'
                     }`}
                   >
                     {step.title}
@@ -146,7 +146,7 @@ export default function CustomizePage() {
         {currentStep > 1 && (
           <button
             onClick={() => setCurrentStep(currentStep - 1)}
-            className="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-brand-cyan transition-colors mb-6"
+            className="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-brand-cyan transition-colors mb-6"
           >
             <ArrowLeft className="w-4 h-4" />
             戻る
@@ -179,11 +179,11 @@ export default function CustomizePage() {
               <Link href="/" className="text-brand-cyan font-semibold">
                 CareerBridge
               </Link>
-              <span className="text-xs text-slate-500 dark:text-slate-400">
+              <span className="text-xs text-slate-500 dark:text-slate-300">
                 運営: 株式会社エヌアンドエス
               </span>
             </div>
-            <div className="flex items-center gap-6 text-sm text-slate-600 dark:text-slate-400">
+            <div className="flex items-center gap-6 text-sm text-slate-600 dark:text-slate-300">
               <Link href="/terms" className="hover:text-brand-cyan transition-colors">
                 利用規約
               </Link>

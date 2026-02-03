@@ -151,26 +151,31 @@ export default function TaishokuSupportPage() {
                   </div>
 
                   {/* Description */}
-                  <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                  <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-300">
                     通過率を高める「履歴書完成保証」プログラム。
                     <br />
-                    最新のAI技術とプロの知見を融合したモニタープログラムで、
+                    最新のAI技術とプロの知見を融合した
                     <br />
-                    あなたの経験を最大限に評価される職務経歴書へ。
+                    モニタープログラム
+                    <br />
+                    あなたの経験を最大限に評価される職務経歴書へ
                   </p>
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
                   <Link
                     href="/monitor-program/resume"
-                    className="flex items-center justify-center gap-2 h-14 px-8 rounded-xl bg-[#F97316] hover:bg-orange-500 text-white text-base font-bold shadow-[0_0_20px_rgba(249,115,22,0.4)] transition-all hover:scale-105"
+                    className="flex flex-col items-center justify-center gap-0.5 h-16 px-8 rounded-xl bg-[#F97316] hover:bg-orange-500 text-white font-bold shadow-[0_0_20px_rgba(249,115,22,0.4)] transition-all hover:scale-105"
                   >
-                    モニタープログラムに参加する（無料）
-                    <span className="material-symbols-outlined">arrow_forward</span>
+                    <span className="text-xs font-medium opacity-90">最短15秒で無料登録</span>
+                    <span className="flex items-center gap-1 text-base">
+                      モニタープログラムに参加する
+                      <span className="material-symbols-outlined text-lg">arrow_forward</span>
+                    </span>
                   </Link>
                 </div>
 
-                <div className="flex items-center justify-center lg:justify-start gap-4 text-xs text-slate-500 dark:text-slate-400 pt-2">
+                <div className="flex items-center justify-center lg:justify-start gap-4 text-xs text-slate-500 dark:text-slate-300 pt-2">
                   <div className="flex items-center gap-1">
                     <span className="material-symbols-outlined text-sm text-green-400">lock</span>
                     SSL Secure
@@ -202,10 +207,10 @@ export default function TaishokuSupportPage() {
           {/* Features (Bento Grid) */}
           <section className="py-20 px-6 max-w-[1200px] mx-auto w-full">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
+              <h2 className="text-[1.45rem] md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
                 CareerBridgeの3つの強み
               </h2>
-              <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+              <p className="text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
                 確実な書類作成と高いセキュリティで、あなたの再出発をサポートします。
               </p>
             </div>
@@ -217,7 +222,7 @@ export default function TaishokuSupportPage() {
                   <span className="material-symbols-outlined text-3xl">description</span>
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 dark:text-white">履歴書完成保証</h3>
-                <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+                <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
                   AIとプロの添削により、企業に響く完成度の高い応募書類を確実に作成します。納得いくまで何度でも修正可能です。
                 </p>
               </div>
@@ -228,7 +233,7 @@ export default function TaishokuSupportPage() {
                   <span className="material-symbols-outlined text-3xl">trending_up</span>
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 dark:text-white">通過率アップ</h3>
-                <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+                <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
                   採用トレンドを分析したAIアルゴリズムにより、書類選考の通過率を大幅に改善。あなたの強みを数値化してアピールします。
                 </p>
               </div>
@@ -241,7 +246,7 @@ export default function TaishokuSupportPage() {
                 <h3 className="text-xl font-bold text-slate-900 dark:text-white">
                   万全のセキュリティ
                 </h3>
-                <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+                <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
                   金融機関レベルのデータ暗号化技術を採用。個人情報は厳重に保護され、外部に漏れる心配はありません。
                 </p>
               </div>
@@ -255,7 +260,7 @@ export default function TaishokuSupportPage() {
                 <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">
                   ご利用の流れ
                 </h2>
-                <p className="text-slate-600 dark:text-slate-400">
+                <p className="text-slate-600 dark:text-slate-300">
                   最短3ステップで、あなたの書類が完成します。
                 </p>
               </div>
@@ -275,7 +280,7 @@ export default function TaishokuSupportPage() {
                   <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
                     会員登録
                   </h3>
-                  <p className="text-slate-600 dark:text-slate-400 text-sm max-w-[240px]">
+                  <p className="text-slate-600 dark:text-slate-300 text-sm max-w-[240px]">
                     メールアドレスだけで簡単に登録。すぐにサービスを開始できます。
                   </p>
                 </div>
@@ -291,7 +296,7 @@ export default function TaishokuSupportPage() {
                   <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
                     オンラインヒアリング
                   </h3>
-                  <p className="text-slate-600 dark:text-slate-400 text-sm max-w-[240px]">
+                  <p className="text-slate-600 dark:text-slate-300 text-sm max-w-[240px]">
                     AIチャットまたは担当者とチャット形式で、これまでの経験をお話しください。
                   </p>
                 </div>
@@ -307,7 +312,7 @@ export default function TaishokuSupportPage() {
                   <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
                     ドラフト受け取り
                   </h3>
-                  <p className="text-slate-600 dark:text-slate-400 text-sm max-w-[240px]">
+                  <p className="text-slate-600 dark:text-slate-300 text-sm max-w-[240px]">
                     プロが作成した職務経歴書のドラフトを受け取り、確認・修正して完成です。
                   </p>
                 </div>
@@ -352,7 +357,7 @@ export default function TaishokuSupportPage() {
                     <p className="text-sm font-bold text-slate-900 dark:text-white">
                       30代・前職営業
                     </p>
-                    <p className="text-xs text-slate-500 dark:text-slate-400">2023年10月利用</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-300">2023年10月利用</p>
                   </div>
                 </div>
               </div>
@@ -387,7 +392,7 @@ export default function TaishokuSupportPage() {
                     <p className="text-sm font-bold text-slate-900 dark:text-white">
                       20代・事務職
                     </p>
-                    <p className="text-xs text-slate-500 dark:text-slate-400">2023年9月利用</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-300">2023年9月利用</p>
                   </div>
                 </div>
               </div>
@@ -425,7 +430,7 @@ export default function TaishokuSupportPage() {
                     <p className="text-sm font-bold text-slate-900 dark:text-white">
                       40代・元企画職
                     </p>
-                    <p className="text-xs text-slate-500 dark:text-slate-400">2023年11月利用</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-300">2023年11月利用</p>
                   </div>
                 </div>
               </div>
@@ -448,7 +453,7 @@ export default function TaishokuSupportPage() {
                     expand_more
                   </span>
                 </summary>
-                <div className="px-6 pb-6 text-slate-600 dark:text-slate-400 leading-relaxed">
+                <div className="px-6 pb-6 text-slate-600 dark:text-slate-300 leading-relaxed">
                   はい、モニタープログラム期間中は全ての機能を無料でご利用いただけます。追加料金が発生することはございませんので、ご安心ください。
                 </div>
               </details>
@@ -462,7 +467,7 @@ export default function TaishokuSupportPage() {
                     expand_more
                   </span>
                 </summary>
-                <div className="px-6 pb-6 text-slate-600 dark:text-slate-400 leading-relaxed">
+                <div className="px-6 pb-6 text-slate-600 dark:text-slate-300 leading-relaxed">
                   はい、ご利用可能です。退職をご検討中の段階から、次のキャリアに向けた準備を始めることを推奨しております。
                 </div>
               </details>
@@ -476,7 +481,7 @@ export default function TaishokuSupportPage() {
                     expand_more
                   </span>
                 </summary>
-                <div className="px-6 pb-6 text-slate-600 dark:text-slate-400 leading-relaxed">
+                <div className="px-6 pb-6 text-slate-600 dark:text-slate-300 leading-relaxed">
                   はい、Word形式およびPDF形式でお渡ししますので、ご自身で自由に編集・加筆していただくことが可能です。
                 </div>
               </details>
@@ -486,8 +491,8 @@ export default function TaishokuSupportPage() {
           {/* CTA Section */}
           <section className="py-20 bg-[#3CC8E8]/5 dark:bg-slate-900/50">
             <div className="max-w-[800px] mx-auto px-6 text-center">
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-6">
-                あなたのキャリアを、次のステージへ。
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-6 text-center">
+                あなたのキャリアを、<br className="md:hidden" />次のステージへ。
               </h2>
               <p className="text-lg text-slate-600 dark:text-slate-300 mb-8">
                 まずは無料のモニタープログラムにご参加ください。

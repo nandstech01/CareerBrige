@@ -74,7 +74,7 @@ export function AdminUserMenu() {
           <p className="text-sm font-medium text-slate-900 dark:text-white">
             {profile.display_name}
           </p>
-          <p className="text-xs text-slate-500 dark:text-slate-400">
+          <p className="text-xs text-slate-500 dark:text-slate-300">
             {profile.email}
           </p>
         </div>

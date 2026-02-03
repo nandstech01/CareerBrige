@@ -28,7 +28,7 @@ const ROLE_LABELS: Record<string, { label: string; icon: typeof Shield; color: s
   owner: { label: 'オーナー', icon: Shield, color: 'text-amber-600 bg-amber-100 dark:bg-amber-900/30 dark:text-amber-400' },
   admin: { label: '管理者', icon: Shield, color: 'text-purple-600 bg-purple-100 dark:bg-purple-900/30 dark:text-purple-400' },
   staff: { label: 'スタッフ', icon: Users, color: 'text-brand-cyan bg-brand-cyan/10' },
-  viewer: { label: '閲覧者', icon: Eye, color: 'text-slate-600 bg-slate-100 dark:bg-slate-800 dark:text-slate-400' },
+  viewer: { label: '閲覧者', icon: Eye, color: 'text-slate-600 bg-slate-100 dark:bg-slate-800 dark:text-slate-300' },
 }
 
 export default function AdminMonitorUsersPage() {
@@ -70,7 +70,7 @@ export default function AdminMonitorUsersPage() {
           <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
             モニターユーザー管理
           </h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-sm text-slate-500 dark:text-slate-300 mt-1">
             ワークスペースメンバーの管理
           </p>
         </div>
@@ -85,7 +85,7 @@ export default function AdminMonitorUsersPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-white dark:bg-midnight-800 rounded-xl border border-slate-200 dark:border-midnight-600 p-4">
             <div className="flex items-center justify-between">
-              <span className="text-sm text-slate-500 dark:text-slate-400">管理者アカウント</span>
+              <span className="text-sm text-slate-500 dark:text-slate-300">管理者アカウント</span>
               <span className="text-sm font-medium text-slate-900 dark:text-white">
                 {limits.currentAdmin} / {limits.maxAdmin}
               </span>
@@ -99,7 +99,7 @@ export default function AdminMonitorUsersPage() {
           </div>
           <div className="bg-white dark:bg-midnight-800 rounded-xl border border-slate-200 dark:border-midnight-600 p-4">
             <div className="flex items-center justify-between">
-              <span className="text-sm text-slate-500 dark:text-slate-400">一般アカウント</span>
+              <span className="text-sm text-slate-500 dark:text-slate-300">一般アカウント</span>
               <span className="text-sm font-medium text-slate-900 dark:text-white">
                 {limits.currentGeneral} / {limits.maxGeneral}
               </span>
@@ -135,7 +135,7 @@ export default function AdminMonitorUsersPage() {
                       <p className="font-medium text-slate-900 dark:text-white text-sm">
                         {member.profiles?.display_name || 'Unknown'}
                       </p>
-                      <p className="text-xs text-slate-500 dark:text-slate-400">
+                      <p className="text-xs text-slate-500 dark:text-slate-300">
                         {member.profiles?.email || '-'}
                       </p>
                     </div>

@@ -63,7 +63,7 @@ export default function CareerConsultPage() {
         {/* Back link */}
         <Link
           href="/monitor-program/complete"
-          className="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-brand-cyan transition-colors mb-6"
+          className="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-brand-cyan transition-colors mb-6"
         >
           <ArrowLeft className="w-4 h-4" />
           戻る
@@ -182,7 +182,7 @@ export default function CareerConsultPage() {
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </a>
 
-                <p className="text-xs text-slate-500 dark:text-slate-400 text-center">
+                <p className="text-xs text-slate-500 dark:text-slate-300 text-center">
                   LINEを追加いただくと、担当者からスムーズにご連絡できます
                 </p>
               </div>
@@ -199,11 +199,11 @@ export default function CareerConsultPage() {
               <Link href="/" className="text-brand-cyan font-semibold">
                 CareerBridge
               </Link>
-              <span className="text-xs text-slate-500 dark:text-slate-400">
+              <span className="text-xs text-slate-500 dark:text-slate-300">
                 運営: 株式会社エヌアンドエス
               </span>
             </div>
-            <div className="flex items-center gap-6 text-sm text-slate-600 dark:text-slate-400">
+            <div className="flex items-center gap-6 text-sm text-slate-600 dark:text-slate-300">
               <Link href="/terms" className="hover:text-brand-cyan transition-colors">
                 利用規約
               </Link>

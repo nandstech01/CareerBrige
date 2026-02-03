@@ -50,7 +50,7 @@ export default function AdminTemplatesPage() {
           <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
             テンプレート管理
           </h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-sm text-slate-500 dark:text-slate-300 mt-1">
             履歴書テンプレートの管理
           </p>
         </div>
@@ -63,7 +63,7 @@ export default function AdminTemplatesPage() {
       {templates.length === 0 ? (
         <div className="bg-white dark:bg-midnight-800 rounded-xl border border-slate-200 dark:border-midnight-600 p-12 text-center">
           <Layout className="w-12 h-12 text-slate-300 mx-auto mb-4" />
-          <p className="text-slate-500 dark:text-slate-400">テンプレートがありません</p>
+          <p className="text-slate-500 dark:text-slate-300">テンプレートがありません</p>
           <p className="text-sm text-slate-400 mt-1">新しいテンプレートを追加してください</p>
         </div>
       ) : (
@@ -84,7 +84,7 @@ export default function AdminTemplatesPage() {
                     )}
                   </h3>
                   {template.description && (
-                    <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+                    <p className="text-sm text-slate-500 dark:text-slate-300 mt-1">
                       {template.description}
                     </p>
                   )}

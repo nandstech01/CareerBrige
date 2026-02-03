@@ -96,7 +96,7 @@ export default function AdminSettingsPage() {
       <div className="space-y-8 animate-fade-in-up">
         <div>
           <h1 className="font-display text-3xl font-bold text-slate-900 dark:text-white">システム設定</h1>
-          <p className="text-slate-500 dark:text-slate-400 mt-1">プラットフォーム全体の設定管理</p>
+          <p className="text-slate-500 dark:text-slate-300 mt-1">プラットフォーム全体の設定管理</p>
         </div>
         <div className="flex items-center justify-center py-24">
           <Loader2 className="w-8 h-8 text-sky-500 dark:text-purple-400 animate-spin" />
@@ -111,7 +111,7 @@ export default function AdminSettingsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="font-display text-3xl font-bold text-slate-900 dark:text-white">システム設定</h1>
-          <p className="text-slate-500 dark:text-slate-400 mt-1">プラットフォーム全体の設定管理</p>
+          <p className="text-slate-500 dark:text-slate-300 mt-1">プラットフォーム全体の設定管理</p>
         </div>
         <button
           onClick={handleSave}
@@ -141,7 +141,7 @@ export default function AdminSettingsPage() {
             </div>
             <div>
               <h2 className="font-display text-lg font-semibold text-slate-900 dark:text-white">手数料設定</h2>
-              <p className="text-sm text-slate-500 dark:text-slate-400">プラットフォーム手数料のデフォルト値</p>
+              <p className="text-sm text-slate-500 dark:text-slate-300">プラットフォーム手数料のデフォルト値</p>
             </div>
           </div>
         </div>
@@ -162,7 +162,7 @@ export default function AdminSettingsPage() {
               />
               <span className="text-2xl font-bold text-orange-600 dark:text-orange-400">%</span>
             </div>
-            <p className="text-sm text-slate-400 dark:text-slate-500 mt-3">
+            <p className="text-sm text-slate-400 dark:text-slate-400 mt-3">
               契約時にこの手数料率がデフォルトで適用されます（個別に変更可能）
             </p>
           </div>
@@ -178,7 +178,7 @@ export default function AdminSettingsPage() {
             </div>
             <div>
               <h2 className="font-display text-lg font-semibold text-slate-900 dark:text-white">マッチスコア重み設定</h2>
-              <p className="text-sm text-slate-500 dark:text-slate-400">案件とエンジニアのマッチングスコア計算時の重み係数</p>
+              <p className="text-sm text-slate-500 dark:text-slate-300">案件とエンジニアのマッチングスコア計算時の重み係数</p>
             </div>
           </div>
         </div>
@@ -195,7 +195,7 @@ export default function AdminSettingsPage() {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-slate-900 dark:text-white">{config.label}</label>
-                      <p className="text-xs text-slate-400 dark:text-slate-500">{config.description}</p>
+                      <p className="text-xs text-slate-400 dark:text-slate-400">{config.description}</p>
                     </div>
                   </div>
                   <input
@@ -237,25 +237,25 @@ export default function AdminSettingsPage() {
             </div>
             <div>
               <h2 className="font-display text-lg font-semibold text-slate-900 dark:text-white">システム情報</h2>
-              <p className="text-sm text-slate-500 dark:text-slate-400">プラットフォームの基本情報</p>
+              <p className="text-sm text-slate-500 dark:text-slate-300">プラットフォームの基本情報</p>
             </div>
           </div>
         </div>
         <div className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50">
-              <p className="text-xs text-slate-400 dark:text-slate-500 mb-1">バージョン</p>
+              <p className="text-xs text-slate-400 dark:text-slate-400 mb-1">バージョン</p>
               <p className="font-mono text-lg font-bold text-slate-900 dark:text-white">1.0.0</p>
             </div>
             <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50">
-              <p className="text-xs text-slate-400 dark:text-slate-500 mb-1">環境</p>
+              <p className="text-xs text-slate-400 dark:text-slate-400 mb-1">環境</p>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse" />
                 <p className="font-mono text-lg font-bold text-emerald-600 dark:text-emerald-400">{process.env.NODE_ENV}</p>
               </div>
             </div>
             <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50">
-              <p className="text-xs text-slate-400 dark:text-slate-500 mb-1">フレームワーク</p>
+              <p className="text-xs text-slate-400 dark:text-slate-400 mb-1">フレームワーク</p>
               <p className="font-mono text-lg font-bold text-slate-900 dark:text-white">Next.js 13</p>
             </div>
           </div>

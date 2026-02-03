@@ -39,7 +39,7 @@ export default function AdminLayout({
                 className="h-9 w-auto"
                 priority
               />
-              <span className="text-xs px-2 py-1 bg-slate-100 dark:bg-midnight-700 text-slate-600 dark:text-slate-400 rounded-full font-medium">
+              <span className="text-xs px-2 py-1 bg-slate-100 dark:bg-midnight-700 text-slate-600 dark:text-slate-300 rounded-full font-medium">
                 管理パネル
               </span>
             </Link>

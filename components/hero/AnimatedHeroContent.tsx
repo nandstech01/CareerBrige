@@ -26,7 +26,7 @@ const AnimatedHeroContent = memo(function AnimatedHeroContent() {
         <span className="absolute -inset-4 bg-sky-500/10 blur-xl rounded-full" />
         <p className="relative text-xl md:text-2xl font-bold text-slate-600 dark:text-slate-300">
           <span className="bg-sky-500/10 dark:bg-sky-500/20 px-3 py-1 rounded text-sky-600 dark:text-sky-400 border border-sky-500/30">500,000+</span>
-          <span className="ml-2 text-slate-500 dark:text-slate-400">件の求人</span>
+          <span className="ml-2 text-slate-500 dark:text-slate-300">件の求人</span>
         </p>
       </div>
 
@@ -43,9 +43,9 @@ const AnimatedHeroContent = memo(function AnimatedHeroContent() {
               <span className="text-[10px] font-bold text-slate-500 dark:text-slate-300 uppercase tracking-wide">市場トレンド</span>
             </div>
             <div className="text-2xl font-black text-slate-900 dark:text-white mb-1">
-              +124% <span className="text-xs font-normal text-slate-500 dark:text-slate-400 align-middle">需要増</span>
+              +124% <span className="text-xs font-normal text-slate-500 dark:text-slate-300 align-middle">需要増</span>
             </div>
-            <div className="text-[10px] text-slate-500 dark:text-slate-400 mb-3">IT・AI分野が急成長中</div>
+            <div className="text-[10px] text-slate-500 dark:text-slate-300 mb-3">IT・AI分野が急成長中</div>
             <div className="flex items-end gap-1 h-8 w-full">
               <div className="w-1/6 bg-slate-200 dark:bg-slate-700 h-[30%] rounded-sm" />
               <div className="w-1/6 bg-slate-300 dark:bg-slate-600 h-[50%] rounded-sm" />
@@ -72,7 +72,7 @@ const AnimatedHeroContent = memo(function AnimatedHeroContent() {
               <div className="w-8 h-8 rounded-full ring-2 ring-white dark:ring-slate-900 bg-slate-400 dark:bg-slate-600 flex items-center justify-center text-[10px] font-bold text-white">M</div>
               <div className="w-8 h-8 rounded-full ring-2 ring-white dark:ring-slate-900 bg-orange-500 flex items-center justify-center text-[9px] text-white font-bold shadow-[0_0_12px_rgba(249,115,22,0.4)]">+2k</div>
             </div>
-            <div className="flex justify-between items-center text-[10px] text-slate-500 dark:text-slate-400 mt-1">
+            <div className="flex justify-between items-center text-[10px] text-slate-500 dark:text-slate-300 mt-1">
               <span>採用率</span>
               <span className="text-orange-500 font-bold">非常に高い</span>
             </div>

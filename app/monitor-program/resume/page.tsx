@@ -288,7 +288,7 @@ export default function ResumePage() {
                         ? 'bg-green-500 text-white'
                         : currentStep === step.id
                         ? 'bg-brand-cyan text-white shadow-lg shadow-brand-cyan/25'
-                        : 'bg-slate-200 dark:bg-midnight-700 text-slate-500 dark:text-slate-400'
+                        : 'bg-slate-200 dark:bg-midnight-700 text-slate-500 dark:text-slate-300'
                     }`}
                   >
                     {currentStep > step.id ? (
@@ -301,7 +301,7 @@ export default function ResumePage() {
                     className={`mt-2 text-xs font-medium whitespace-nowrap ${
                       currentStep >= step.id
                         ? 'text-slate-900 dark:text-white'
-                        : 'text-slate-500 dark:text-slate-400'
+                        : 'text-slate-500 dark:text-slate-300'
                     }`}
                   >
                     {step.title}
@@ -326,7 +326,7 @@ export default function ResumePage() {
         {currentStep > 1 && currentStep < 4 && (
           <button
             onClick={handleBack}
-            className="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-brand-cyan transition-colors mb-6"
+            className="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-brand-cyan transition-colors mb-6"
           >
             <ArrowLeft className="w-4 h-4" />
             戻る
@@ -394,7 +394,7 @@ export default function ResumePage() {
                 <h2 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">
                   履歴書の作成が完了しました
                 </h2>
-                <p className="text-sm text-slate-600 dark:text-slate-400">
+                <p className="text-sm text-slate-600 dark:text-slate-300">
                   PDFをダウンロードして保存してください
                 </p>
               </div>
@@ -418,7 +418,7 @@ export default function ResumePage() {
               <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
                 AIが履歴書を作成中...
               </h3>
-              <p className="text-sm text-slate-600 dark:text-slate-400">
+              <p className="text-sm text-slate-600 dark:text-slate-300">
                 音声を解析して履歴書を生成しています。
                 <br />
                 しばらくお待ちください。
@@ -436,11 +436,11 @@ export default function ResumePage() {
               <Link href="/" className="text-brand-cyan font-semibold">
                 CareerBridge
               </Link>
-              <span className="text-xs text-slate-500 dark:text-slate-400">
+              <span className="text-xs text-slate-500 dark:text-slate-300">
                 運営: 株式会社エヌアンドエス
               </span>
             </div>
-            <div className="flex items-center gap-6 text-sm text-slate-600 dark:text-slate-400">
+            <div className="flex items-center gap-6 text-sm text-slate-600 dark:text-slate-300">
               <Link href="/terms" className="hover:text-brand-cyan transition-colors">
                 利用規約
               </Link>

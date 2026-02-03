@@ -106,7 +106,7 @@ export default function ResignationPage() {
                         ? 'bg-green-500 text-white'
                         : currentStep === step.id
                         ? 'bg-brand-cyan text-white shadow-lg shadow-brand-cyan/25'
-                        : 'bg-slate-200 dark:bg-midnight-700 text-slate-500 dark:text-slate-400'
+                        : 'bg-slate-200 dark:bg-midnight-700 text-slate-500 dark:text-slate-300'
                     }`}
                   >
                     {currentStep > step.id ? (
@@ -119,7 +119,7 @@ export default function ResignationPage() {
                     className={`mt-2 text-xs font-medium whitespace-nowrap ${
                       currentStep >= step.id
                         ? 'text-slate-900 dark:text-white'
-                        : 'text-slate-500 dark:text-slate-400'
+                        : 'text-slate-500 dark:text-slate-300'
                     }`}
                   >
                     {step.title}
@@ -144,7 +144,7 @@ export default function ResignationPage() {
         {currentStep === 2 && (
           <button
             onClick={handleBack}
-            className="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-brand-cyan transition-colors mb-6"
+            className="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-brand-cyan transition-colors mb-6"
           >
             <ArrowLeft className="w-4 h-4" />
             戻る
@@ -170,7 +170,7 @@ export default function ResignationPage() {
                 <h2 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">
                   内容を確認してください
                 </h2>
-                <p className="text-sm text-slate-600 dark:text-slate-400">
+                <p className="text-sm text-slate-600 dark:text-slate-300">
                   以下の内容で退職届を作成します
                 </p>
               </div>
@@ -205,7 +205,7 @@ export default function ResignationPage() {
                       {departmentDisplay}
                     </p>
                     <p className="text-sm text-slate-700 dark:text-slate-300 whitespace-nowrap">
-                      {formData.employeeName} <span className="text-slate-400 dark:text-slate-500">[印]</span>
+                      {formData.employeeName} <span className="text-slate-400 dark:text-slate-400">[印]</span>
                     </p>
                   </div>
 
@@ -233,19 +233,19 @@ export default function ResignationPage() {
                 </h4>
                 <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
                   <div className="flex items-center gap-1 whitespace-nowrap">
-                    <span className="text-slate-500 dark:text-slate-400">提出日:</span>
+                    <span className="text-slate-500 dark:text-slate-300">提出日:</span>
                     <span className="text-slate-900 dark:text-white">{formatDateJapanese(formData.submissionDate)}</span>
                   </div>
                   <div className="flex items-center gap-1 whitespace-nowrap">
-                    <span className="text-slate-500 dark:text-slate-400">退職日:</span>
+                    <span className="text-slate-500 dark:text-slate-300">退職日:</span>
                     <span className="text-slate-900 dark:text-white">{formatDateJapanese(formData.resignationDate)}</span>
                   </div>
                   <div className="flex items-center gap-1">
-                    <span className="text-slate-500 dark:text-slate-400 shrink-0">会社:</span>
+                    <span className="text-slate-500 dark:text-slate-300 shrink-0">会社:</span>
                     <span className="text-slate-900 dark:text-white truncate">{formData.companyName}</span>
                   </div>
                   <div className="flex items-center gap-1 whitespace-nowrap">
-                    <span className="text-slate-500 dark:text-slate-400">氏名:</span>
+                    <span className="text-slate-500 dark:text-slate-300">氏名:</span>
                     <span className="text-slate-900 dark:text-white">{formData.employeeName}</span>
                   </div>
                 </div>
@@ -280,7 +280,7 @@ export default function ResignationPage() {
                 <h2 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">
                   ダウンロードが完了しました
                 </h2>
-                <p className="text-sm text-slate-600 dark:text-slate-400">
+                <p className="text-sm text-slate-600 dark:text-slate-300">
                   退職届のPDFファイルがダウンロードされました
                 </p>
               </div>
@@ -309,7 +309,7 @@ export default function ResignationPage() {
                   <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
                     退職が決まったら、次は転職準備！
                   </h3>
-                  <p className="text-sm text-slate-600 dark:text-slate-400">
+                  <p className="text-sm text-slate-600 dark:text-slate-300">
                     専門スタッフがあなたの転職をサポートします
                   </p>
                 </div>
@@ -348,7 +348,7 @@ export default function ResignationPage() {
                       <span className="block text-lg font-bold text-slate-900 dark:text-white mb-1 group-hover:text-[#06C755] dark:group-hover:text-[#06C755] transition-colors duration-300">
                         キャリア相談
                       </span>
-                      <span className="block text-sm text-slate-600 dark:text-slate-400">
+                      <span className="block text-sm text-slate-600 dark:text-slate-300">
                         専門家に相談する
                       </span>
                     </div>
@@ -392,7 +392,7 @@ export default function ResignationPage() {
                       <span className="block text-lg font-bold text-slate-900 dark:text-white mb-1 group-hover:text-brand-cyan dark:group-hover:text-brand-cyan transition-colors duration-300">
                         履歴書を作成
                       </span>
-                      <span className="block text-sm text-slate-600 dark:text-slate-400">
+                      <span className="block text-sm text-slate-600 dark:text-slate-300">
                         AIが自動で作成
                       </span>
                     </div>
@@ -426,11 +426,11 @@ export default function ResignationPage() {
               <Link href="/" className="text-brand-cyan font-semibold">
                 CareerBridge
               </Link>
-              <span className="text-xs text-slate-500 dark:text-slate-400">
+              <span className="text-xs text-slate-500 dark:text-slate-300">
                 運営: 株式会社エヌアンドエス
               </span>
             </div>
-            <div className="flex items-center gap-6 text-sm text-slate-600 dark:text-slate-400">
+            <div className="flex items-center gap-6 text-sm text-slate-600 dark:text-slate-300">
               <Link href="/terms" className="hover:text-brand-cyan transition-colors">
                 利用規約
               </Link>

@@ -66,7 +66,7 @@ function ConsentContent() {
       <main className="max-w-lg mx-auto px-4 py-12">
         <Link
           href="/monitor-program"
-          className="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-brand-cyan transition-colors mb-6"
+          className="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-brand-cyan transition-colors mb-6"
         >
           <ArrowLeft className="w-4 h-4" />
           戻る
@@ -80,7 +80,7 @@ function ConsentContent() {
             <h1 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
               同意事項の確認
             </h1>
-            <p className="text-sm text-slate-600 dark:text-slate-400">
+            <p className="text-sm text-slate-600 dark:text-slate-300">
               サービスのご利用にあたり、以下の事項にご同意ください。
             </p>
           </div>
@@ -98,7 +98,7 @@ function ConsentContent() {
                 <p className="font-medium text-slate-900 dark:text-white text-sm">
                   データの収集・保存
                 </p>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                <p className="text-xs text-slate-500 dark:text-slate-300 mt-1">
                   入力いただいた基本情報、音声データ、生成された履歴書データを、サービス提供の目的で収集・保存します。
                   データは暗号化して保管され、利用規約に基づいて管理されます。
                 </p>
@@ -117,7 +117,7 @@ function ConsentContent() {
                 <p className="font-medium text-slate-900 dark:text-white text-sm">
                   AI処理
                 </p>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                <p className="text-xs text-slate-500 dark:text-slate-300 mt-1">
                   音声データの文字起こしおよび履歴書データの生成に、AIサービス（Google Gemini）を利用します。
                   処理されたデータはAIプロバイダのポリシーに準拠して取り扱われます。
                 </p>

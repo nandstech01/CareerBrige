@@ -96,7 +96,7 @@ export function ResignationForm({ data, onChange, onNext }: ResignationFormProps
         <h2 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">
           退職届の情報を入力
         </h2>
-        <p className="text-sm text-slate-600 dark:text-slate-400">
+        <p className="text-sm text-slate-600 dark:text-slate-300">
           正式な退職届を作成するために必要な情報を入力してください
         </p>
       </div>
@@ -173,7 +173,7 @@ export function ResignationForm({ data, onChange, onNext }: ResignationFormProps
             {errors.representativeName}
           </p>
         )}
-        <p className="text-xs text-slate-500 dark:text-slate-400">
+        <p className="text-xs text-slate-500 dark:text-slate-300">
           ※「代表取締役 ○○殿」の形式で表示されます
         </p>
       </div>
@@ -266,7 +266,7 @@ export function ResignationForm({ data, onChange, onNext }: ResignationFormProps
             {errors.resignationDate}
           </p>
         )}
-        <p className="text-xs text-slate-500 dark:text-slate-400">
+        <p className="text-xs text-slate-500 dark:text-slate-300">
           ※一般的に退職届の提出は退職希望日の1ヶ月以上前が推奨されています
         </p>
       </div>

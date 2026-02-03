@@ -96,7 +96,7 @@ export default function AdminJobsPage() {
   }
 
   const statusConfig: Record<JobStatus, { label: string; color: string; bg: string; border: string }> = {
-    draft: { label: '下書き', color: 'text-slate-500 dark:text-slate-400', bg: 'bg-slate-200/50 dark:bg-slate-700/50', border: 'border-slate-300/50 dark:border-slate-600/50' },
+    draft: { label: '下書き', color: 'text-slate-500 dark:text-slate-300', bg: 'bg-slate-200/50 dark:bg-slate-700/50', border: 'border-slate-300/50 dark:border-slate-600/50' },
     open: { label: '公開中', color: 'text-emerald-600 dark:text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/30' },
     paused: { label: '一時停止', color: 'text-yellow-600 dark:text-yellow-400', bg: 'bg-yellow-500/10', border: 'border-yellow-500/30' },
     closed: { label: '終了', color: 'text-red-600 dark:text-red-400', bg: 'bg-red-500/10', border: 'border-red-500/30' },
@@ -121,7 +121,7 @@ export default function AdminJobsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="font-display text-3xl font-bold text-slate-900 dark:text-white">案件管理</h1>
-          <p className="text-slate-500 dark:text-slate-400 mt-1">掲載案件の管理・ステータス変更</p>
+          <p className="text-slate-500 dark:text-slate-300 mt-1">掲載案件の管理・ステータス変更</p>
         </div>
         <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-500/10 border border-emerald-500/30">
           <Briefcase className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
@@ -134,7 +134,7 @@ export default function AdminJobsPage() {
         <div className="flex flex-col md:flex-row gap-4">
           <form onSubmit={handleSearch} className="flex-1 flex gap-3">
             <div className="relative flex-1">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 dark:text-slate-500" />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 dark:text-slate-400" />
               <input
                 type="text"
                 placeholder="案件タイトルで検索..."
@@ -151,7 +151,7 @@ export default function AdminJobsPage() {
             </button>
           </form>
           <div className="relative">
-            <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
+            <div className="flex items-center gap-2 text-slate-500 dark:text-slate-300">
               <Filter className="w-4 h-4" />
               <span className="text-sm">ステータス:</span>
             </div>
@@ -175,19 +175,19 @@ export default function AdminJobsPage() {
         {loading ? (
           <div className="p-12 flex flex-col items-center justify-center">
             <Loader2 className="w-8 h-8 text-sky-500 dark:text-purple-400 animate-spin mb-4" />
-            <p className="text-slate-500 dark:text-slate-400">読み込み中...</p>
+            <p className="text-slate-500 dark:text-slate-300">読み込み中...</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
                 <tr className="border-b border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-800/30">
-                  <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-400">タイトル</th>
-                  <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-400">企業</th>
-                  <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-400">ステータス</th>
-                  <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-400">予算</th>
-                  <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-400">作成日</th>
-                  <th className="text-right py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-400">操作</th>
+                  <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-300">タイトル</th>
+                  <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-300">企業</th>
+                  <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-300">ステータス</th>
+                  <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-300">予算</th>
+                  <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-300">作成日</th>
+                  <th className="text-right py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-300">操作</th>
                 </tr>
               </thead>
               <tbody>
@@ -201,7 +201,7 @@ export default function AdminJobsPage() {
                       <td className="py-4 px-6">
                         <div>
                           <p className="font-medium text-slate-900 dark:text-white mb-1">{job.title}</p>
-                          <p className="text-xs text-slate-400 dark:text-slate-500">
+                          <p className="text-xs text-slate-400 dark:text-slate-400">
                             {engagementLabels[job.engagement] || job.engagement}
                           </p>
                         </div>
@@ -224,7 +224,7 @@ export default function AdminJobsPage() {
                           {formatBudget(job.budget_min_monthly_yen, job.budget_max_monthly_yen)}
                         </span>
                       </td>
-                      <td className="py-4 px-6 text-sm text-slate-500 dark:text-slate-400">
+                      <td className="py-4 px-6 text-sm text-slate-500 dark:text-slate-300">
                         {new Date(job.created_at).toLocaleDateString('ja-JP')}
                       </td>
                       <td className="py-4 px-6 text-right relative">
@@ -281,7 +281,7 @@ export default function AdminJobsPage() {
                   <tr>
                     <td colSpan={6} className="py-12 text-center">
                       <Briefcase className="w-12 h-12 text-slate-300 dark:text-slate-600 mx-auto mb-3" />
-                      <p className="text-slate-400 dark:text-slate-500">案件が見つかりません</p>
+                      <p className="text-slate-400 dark:text-slate-400">案件が見つかりません</p>
                     </td>
                   </tr>
                 )}

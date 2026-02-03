@@ -35,7 +35,7 @@ export function LineCtaCard({ variant = 'default', userName }: LineCtaCardProps)
             <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
               次のステップ
             </h3>
-            <p className="text-sm text-slate-600 dark:text-slate-400">
+            <p className="text-sm text-slate-600 dark:text-slate-300">
               LINEで専任の担当者があなたの転職をサポートします
             </p>
           </div>
@@ -74,7 +74,7 @@ export function LineCtaCard({ variant = 'default', userName }: LineCtaCardProps)
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </a>
 
-          <p className="text-xs text-slate-500 dark:text-slate-400 text-center mt-4">
+          <p className="text-xs text-slate-500 dark:text-slate-300 text-center mt-4">
             ※LINEを追加いただくと、担当者からスムーズにご連絡できます
           </p>
         </div>
@@ -94,7 +94,7 @@ export function LineCtaCard({ variant = 'default', userName }: LineCtaCardProps)
               <p className="font-medium text-slate-900 dark:text-white text-sm">
                 LINEで担当者に相談
               </p>
-              <p className="text-xs text-slate-600 dark:text-slate-400">
+              <p className="text-xs text-slate-600 dark:text-slate-300">
                 転職のお悩みをサポートします
               </p>
             </div>
@@ -123,7 +123,7 @@ export function LineCtaCard({ variant = 'default', userName }: LineCtaCardProps)
           <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
             LINEで転職サポートを受ける
           </h3>
-          <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
+          <p className="text-sm text-slate-600 dark:text-slate-300 mb-4">
             専任の担当者があなたの転職活動をサポートします。
             履歴書の添削や求人紹介、面接対策まで無料で相談できます。
           </p>

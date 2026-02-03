@@ -167,7 +167,7 @@ export default function AdminMonitorAnalyticsPage() {
           <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
             モニター分析
           </h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-sm text-slate-500 dark:text-slate-300 mt-1">
             モニタープログラムの利用状況
           </p>
         </div>
@@ -199,7 +199,7 @@ export default function AdminMonitorAnalyticsPage() {
               className={`px-4 py-2.5 text-sm font-medium border-b-2 transition-colors ${
                 activeTab === tab.id
                   ? 'border-brand-cyan text-brand-cyan'
-                  : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300'
+                  : 'border-transparent text-slate-500 dark:text-slate-300 hover:text-slate-700 dark:hover:text-slate-300'
               }`}
             >
               {tab.label}
@@ -306,7 +306,7 @@ export default function AdminMonitorAnalyticsPage() {
 function SummaryCard({ label, value }: { label: string; value: number | string }) {
   return (
     <div className="bg-white dark:bg-midnight-800 rounded-xl border border-slate-200 dark:border-midnight-600 p-4 text-center">
-      <p className="text-xs text-slate-500 dark:text-slate-400 mb-1">{label}</p>
+      <p className="text-xs text-slate-500 dark:text-slate-300 mb-1">{label}</p>
       <p className="text-xl font-bold text-slate-900 dark:text-white">{value}</p>
     </div>
   )

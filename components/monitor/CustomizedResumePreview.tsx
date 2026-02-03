@@ -95,7 +95,7 @@ export function CustomizedResumePreview({
           <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
             {companyAnalysis.companyName}向けの履歴書を生成
           </h3>
-          <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">
+          <p className="text-sm text-slate-600 dark:text-slate-300 mb-6">
             あなたの履歴書を、この企業に合わせて自己PRと職務経歴の表現を最適化します。
             <br />
             経歴の事実は変更せず、表現のみを調整します。
@@ -129,7 +129,7 @@ export function CustomizedResumePreview({
         <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
           企業特化履歴書を生成中...
         </h3>
-        <p className="text-sm text-slate-600 dark:text-slate-400">
+        <p className="text-sm text-slate-600 dark:text-slate-300">
           {companyAnalysis.companyName}に合わせた内容を作成しています
         </p>
       </div>
@@ -174,7 +174,7 @@ export function CustomizedResumePreview({
           <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
             企業特化履歴書のPDFダウンロード
           </h3>
-          <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
+          <p className="text-sm text-slate-600 dark:text-slate-300 mt-1">
             {companyAnalysis.companyName}向け
           </p>
         </div>

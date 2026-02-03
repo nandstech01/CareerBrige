@@ -53,7 +53,7 @@ export function AdminDashboardStats({ stats }: AdminDashboardStatsProps) {
           className="bg-white dark:bg-midnight-800 rounded-xl border border-slate-200 dark:border-midnight-600 p-5"
         >
           <div className="flex items-center justify-between mb-3">
-            <span className="text-sm text-slate-500 dark:text-slate-400">
+            <span className="text-sm text-slate-500 dark:text-slate-300">
               {card.label}
             </span>
             <div className={`w-10 h-10 ${card.bg} ${card.color} rounded-lg flex items-center justify-center`}>

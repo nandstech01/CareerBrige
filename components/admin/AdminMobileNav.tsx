@@ -43,7 +43,7 @@ export function AdminMobileNav({ open, onOpenChange }: AdminMobileNavProps) {
             return (
               <div key={section.title || i} className={isTopLevel ? 'mb-2' : ''}>
                 {section.title && (
-                  <div className="px-3 py-2 text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                  <div className="px-3 py-2 text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-400">
                     {section.title}
                   </div>
                 )}
@@ -59,7 +59,7 @@ export function AdminMobileNav({ open, onOpenChange }: AdminMobileNavProps) {
                           className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                             isActive
                               ? 'bg-brand-cyan/10 text-brand-cyan'
-                              : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-midnight-700 hover:text-slate-900 dark:hover:text-white'
+                              : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-midnight-700 hover:text-slate-900 dark:hover:text-white'
                           }`}
                         >
                           <item.icon className="w-5 h-5 flex-shrink-0" />

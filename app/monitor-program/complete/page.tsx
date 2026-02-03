@@ -48,11 +48,11 @@ export default function CompletePage() {
             履歴書の作成が完了しました
           </h1>
           {userName && (
-            <p className="text-slate-600 dark:text-slate-400">
+            <p className="text-slate-600 dark:text-slate-300">
               {userName}さん、お疲れさまでした
             </p>
           )}
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-2">
+          <p className="text-sm text-slate-500 dark:text-slate-300 mt-2">
             ダウンロードした履歴書はお手元に保存してください。
           </p>
         </div>
@@ -77,7 +77,7 @@ export default function CompletePage() {
                     NEW
                   </span>
                 </div>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                <p className="text-xs text-slate-500 dark:text-slate-300 mt-0.5">
                   応募先企業のURLを入力して、通過率UPの履歴書に
                 </p>
               </div>
@@ -98,7 +98,7 @@ export default function CompletePage() {
                 <p className="font-medium text-slate-900 dark:text-white">
                   別の履歴書を作成
                 </p>
-                <p className="text-xs text-slate-500 dark:text-slate-400">
+                <p className="text-xs text-slate-500 dark:text-slate-300">
                   もう一度最初から作成する
                 </p>
               </div>
@@ -112,14 +112,14 @@ export default function CompletePage() {
             className="flex items-center justify-between p-4 bg-white dark:bg-midnight-800 rounded-xl border border-slate-200 dark:border-midnight-600 hover:border-brand-cyan/50 transition-colors group"
           >
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 flex items-center justify-center bg-slate-100 dark:bg-midnight-700 text-slate-600 dark:text-slate-400 rounded-lg group-hover:bg-brand-cyan group-hover:text-white transition-colors">
+              <div className="w-10 h-10 flex items-center justify-center bg-slate-100 dark:bg-midnight-700 text-slate-600 dark:text-slate-300 rounded-lg group-hover:bg-brand-cyan group-hover:text-white transition-colors">
                 <Home className="w-5 h-5" />
               </div>
               <div>
                 <p className="font-medium text-slate-900 dark:text-white">
                   サービストップ
                 </p>
-                <p className="text-xs text-slate-500 dark:text-slate-400">
+                <p className="text-xs text-slate-500 dark:text-slate-300">
                   サービス概要に戻る
                 </p>
               </div>
@@ -134,7 +134,7 @@ export default function CompletePage() {
             <div className="w-full border-t border-slate-200 dark:border-midnight-600" />
           </div>
           <div className="relative flex justify-center">
-            <span className="bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-midnight-900 dark:via-midnight-800 dark:to-midnight-900 px-4 text-xs text-slate-400 dark:text-slate-500">
+            <span className="bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-midnight-900 dark:via-midnight-800 dark:to-midnight-900 px-4 text-xs text-slate-400 dark:text-slate-400">
               その他のサービス
             </span>
           </div>
@@ -146,14 +146,14 @@ export default function CompletePage() {
           className="flex items-center justify-between p-4 bg-white dark:bg-midnight-800 rounded-xl border border-slate-200 dark:border-midnight-600 hover:border-slate-300 dark:hover:border-midnight-500 transition-colors group"
         >
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 flex items-center justify-center bg-slate-100 dark:bg-midnight-700 text-slate-500 dark:text-slate-400 rounded-lg">
+            <div className="w-10 h-10 flex items-center justify-center bg-slate-100 dark:bg-midnight-700 text-slate-500 dark:text-slate-300 rounded-lg">
               <MessageSquare className="w-5 h-5" />
             </div>
             <div>
               <p className="font-medium text-slate-700 dark:text-slate-300">
                 キャリアの相談をしてみる
               </p>
-              <p className="text-xs text-slate-400 dark:text-slate-500">
+              <p className="text-xs text-slate-400 dark:text-slate-400">
                 転職相談をご希望の方はこちら（別途同意が必要です）
               </p>
             </div>
@@ -178,11 +178,11 @@ export default function CompletePage() {
               <Link href="/" className="text-brand-cyan font-semibold">
                 CareerBridge
               </Link>
-              <span className="text-xs text-slate-500 dark:text-slate-400">
+              <span className="text-xs text-slate-500 dark:text-slate-300">
                 運営: 株式会社エヌアンドエス
               </span>
             </div>
-            <div className="flex items-center gap-6 text-sm text-slate-600 dark:text-slate-400">
+            <div className="flex items-center gap-6 text-sm text-slate-600 dark:text-slate-300">
               <Link href="/terms" className="hover:text-brand-cyan transition-colors">
                 利用規約
               </Link>

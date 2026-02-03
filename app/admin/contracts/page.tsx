@@ -67,7 +67,7 @@ export default function AdminContractsPage() {
   }, [statusFilter])
 
   const statusConfig: Record<ContractStatus, { label: string; color: string; bg: string; border: string; icon: typeof CheckCircle }> = {
-    initiated: { label: '開始前', color: 'text-slate-500 dark:text-slate-400', bg: 'bg-slate-200/50 dark:bg-slate-700/50', border: 'border-slate-300/50 dark:border-slate-600/50', icon: Clock },
+    initiated: { label: '開始前', color: 'text-slate-500 dark:text-slate-300', bg: 'bg-slate-200/50 dark:bg-slate-700/50', border: 'border-slate-300/50 dark:border-slate-600/50', icon: Clock },
     signed: { label: '署名済み', color: 'text-blue-600 dark:text-blue-400', bg: 'bg-blue-500/10', border: 'border-blue-500/30', icon: FileText },
     active: { label: 'アクティブ', color: 'text-emerald-600 dark:text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/30', icon: CheckCircle },
     completed: { label: '完了', color: 'text-purple-600 dark:text-purple-400', bg: 'bg-purple-500/10', border: 'border-purple-500/30', icon: CheckCircle },
@@ -77,7 +77,7 @@ export default function AdminContractsPage() {
   const invoiceStatusConfig: Record<InvoiceStatus, { label: string; color: string; bg: string; border: string; icon: typeof CheckCircle }> = {
     pending: { label: '未払い', color: 'text-yellow-600 dark:text-yellow-400', bg: 'bg-yellow-500/10', border: 'border-yellow-500/30', icon: Clock },
     paid: { label: '支払済', color: 'text-emerald-600 dark:text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/30', icon: CheckCircle },
-    void: { label: '無効', color: 'text-slate-500 dark:text-slate-400', bg: 'bg-slate-200/50 dark:bg-slate-700/50', border: 'border-slate-300/50 dark:border-slate-600/50', icon: XCircle },
+    void: { label: '無効', color: 'text-slate-500 dark:text-slate-300', bg: 'bg-slate-200/50 dark:bg-slate-700/50', border: 'border-slate-300/50 dark:border-slate-600/50', icon: XCircle },
     failed: { label: '失敗', color: 'text-red-600 dark:text-red-400', bg: 'bg-red-500/10', border: 'border-red-500/30', icon: AlertCircle },
   }
 
@@ -94,7 +94,7 @@ export default function AdminContractsPage() {
       <div className="space-y-8 animate-fade-in-up">
         <div>
           <h1 className="font-display text-3xl font-bold text-slate-900 dark:text-white">契約・請求管理</h1>
-          <p className="text-slate-500 dark:text-slate-400 mt-1">契約状況と請求書の管理</p>
+          <p className="text-slate-500 dark:text-slate-300 mt-1">契約状況と請求書の管理</p>
         </div>
         <div className="flex items-center justify-center py-24">
           <Loader2 className="w-8 h-8 text-sky-500 dark:text-purple-400 animate-spin" />
@@ -109,7 +109,7 @@ export default function AdminContractsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="font-display text-3xl font-bold text-slate-900 dark:text-white">契約・請求管理</h1>
-          <p className="text-slate-500 dark:text-slate-400 mt-1">契約状況と請求書の管理</p>
+          <p className="text-slate-500 dark:text-slate-300 mt-1">契約状況と請求書の管理</p>
         </div>
       </div>
 
@@ -122,10 +122,10 @@ export default function AdminContractsPage() {
             </div>
             <TrendingUp className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
           </div>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mb-1">総売上（支払済）</p>
+          <p className="text-sm text-slate-500 dark:text-slate-300 mb-1">総売上（支払済）</p>
           <p className="font-display text-3xl font-bold text-slate-900 dark:text-white">
             ¥{(totalRevenue / 10000).toFixed(0)}
-            <span className="text-lg text-slate-400 dark:text-slate-500">万</span>
+            <span className="text-lg text-slate-400 dark:text-slate-400">万</span>
           </p>
         </div>
 
@@ -135,10 +135,10 @@ export default function AdminContractsPage() {
               <Clock className="w-6 h-6 text-yellow-600 dark:text-yellow-400" />
             </div>
           </div>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mb-1">未収金</p>
+          <p className="text-sm text-slate-500 dark:text-slate-300 mb-1">未収金</p>
           <p className="font-display text-3xl font-bold text-yellow-600 dark:text-yellow-400">
             ¥{(pendingRevenue / 10000).toFixed(0)}
-            <span className="text-lg text-slate-400 dark:text-slate-500">万</span>
+            <span className="text-lg text-slate-400 dark:text-slate-400">万</span>
           </p>
         </div>
 
@@ -148,7 +148,7 @@ export default function AdminContractsPage() {
               <FileText className="w-6 h-6 text-purple-600 dark:text-purple-400" />
             </div>
           </div>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mb-1">契約数</p>
+          <p className="text-sm text-slate-500 dark:text-slate-300 mb-1">契約数</p>
           <p className="font-display text-3xl font-bold text-slate-900 dark:text-white">{contracts.length}</p>
         </div>
       </div>
@@ -159,10 +159,10 @@ export default function AdminContractsPage() {
           <div className="flex items-center justify-between">
             <div>
               <h2 className="font-display text-lg font-semibold text-slate-900 dark:text-white">契約一覧</h2>
-              <p className="text-sm text-slate-500 dark:text-slate-400">アクティブな契約の管理</p>
+              <p className="text-sm text-slate-500 dark:text-slate-300">アクティブな契約の管理</p>
             </div>
             <div className="flex items-center gap-3">
-              <Filter className="w-4 h-4 text-slate-400 dark:text-slate-500" />
+              <Filter className="w-4 h-4 text-slate-400 dark:text-slate-400" />
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
@@ -182,12 +182,12 @@ export default function AdminContractsPage() {
           <table className="w-full">
             <thead>
               <tr className="border-b border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-800/30">
-                <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-400">企業</th>
-                <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-400">エンジニア</th>
-                <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-400">ステータス</th>
-                <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-400">月額</th>
-                <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-400">手数料率</th>
-                <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-400">期間</th>
+                <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-300">企業</th>
+                <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-300">エンジニア</th>
+                <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-300">ステータス</th>
+                <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-300">月額</th>
+                <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-300">手数料率</th>
+                <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-300">期間</th>
               </tr>
             </thead>
             <tbody>
@@ -231,7 +231,7 @@ export default function AdminContractsPage() {
                     <td className="py-4 px-6">
                       <span className="text-purple-600 dark:text-purple-400 font-medium">{contract.platform_fee_rate}%</span>
                     </td>
-                    <td className="py-4 px-6 text-sm text-slate-500 dark:text-slate-400">
+                    <td className="py-4 px-6 text-sm text-slate-500 dark:text-slate-300">
                       {contract.start_date
                         ? `${new Date(contract.start_date).toLocaleDateString('ja-JP')}〜`
                         : '-'}
@@ -243,7 +243,7 @@ export default function AdminContractsPage() {
                 <tr>
                   <td colSpan={6} className="py-12 text-center">
                     <FileText className="w-12 h-12 text-slate-300 dark:text-slate-600 mx-auto mb-3" />
-                    <p className="text-slate-400 dark:text-slate-500">契約がありません</p>
+                    <p className="text-slate-400 dark:text-slate-400">契約がありません</p>
                   </td>
                 </tr>
               )}
@@ -259,7 +259,7 @@ export default function AdminContractsPage() {
             <Receipt className="w-5 h-5 text-purple-600 dark:text-purple-400" />
             <div>
               <h2 className="font-display text-lg font-semibold text-slate-900 dark:text-white">請求一覧</h2>
-              <p className="text-sm text-slate-500 dark:text-slate-400">発行済み請求書の管理</p>
+              <p className="text-sm text-slate-500 dark:text-slate-300">発行済み請求書の管理</p>
             </div>
           </div>
         </div>
@@ -267,10 +267,10 @@ export default function AdminContractsPage() {
           <table className="w-full">
             <thead>
               <tr className="border-b border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-800/30">
-                <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-400">企業</th>
-                <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-400">請求月</th>
-                <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-400">金額</th>
-                <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-400">ステータス</th>
+                <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-300">企業</th>
+                <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-300">請求月</th>
+                <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-300">金額</th>
+                <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-300">ステータス</th>
               </tr>
             </thead>
             <tbody>
@@ -313,7 +313,7 @@ export default function AdminContractsPage() {
                 <tr>
                   <td colSpan={4} className="py-12 text-center">
                     <Receipt className="w-12 h-12 text-slate-300 dark:text-slate-600 mx-auto mb-3" />
-                    <p className="text-slate-400 dark:text-slate-500">請求がありません</p>
+                    <p className="text-slate-400 dark:text-slate-400">請求がありません</p>
                   </td>
                 </tr>
               )}

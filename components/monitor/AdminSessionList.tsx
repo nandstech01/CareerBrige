@@ -30,7 +30,7 @@ export const STATUS_LABELS: Record<MonitorSessionStatus, { label: string; color:
   screening: { label: '選考中', color: 'bg-teal-100 text-teal-600 dark:bg-teal-900/30 dark:text-teal-400' },
   decided: { label: '決定済み', color: 'bg-rose-100 text-rose-600 dark:bg-rose-900/30 dark:text-rose-400' },
   dropped: { label: '離脱', color: 'bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400' },
-  started: { label: '開始', color: 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400' },
+  started: { label: '開始', color: 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300' },
   basic_info: { label: '基本情報', color: 'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400' },
   recording: { label: '録音中', color: 'bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400' },
   transcribing: { label: '文字起こし', color: 'bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400' },
@@ -81,7 +81,7 @@ function getStatusIcon(status: MonitorSessionStatus) {
   if (status === 'abandoned' || status === 'dropped') {
     return <AlertCircle className="w-5 h-5 text-red-400" />
   }
-  return <Clock className="w-5 h-5 text-slate-400 dark:text-slate-500" />
+  return <Clock className="w-5 h-5 text-slate-400 dark:text-slate-400" />
 }
 
 function getIconBg(status: MonitorSessionStatus) {
@@ -147,7 +147,7 @@ function ListView({ sessions, total }: { sessions: SessionRow[]; total: number }
                     </span>
                     <SourceBadge source={session.source} />
                   </div>
-                  <div className="flex items-center gap-3 mt-1 text-xs text-slate-500 dark:text-slate-400">
+                  <div className="flex items-center gap-3 mt-1 text-xs text-slate-500 dark:text-slate-300">
                     <span>Step {session.step_reached}/4</span>
                     <span>AI呼出: {session.ai_calls_count}回</span>
                     <span>{formatDate(session.started_at)}</span>
@@ -186,7 +186,7 @@ function GalleryView({ sessions }: { sessions: SessionRow[] }) {
               <div className="flex items-start gap-3 mb-4">
                 <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${getIconBg(session.status)}`}>
                   {session.source === 'apply_form' ? (
-                    <User className="w-5 h-5 text-slate-500 dark:text-slate-400" />
+                    <User className="w-5 h-5 text-slate-500 dark:text-slate-300" />
                   ) : (
                     getStatusIcon(session.status)
                   )}
@@ -209,13 +209,13 @@ function GalleryView({ sessions }: { sessions: SessionRow[] }) {
                 <div className="grid grid-cols-2 gap-x-3 gap-y-1.5 mb-4 text-xs">
                   {info.age && (
                     <div>
-                      <span className="text-slate-400 dark:text-slate-500">年齢</span>
+                      <span className="text-slate-400 dark:text-slate-400">年齢</span>
                       <span className="ml-1.5 text-slate-700 dark:text-slate-300">{info.age}歳</span>
                     </div>
                   )}
                   {info.prefecture && (
                     <div>
-                      <span className="text-slate-400 dark:text-slate-500">地域</span>
+                      <span className="text-slate-400 dark:text-slate-400">地域</span>
                       <span className="ml-1.5 text-slate-700 dark:text-slate-300">{info.prefecture}</span>
                     </div>
                   )}
@@ -225,7 +225,7 @@ function GalleryView({ sessions }: { sessions: SessionRow[] }) {
               {/* Progress */}
               <div>
                 <div className="flex justify-between text-[11px] mb-1.5">
-                  <span className="text-slate-400 dark:text-slate-500">進捗</span>
+                  <span className="text-slate-400 dark:text-slate-400">進捗</span>
                   <span className="text-slate-600 dark:text-slate-300 font-medium">Step {session.step_reached}/4</span>
                 </div>
                 <div className="w-full bg-slate-100 dark:bg-midnight-700 rounded-full h-1.5">
@@ -236,7 +236,7 @@ function GalleryView({ sessions }: { sessions: SessionRow[] }) {
 
             {/* Card Footer */}
             <div className="px-5 py-3 bg-slate-50/80 dark:bg-midnight-900/40 border-t border-slate-100 dark:border-midnight-700 flex items-center justify-between">
-              <div className="flex items-center gap-3 text-[11px] text-slate-400 dark:text-slate-500">
+              <div className="flex items-center gap-3 text-[11px] text-slate-400 dark:text-slate-400">
                 <span>AI: {session.ai_calls_count}回</span>
                 <span>{formatDate(session.started_at)}</span>
               </div>
@@ -258,7 +258,7 @@ export function AdminSessionList({ sessions, total, viewMode }: AdminSessionList
     return (
       <div className="bg-white dark:bg-midnight-800 rounded-xl border border-slate-200 dark:border-midnight-600 p-12 text-center">
         <FileText className="w-12 h-12 text-slate-300 dark:text-slate-600 mx-auto mb-4" />
-        <p className="text-slate-500 dark:text-slate-400">セッションがありません</p>
+        <p className="text-slate-500 dark:text-slate-300">セッションがありません</p>
       </div>
     )
   }

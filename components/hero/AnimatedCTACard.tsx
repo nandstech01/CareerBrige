@@ -31,7 +31,7 @@ const AnimatedCTACard = memo(function AnimatedCTACard() {
           </Link>
         </div>
 
-        <div className="flex flex-wrap items-center justify-center gap-4 mt-4 text-xs text-slate-500 dark:text-slate-400">
+        <div className="flex flex-wrap items-center justify-center gap-4 mt-4 text-xs text-slate-500 dark:text-slate-300">
           <span className="flex items-center gap-1">
             <Clock className="w-4 h-4 text-green-500" />
             最短10秒

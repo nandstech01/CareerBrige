@@ -187,7 +187,7 @@ export function VoiceRecorder({ onAudioReady, isProcessing }: VoiceRecorderProps
         <h2 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">
           音声で職歴を入力
         </h2>
-        <p className="text-sm text-slate-600 dark:text-slate-400">
+        <p className="text-sm text-slate-600 dark:text-slate-300">
           これまでの職歴や経験について話してください
         </p>
       </div>
@@ -197,7 +197,7 @@ export function VoiceRecorder({ onAudioReady, isProcessing }: VoiceRecorderProps
         <p className="text-sm text-slate-700 dark:text-slate-300 font-medium mb-2">
           話す内容の例:
         </p>
-        <ul className="text-sm text-slate-600 dark:text-slate-400 space-y-1">
+        <ul className="text-sm text-slate-600 dark:text-slate-300 space-y-1">
           <li>・これまで勤めた会社名と期間</li>
           <li>・担当していた業務内容</li>
           <li>・持っている資格やスキル</li>
@@ -231,7 +231,7 @@ export function VoiceRecorder({ onAudioReady, isProcessing }: VoiceRecorderProps
                 <div className="w-full border-t border-slate-300 dark:border-midnight-500" />
               </div>
               <div className="relative flex justify-center">
-                <span className="px-3 bg-slate-50 dark:bg-midnight-700/50 text-sm text-slate-500 dark:text-slate-400">
+                <span className="px-3 bg-slate-50 dark:bg-midnight-700/50 text-sm text-slate-500 dark:text-slate-300">
                   または
                 </span>
               </div>
@@ -254,10 +254,10 @@ export function VoiceRecorder({ onAudioReady, isProcessing }: VoiceRecorderProps
                 <Upload className="w-5 h-5" />
                 音声ファイルをアップロード
               </label>
-              <p className="text-xs text-slate-600 dark:text-slate-400 text-center mt-2">
+              <p className="text-xs text-slate-600 dark:text-slate-300 text-center mt-2">
                 Zoom・Google Meetの録音ファイル（M4A/MP3）もアップロードできます
               </p>
-              <p className="text-xs text-slate-500 dark:text-slate-400 text-center mt-1">
+              <p className="text-xs text-slate-500 dark:text-slate-300 text-center mt-1">
                 対応形式: MP3, WAV, WebM, OGG, M4A（最大25MB）
               </p>
             </div>
@@ -312,7 +312,7 @@ export function VoiceRecorder({ onAudioReady, isProcessing }: VoiceRecorderProps
                   {mode === 'recorded' ? '録音した音声' : 'アップロードした音声'}
                 </p>
                 {mode === 'recorded' && (
-                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                  <p className="text-xs text-slate-500 dark:text-slate-300">
                     {formatTime(recordingTime)}
                   </p>
                 )}

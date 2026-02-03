@@ -71,7 +71,7 @@ export function CompanyAnalyzer({ onAnalysisComplete }: CompanyAnalyzerProps) {
         <h2 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">
           応募先企業のURLを入力
         </h2>
-        <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
+        <p className="text-sm text-slate-600 dark:text-slate-300 mb-4">
           企業のWebサイトや求人ページのURLを入力すると、AIが企業情報を分析し、
           その企業に最適化された履歴書を生成します。
         </p>
@@ -134,7 +134,7 @@ export function CompanyAnalyzer({ onAnalysisComplete }: CompanyAnalyzerProps) {
             <div className="flex gap-3">
               <Briefcase className="w-5 h-5 text-slate-400 flex-shrink-0 mt-0.5" />
               <div>
-                <p className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">
+                <p className="text-xs font-medium text-slate-500 dark:text-slate-300 mb-1">
                   事業内容
                 </p>
                 <p className="text-sm text-slate-700 dark:text-slate-300">
@@ -148,7 +148,7 @@ export function CompanyAnalyzer({ onAnalysisComplete }: CompanyAnalyzerProps) {
               <div className="flex gap-3">
                 <Users className="w-5 h-5 text-slate-400 flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">
+                  <p className="text-xs font-medium text-slate-500 dark:text-slate-300 mb-1">
                     求める人材像
                   </p>
                   <p className="text-sm text-slate-700 dark:text-slate-300">
@@ -163,7 +163,7 @@ export function CompanyAnalyzer({ onAnalysisComplete }: CompanyAnalyzerProps) {
               <div className="flex gap-3">
                 <Heart className="w-5 h-5 text-slate-400 flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">
+                  <p className="text-xs font-medium text-slate-500 dark:text-slate-300 mb-1">
                     企業文化
                   </p>
                   <p className="text-sm text-slate-700 dark:text-slate-300">
@@ -178,7 +178,7 @@ export function CompanyAnalyzer({ onAnalysisComplete }: CompanyAnalyzerProps) {
               <div className="flex gap-3">
                 <Star className="w-5 h-5 text-slate-400 flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">
+                  <p className="text-xs font-medium text-slate-500 dark:text-slate-300 mb-1">
                     履歴書作成のポイント
                   </p>
                   <ul className="space-y-1">

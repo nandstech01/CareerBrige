@@ -28,7 +28,7 @@ const categories = [
   { value: 'cloud', label: 'クラウド', color: 'text-blue-600 dark:text-blue-400', bg: 'bg-blue-500/10', border: 'border-blue-500/30' },
   { value: 'database', label: 'データベース', color: 'text-amber-600 dark:text-orange-400', bg: 'bg-amber-500/10 dark:bg-orange-500/10', border: 'border-amber-500/30 dark:border-orange-500/30' },
   { value: 'devops', label: 'DevOps', color: 'text-pink-600 dark:text-pink-400', bg: 'bg-pink-500/10', border: 'border-pink-500/30' },
-  { value: 'other', label: 'その他', color: 'text-slate-500 dark:text-slate-400', bg: 'bg-slate-200/50 dark:bg-slate-700/50', border: 'border-slate-300/50 dark:border-slate-600/50' },
+  { value: 'other', label: 'その他', color: 'text-slate-500 dark:text-slate-300', bg: 'bg-slate-200/50 dark:bg-slate-700/50', border: 'border-slate-300/50 dark:border-slate-600/50' },
 ]
 
 export default function AdminSkillsPage() {
@@ -141,7 +141,7 @@ export default function AdminSkillsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="font-display text-3xl font-bold text-slate-900 dark:text-white">スキルマスタ管理</h1>
-          <p className="text-slate-500 dark:text-slate-400 mt-1">スキルの追加・削除・カテゴリ管理</p>
+          <p className="text-slate-500 dark:text-slate-300 mt-1">スキルの追加・削除・カテゴリ管理</p>
         </div>
         <div className="flex gap-3">
           <button
@@ -166,7 +166,7 @@ export default function AdminSkillsPage() {
         <div className="flex flex-col md:flex-row gap-4">
           <form onSubmit={handleSearch} className="flex-1 flex gap-3">
             <div className="relative flex-1">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 dark:text-slate-500" />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 dark:text-slate-400" />
               <input
                 type="text"
                 placeholder="スキル名で検索..."
@@ -183,7 +183,7 @@ export default function AdminSkillsPage() {
             </button>
           </form>
           <div className="relative">
-            <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
+            <div className="flex items-center gap-2 text-slate-500 dark:text-slate-300">
               <Filter className="w-4 h-4" />
               <span className="text-sm">カテゴリ:</span>
             </div>
@@ -212,17 +212,17 @@ export default function AdminSkillsPage() {
         {loading ? (
           <div className="p-12 flex flex-col items-center justify-center">
             <Loader2 className="w-8 h-8 text-sky-500 dark:text-purple-400 animate-spin mb-4" />
-            <p className="text-slate-500 dark:text-slate-400">読み込み中...</p>
+            <p className="text-slate-500 dark:text-slate-300">読み込み中...</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
                 <tr className="border-b border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-800/30">
-                  <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-400">スキル名</th>
-                  <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-400">カテゴリ</th>
-                  <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-400">作成日</th>
-                  <th className="text-right py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-400">操作</th>
+                  <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-300">スキル名</th>
+                  <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-300">カテゴリ</th>
+                  <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-300">作成日</th>
+                  <th className="text-right py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-300">操作</th>
                 </tr>
               </thead>
               <tbody>
@@ -241,7 +241,7 @@ export default function AdminSkillsPage() {
                           {cat.label}
                         </span>
                       </td>
-                      <td className="py-4 px-6 text-sm text-slate-500 dark:text-slate-400">
+                      <td className="py-4 px-6 text-sm text-slate-500 dark:text-slate-300">
                         {new Date(skill.created_at).toLocaleDateString('ja-JP')}
                       </td>
                       <td className="py-4 px-6 text-right">
@@ -259,7 +259,7 @@ export default function AdminSkillsPage() {
                   <tr>
                     <td colSpan={4} className="py-12 text-center">
                       <Code2 className="w-12 h-12 text-slate-300 dark:text-slate-600 mx-auto mb-3" />
-                      <p className="text-slate-400 dark:text-slate-500">スキルが見つかりません</p>
+                      <p className="text-slate-400 dark:text-slate-400">スキルが見つかりません</p>
                     </td>
                   </tr>
                 )}
@@ -367,7 +367,7 @@ React,framework`}
                 />
               </div>
               <div className="p-3 rounded-xl bg-slate-100 dark:bg-slate-700/30 border border-slate-200 dark:border-slate-600/50">
-                <p className="text-xs text-slate-500 dark:text-slate-400">
+                <p className="text-xs text-slate-500 dark:text-slate-300">
                   <span className="text-slate-700 dark:text-slate-300 font-medium">カテゴリ:</span> language, framework, ml, genai, cloud, database, devops, other
                 </p>
               </div>

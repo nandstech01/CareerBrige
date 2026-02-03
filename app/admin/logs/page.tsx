@@ -59,7 +59,7 @@ export default function AdminLogsPage() {
         <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
           操作ログ
         </h1>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+        <p className="text-sm text-slate-500 dark:text-slate-300 mt-1">
           すべての操作履歴を確認できます（12ヶ月保持）
         </p>
       </div>
@@ -93,16 +93,16 @@ export default function AdminLogsPage() {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-slate-200 dark:border-midnight-600 bg-slate-50 dark:bg-midnight-700/50">
-                <th className="text-left px-4 py-3 text-slate-500 dark:text-slate-400 font-medium">日時</th>
-                <th className="text-left px-4 py-3 text-slate-500 dark:text-slate-400 font-medium">アクション</th>
-                <th className="text-left px-4 py-3 text-slate-500 dark:text-slate-400 font-medium">リソース</th>
-                <th className="text-left px-4 py-3 text-slate-500 dark:text-slate-400 font-medium">詳細</th>
+                <th className="text-left px-4 py-3 text-slate-500 dark:text-slate-300 font-medium">日時</th>
+                <th className="text-left px-4 py-3 text-slate-500 dark:text-slate-300 font-medium">アクション</th>
+                <th className="text-left px-4 py-3 text-slate-500 dark:text-slate-300 font-medium">リソース</th>
+                <th className="text-left px-4 py-3 text-slate-500 dark:text-slate-300 font-medium">詳細</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-midnight-700">
               {logs.map((log) => (
                 <tr key={log.id} className="hover:bg-slate-50 dark:hover:bg-midnight-700/30">
-                  <td className="px-4 py-3 text-slate-500 dark:text-slate-400 whitespace-nowrap">
+                  <td className="px-4 py-3 text-slate-500 dark:text-slate-300 whitespace-nowrap">
                     {formatDateTime(log.created_at)}
                   </td>
                   <td className="px-4 py-3 font-medium text-slate-900 dark:text-white">

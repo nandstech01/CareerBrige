@@ -102,7 +102,7 @@ export default function HomePage() {
                 <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white relative z-10">実績紹介</h2>
                 <div className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-transparent via-orange-500 to-transparent"></div>
               </div>
-              <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">プロフェッショナルがキャリアと年収をレベルアップした実例をご覧ください。</p>
+              <p className="text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">プロフェッショナルがキャリアと年収をレベルアップした実例をご覧ください。</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -265,7 +265,7 @@ export default function HomePage() {
                   </div>
                   <div>
                     <h4 className="text-slate-900 dark:text-white font-bold text-xl group-hover:text-[#3CC8E8] transition-colors">プロダクトデザイナー</h4>
-                    <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">FinTech Corp • リモート</p>
+                    <p className="text-slate-500 dark:text-slate-300 text-sm mt-1">FinTech Corp • リモート</p>
                   </div>
                 </div>
                 <div className="flex gap-2 mb-6">
@@ -288,7 +288,7 @@ export default function HomePage() {
                   </div>
                   <div>
                     <h4 className="text-slate-900 dark:text-white font-bold text-xl group-hover:text-[#3CC8E8] transition-colors">バックエンドエンジニア</h4>
-                    <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">CloudSystems • 東京</p>
+                    <p className="text-slate-500 dark:text-slate-300 text-sm mt-1">CloudSystems • 東京</p>
                   </div>
                 </div>
                 <div className="flex gap-2 mb-6">
@@ -311,7 +311,7 @@ export default function HomePage() {
                   </div>
                   <div>
                     <h4 className="text-slate-900 dark:text-white font-bold text-xl group-hover:text-[#3CC8E8] transition-colors">グロースマネージャー</h4>
-                    <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">StartupInc • ハイブリッド</p>
+                    <p className="text-slate-500 dark:text-slate-300 text-sm mt-1">StartupInc • ハイブリッド</p>
                   </div>
                 </div>
                 <div className="flex gap-2 mb-6">
@@ -330,7 +330,7 @@ export default function HomePage() {
             {/* Total Jobs Counter */}
             <div className="mt-16 bg-white dark:bg-[#131c2a] border border-[#3CC8E8]/30 rounded-2xl p-8 text-center max-w-4xl mx-auto shadow-lg dark:shadow-[0_0_40px_rgba(60,200,232,0.1)]">
               <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">現在の求人数: <span className="text-[#3CC8E8] text-3xl font-black mx-2">524,301</span>件</h3>
-              <p className="text-slate-500 dark:text-slate-400 text-sm flex justify-center items-center gap-2">
+              <p className="text-slate-500 dark:text-slate-300 text-sm flex justify-center items-center gap-2">
                 <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
                 更新: 本日
               </p>
@@ -408,11 +408,11 @@ export default function HomePage() {
           <div className="border-t border-slate-200 dark:border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-6">
             <p className="text-slate-500 dark:text-slate-600 text-sm">© 2024 CareerBridge Inc. 無断転載を禁じます。</p>
             <div className="flex gap-6">
-              <a className="text-slate-400 dark:text-slate-500 hover:text-[#3CC8E8] transition-colors" href="#">
+              <a className="text-slate-400 dark:text-slate-400 hover:text-[#3CC8E8] transition-colors" href="#">
                 <span className="sr-only">Twitter</span>
                 <Twitter className="w-5 h-5" />
               </a>
-              <a className="text-slate-400 dark:text-slate-500 hover:text-[#3CC8E8] transition-colors" href="#">
+              <a className="text-slate-400 dark:text-slate-400 hover:text-[#3CC8E8] transition-colors" href="#">
                 <span className="sr-only">LinkedIn</span>
                 <Linkedin className="w-5 h-5" />
               </a>

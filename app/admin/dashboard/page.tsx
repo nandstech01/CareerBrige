@@ -115,7 +115,7 @@ export default function AdminDashboardPage() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="font-display text-3xl font-bold text-slate-900 dark:text-white">ダッシュボード</h1>
-            <p className="text-slate-500 dark:text-slate-400 mt-1">統合管理パネル</p>
+            <p className="text-slate-500 dark:text-slate-300 mt-1">統合管理パネル</p>
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -245,7 +245,7 @@ export default function AdminDashboardPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="font-display text-3xl font-bold text-slate-900 dark:text-white">ダッシュボード</h1>
-          <p className="text-slate-500 dark:text-slate-400 mt-1">統合管理パネル</p>
+          <p className="text-slate-500 dark:text-slate-300 mt-1">統合管理パネル</p>
         </div>
         <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-500/10 border border-emerald-500/30">
           <Activity className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
@@ -278,9 +278,9 @@ export default function AdminDashboardPage() {
                   </div>
                 )}
               </div>
-              <p className="text-sm text-slate-500 dark:text-slate-400 mb-1">{stat.title}</p>
+              <p className="text-sm text-slate-500 dark:text-slate-300 mb-1">{stat.title}</p>
               <p className="font-display text-3xl font-bold text-slate-900 dark:text-white mb-2 tracking-tight">{stat.value}</p>
-              <p className="text-xs text-slate-400 dark:text-slate-500">{stat.description}</p>
+              <p className="text-xs text-slate-400 dark:text-slate-400">{stat.description}</p>
             </div>
           )
         })}
@@ -296,7 +296,7 @@ export default function AdminDashboardPage() {
               className={`px-4 py-2.5 text-sm font-medium border-b-2 transition-colors ${
                 activeTab === tab.id
                   ? 'border-brand-cyan text-brand-cyan'
-                  : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300'
+                  : 'border-transparent text-slate-500 dark:text-slate-300 hover:text-slate-700 dark:hover:text-slate-300'
               }`}
             >
               {tab.label}
@@ -315,7 +315,7 @@ export default function AdminDashboardPage() {
               <div className="flex items-center justify-between mb-6">
                 <div>
                   <h2 className="font-display text-lg font-semibold text-slate-900 dark:text-white tracking-tight">月次売上推移</h2>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">過去6ヶ月の売上推移</p>
+                  <p className="text-sm text-slate-500 dark:text-slate-300">過去6ヶ月の売上推移</p>
                 </div>
                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-purple-500/10 border border-purple-500/30">
                   <TrendingUp className="w-4 h-4 text-purple-600 dark:text-purple-400" />
@@ -362,7 +362,7 @@ export default function AdminDashboardPage() {
               <div className="flex items-center justify-between mb-6">
                 <div>
                   <h2 className="font-display text-lg font-semibold text-slate-900 dark:text-white tracking-tight">案件ステータス分布</h2>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">現在の案件状況</p>
+                  <p className="text-sm text-slate-500 dark:text-slate-300">現在の案件状況</p>
                 </div>
               </div>
               <div className="h-80">
@@ -401,7 +401,7 @@ export default function AdminDashboardPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <h2 className="font-display text-lg font-semibold text-slate-900 dark:text-white tracking-tight">最近の登録ユーザー</h2>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">直近の新規登録</p>
+                  <p className="text-sm text-slate-500 dark:text-slate-300">直近の新規登録</p>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-purple-600 dark:text-purple-400">
                   <UserPlus className="w-4 h-4" />
@@ -413,9 +413,9 @@ export default function AdminDashboardPage() {
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-800/30">
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-400">名前</th>
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-400">ロール</th>
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-400">登録日</th>
+                    <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-300">名前</th>
+                    <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-300">ロール</th>
+                    <th className="text-left py-4 px-6 text-sm font-semibold text-slate-500 dark:text-slate-300">登録日</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -449,14 +449,14 @@ export default function AdminDashboardPage() {
                           {user.role === 'engineer' ? 'エンジニア' : user.role === 'company' ? '企業' : '管理者'}
                         </span>
                       </td>
-                      <td className="py-4 px-6 text-sm text-slate-500 dark:text-slate-400">
+                      <td className="py-4 px-6 text-sm text-slate-500 dark:text-slate-300">
                         {new Date(user.created_at).toLocaleDateString('ja-JP')}
                       </td>
                     </tr>
                   ))}
                   {(!platformStats.recentUsers || platformStats.recentUsers.length === 0) && (
                     <tr>
-                      <td colSpan={3} className="py-12 text-center text-slate-400 dark:text-slate-500">
+                      <td colSpan={3} className="py-12 text-center text-slate-400 dark:text-slate-400">
                         <Users className="w-8 h-8 mx-auto mb-2 opacity-50" />
                         ユーザーがいません
                       </td>
@@ -484,7 +484,7 @@ export default function AdminDashboardPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <h2 className="font-display text-lg font-semibold text-slate-900 dark:text-white tracking-tight">最新セッション</h2>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">モニタープログラムの最近のセッション</p>
+                  <p className="text-sm text-slate-500 dark:text-slate-300">モニタープログラムの最近のセッション</p>
                 </div>
                 <Link
                   href="/admin/monitor/sessions"
@@ -517,7 +517,7 @@ export default function AdminDashboardPage() {
                       </div>
                       <div>
                         <span className="font-medium text-slate-900 dark:text-white text-sm">{name}</span>
-                        <div className="flex items-center gap-3 mt-0.5 text-xs text-slate-500 dark:text-slate-400">
+                        <div className="flex items-center gap-3 mt-0.5 text-xs text-slate-500 dark:text-slate-300">
                           <span className="capitalize">{session.status}</span>
                           <span>Step {session.step_reached}/4</span>
                           <span>{new Date(session.started_at).toLocaleDateString('ja-JP')}</span>
@@ -528,7 +528,7 @@ export default function AdminDashboardPage() {
                 )
               })}
               {(!monitorStats.recentSessions || monitorStats.recentSessions.length === 0) && (
-                <div className="py-12 text-center text-slate-400 dark:text-slate-500">
+                <div className="py-12 text-center text-slate-400 dark:text-slate-400">
                   <FileText className="w-8 h-8 mx-auto mb-2 opacity-50" />
                   セッションがありません
                 </div>

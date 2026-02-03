@@ -141,7 +141,7 @@ export default function AdminSessionDetailPage() {
       <div className="space-y-4">
         <Link
           href="/admin/monitor/sessions"
-          className="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-brand-cyan transition-colors"
+          className="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-brand-cyan transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           セッション一覧に戻る
@@ -158,7 +158,7 @@ export default function AdminSessionDetailPage() {
       <div className="flex items-center gap-4">
         <Link
           href="/admin/monitor/sessions"
-          className="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-brand-cyan transition-colors"
+          className="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-brand-cyan transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           戻る
@@ -240,50 +240,50 @@ export default function AdminSessionDetailPage() {
           </h2>
           <dl className="grid grid-cols-2 gap-4 text-sm">
             <div>
-              <dt className="text-slate-500 dark:text-slate-400">氏名</dt>
+              <dt className="text-slate-500 dark:text-slate-300">氏名</dt>
               <dd className="font-medium text-slate-900 dark:text-white">{session.basic_info.name || '-'}</dd>
             </div>
             {session.basic_info.phone !== undefined && (
               <div>
-                <dt className="text-slate-500 dark:text-slate-400">電話番号</dt>
+                <dt className="text-slate-500 dark:text-slate-300">電話番号</dt>
                 <dd className="font-medium text-slate-900 dark:text-white">{session.basic_info.phone || '-'}</dd>
               </div>
             )}
             <div>
-              <dt className="text-slate-500 dark:text-slate-400">年齢</dt>
+              <dt className="text-slate-500 dark:text-slate-300">年齢</dt>
               <dd className="font-medium text-slate-900 dark:text-white">{session.basic_info.age || '-'}</dd>
             </div>
             <div>
-              <dt className="text-slate-500 dark:text-slate-400">都道府県</dt>
+              <dt className="text-slate-500 dark:text-slate-300">都道府県</dt>
               <dd className="font-medium text-slate-900 dark:text-white">{session.basic_info.prefecture || '-'}</dd>
             </div>
             {session.basic_info.gender && (
               <div>
-                <dt className="text-slate-500 dark:text-slate-400">性別</dt>
+                <dt className="text-slate-500 dark:text-slate-300">性別</dt>
                 <dd className="font-medium text-slate-900 dark:text-white">{session.basic_info.gender}</dd>
               </div>
             )}
             {session.basic_info.canRelocate !== undefined && (
               <div>
-                <dt className="text-slate-500 dark:text-slate-400">転居可否</dt>
+                <dt className="text-slate-500 dark:text-slate-300">転居可否</dt>
                 <dd className="font-medium text-slate-900 dark:text-white">{session.basic_info.canRelocate ? '可能' : '不可'}</dd>
               </div>
             )}
             {session.basic_info.hasResume !== undefined && (
               <div>
-                <dt className="text-slate-500 dark:text-slate-400">履歴書有無</dt>
+                <dt className="text-slate-500 dark:text-slate-300">履歴書有無</dt>
                 <dd className="font-medium text-slate-900 dark:text-white">{session.basic_info.hasResume ? 'あり' : 'なし'}</dd>
               </div>
             )}
             {session.basic_info.jobTemperature && (
               <div>
-                <dt className="text-slate-500 dark:text-slate-400">転職温度</dt>
+                <dt className="text-slate-500 dark:text-slate-300">転職温度</dt>
                 <dd className="font-medium text-slate-900 dark:text-white">{session.basic_info.jobTemperature}</dd>
               </div>
             )}
             {session.basic_info.lineId && (
               <div>
-                <dt className="text-slate-500 dark:text-slate-400">LINE ID</dt>
+                <dt className="text-slate-500 dark:text-slate-300">LINE ID</dt>
                 <dd className="font-medium text-slate-900 dark:text-white">{session.basic_info.lineId}</dd>
               </div>
             )}
@@ -333,17 +333,17 @@ export default function AdminSessionDetailPage() {
         <h2 className="font-semibold text-slate-900 dark:text-white mb-4">タイムライン</h2>
         <div className="space-y-3 text-sm">
           <div className="flex items-center gap-3">
-            <span className="text-slate-500 dark:text-slate-400 w-20">開始</span>
+            <span className="text-slate-500 dark:text-slate-300 w-20">開始</span>
             <span className="text-slate-900 dark:text-white">{formatDateTime(session.started_at)}</span>
           </div>
           {session.completed_at && (
             <div className="flex items-center gap-3">
-              <span className="text-slate-500 dark:text-slate-400 w-20">完了</span>
+              <span className="text-slate-500 dark:text-slate-300 w-20">完了</span>
               <span className="text-slate-900 dark:text-white">{formatDateTime(session.completed_at)}</span>
             </div>
           )}
           <div className="flex items-center gap-3">
-            <span className="text-slate-500 dark:text-slate-400 w-20">更新</span>
+            <span className="text-slate-500 dark:text-slate-300 w-20">更新</span>
             <span className="text-slate-900 dark:text-white">{formatDateTime(session.updated_at)}</span>
           </div>
         </div>
@@ -354,11 +354,11 @@ export default function AdminSessionDetailPage() {
         <h2 className="font-semibold text-slate-900 dark:text-white mb-2">セッション情報</h2>
         <dl className="text-sm space-y-2">
           <div>
-            <dt className="text-slate-500 dark:text-slate-400">ID</dt>
+            <dt className="text-slate-500 dark:text-slate-300">ID</dt>
             <dd className="font-mono text-xs text-slate-700 dark:text-slate-300">{session.id}</dd>
           </div>
           <div>
-            <dt className="text-slate-500 dark:text-slate-400">ソース</dt>
+            <dt className="text-slate-500 dark:text-slate-300">ソース</dt>
             <dd className="text-slate-700 dark:text-slate-300">{session.source}</dd>
           </div>
         </dl>

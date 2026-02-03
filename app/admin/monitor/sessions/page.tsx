@@ -128,7 +128,7 @@ export default function AdminSessionsPage() {
         <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
           セッション一覧
         </h1>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+        <p className="text-sm text-slate-500 dark:text-slate-300 mt-1">
           すべてのセッションと進捗状況を確認できます
         </p>
       </div>
@@ -136,7 +136,7 @@ export default function AdminSessionsPage() {
       {/* Funnel Stats */}
       {!isLoading && sessions.length > 0 && (
         <div className="bg-white dark:bg-midnight-800 rounded-xl border border-slate-200 dark:border-midnight-600 p-5">
-          <h3 className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-4">
+          <h3 className="text-xs font-semibold text-slate-400 dark:text-slate-400 uppercase tracking-wider mb-4">
             採用ファネル
           </h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -157,7 +157,7 @@ export default function AdminSessionsPage() {
                     <span className="text-2xl font-bold text-slate-900 dark:text-white mt-1">
                       {stage.count}
                     </span>
-                    <span className="text-[11px] text-slate-400 dark:text-slate-500 mt-0.5">
+                    <span className="text-[11px] text-slate-400 dark:text-slate-400 mt-0.5">
                       {pct}%
                     </span>
                   </div>
@@ -178,7 +178,7 @@ export default function AdminSessionsPage() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div className="flex items-center gap-4 flex-wrap">
           <div>
-            <label className="block text-[11px] font-medium text-slate-400 dark:text-slate-500 mb-1 ml-0.5">ステータス</label>
+            <label className="block text-[11px] font-medium text-slate-400 dark:text-slate-400 mb-1 ml-0.5">ステータス</label>
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
@@ -192,7 +192,7 @@ export default function AdminSessionsPage() {
             </select>
           </div>
           <div>
-            <label className="block text-[11px] font-medium text-slate-400 dark:text-slate-500 mb-1 ml-0.5">ソース</label>
+            <label className="block text-[11px] font-medium text-slate-400 dark:text-slate-400 mb-1 ml-0.5">ソース</label>
             <select
               value={sourceFilter}
               onChange={(e) => setSourceFilter(e.target.value)}
@@ -208,7 +208,7 @@ export default function AdminSessionsPage() {
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="text-sm text-slate-400 dark:text-slate-500 mr-1">全{total}件</span>
+          <span className="text-sm text-slate-400 dark:text-slate-400 mr-1">全{total}件</span>
           <div className="flex rounded-lg border border-slate-200 dark:border-midnight-600 overflow-hidden">
             <button
               onClick={() => setViewMode('list')}
