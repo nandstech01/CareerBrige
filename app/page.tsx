@@ -393,9 +393,9 @@ export default function HomePage() {
               <Link className="text-slate-500 hover:text-[#3CC8E8] text-sm transition-colors" href="#">キャリアアドバイス</Link>
             </div>
             <div className="flex flex-col gap-4">
-              <h4 className="text-slate-900 dark:text-white font-bold mb-2">採用担当者向け</h4>
+              <h4 className="text-slate-900 dark:text-white font-bold mb-2">企業様へ</h4>
+              <Link className="text-slate-500 hover:text-[#3CC8E8] text-sm transition-colors" href="/monitor-program">AI書類作成プラットフォーム</Link>
               <Link className="text-slate-500 hover:text-[#3CC8E8] text-sm transition-colors" href="/signup?role=company">求人を掲載</Link>
-              <Link className="text-slate-500 hover:text-[#3CC8E8] text-sm transition-colors" href="#">採用ソリューション</Link>
               <Link className="text-slate-500 hover:text-[#3CC8E8] text-sm transition-colors" href="/pricing">料金プラン</Link>
             </div>
             <div className="flex flex-col gap-4">
