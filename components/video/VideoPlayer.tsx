@@ -7,8 +7,10 @@ import { StatsAnimation } from '@/remotion/compositions/StatsAnimation'
 import { LogoIntro } from '@/remotion/compositions/LogoIntro'
 import { ResumeGraphAnimation } from '@/remotion/compositions/ResumeGraphAnimation'
 import { HeroTextAnimation } from '@/remotion/compositions/HeroTextAnimation'
+import { FeaturesShowcase } from '@/remotion/compositions/FeaturesShowcase'
+import { FeaturesShowcaseMobile } from '@/remotion/compositions/FeaturesShowcaseMobile'
 
-type CompositionType = 'hero' | 'job-card' | 'stats' | 'logo' | 'resume-graph' | 'hero-text'
+type CompositionType = 'hero' | 'job-card' | 'stats' | 'logo' | 'resume-graph' | 'hero-text' | 'features-showcase' | 'features-showcase-mobile'
 
 interface VideoPlayerProps {
   composition: CompositionType
@@ -88,6 +90,20 @@ const compositionConfig = {
     height: 600,
     defaultProps: {},
   },
+  'features-showcase': {
+    component: FeaturesShowcase,
+    durationInFrames: 300,
+    width: 1200,
+    height: 800,
+    defaultProps: {},
+  },
+  'features-showcase-mobile': {
+    component: FeaturesShowcaseMobile,
+    durationInFrames: 300,
+    width: 400,
+    height: 1400,
+    defaultProps: {},
+  },
 }
 
 export default function VideoPlayer({
@@ -118,6 +134,10 @@ export default function VideoPlayer({
       case 'resume-graph':
         return { ...config.defaultProps, ...themeProps }
       case 'hero-text':
+        return { ...config.defaultProps, ...themeProps }
+      case 'features-showcase':
+        return { ...config.defaultProps, ...themeProps }
+      case 'features-showcase-mobile':
         return { ...config.defaultProps, ...themeProps }
       default:
         return { ...config.defaultProps, ...themeProps }

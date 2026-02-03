@@ -6,6 +6,8 @@ import { StatsAnimation } from './compositions/StatsAnimation'
 import { LogoIntro } from './compositions/LogoIntro'
 import { ResumeGraphAnimation } from './compositions/ResumeGraphAnimation'
 import { HeroTextAnimation } from './compositions/HeroTextAnimation'
+import { FeaturesShowcase } from './compositions/FeaturesShowcase'
+import { FeaturesShowcaseMobile } from './compositions/FeaturesShowcaseMobile'
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -82,6 +84,26 @@ export const RemotionRoot: React.FC = () => {
         fps={30}
         width={1080}
         height={600}
+      />
+
+      {/* Features Showcase Animation */}
+      <Composition
+        id="FeaturesShowcase"
+        component={FeaturesShowcase}
+        durationInFrames={300}
+        fps={30}
+        width={1200}
+        height={800}
+      />
+
+      {/* Features Showcase Mobile (vertical stacked cards) */}
+      <Composition
+        id="FeaturesShowcaseMobile"
+        component={FeaturesShowcaseMobile}
+        durationInFrames={300}
+        fps={30}
+        width={400}
+        height={1400}
       />
     </>
   )

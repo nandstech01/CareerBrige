@@ -6,6 +6,7 @@ import { useTheme } from 'next-themes'
 import { useEffect, useState } from 'react'
 import { ThemeToggle } from '@/components/ThemeToggle'
 import VideoPlayer from '@/components/video/VideoPlayer'
+import { useInView } from '@/hooks/useInView'
 
 export default function TaishokuSupportPage() {
   const { theme } = useTheme()
@@ -13,6 +14,7 @@ export default function TaishokuSupportPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   useEffect(() => { setMounted(true) }, [])
   const currentTheme = (mounted ? theme : 'light') as 'light' | 'dark'
+  const { ref: featuresRef, isInView: featuresInView } = useInView({ threshold: 0.15 })
 
   return (
     <>
@@ -204,51 +206,38 @@ export default function TaishokuSupportPage() {
             </div>
           </section>
 
-          {/* Features (Bento Grid) */}
-          <section className="py-20 px-6 max-w-[1200px] mx-auto w-full">
-            <div className="text-center mb-16">
-              <h2 className="text-[1.45rem] md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
-                CareerBridgeの3つの強み
-              </h2>
-              <p className="text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
-                AI自動生成と万全のセキュリティで、貴社の紹介業務を強力にサポートします。
-              </p>
+          {/* Features (3つの強み) */}
+          <section
+            ref={featuresRef as React.RefObject<HTMLElement>}
+            className="relative overflow-hidden py-20 px-6"
+          >
+            {/* Desktop: Full Remotion Player — horizontal 3-card layout */}
+            <div className="hidden md:block max-w-[1200px] mx-auto w-full">
+              <div className="w-full aspect-[1200/800]">
+                {featuresInView && (
+                  <VideoPlayer
+                    composition="features-showcase"
+                    autoPlay
+                    loop
+                    theme={currentTheme}
+                    className="w-full h-full"
+                  />
+                )}
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Card 1 */}
-              <div className="glass-card bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-sm hover:shadow-xl transition-shadow border border-slate-100 dark:border-slate-700 flex flex-col gap-4">
-                <div className="w-12 h-12 rounded-xl bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center text-[#3CC8E8] mb-2">
-                  <span className="material-symbols-outlined text-3xl">description</span>
-                </div>
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white">AI自動生成</h3>
-                <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
-                  候補者の経歴情報から、AIが高品質な履歴書・職務経歴書を自動生成。添削・修正の工数を大幅に削減します。
-                </p>
-              </div>
-
-              {/* Card 2 */}
-              <div className="glass-card bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-sm hover:shadow-xl transition-shadow border border-slate-100 dark:border-slate-700 flex flex-col gap-4">
-                <div className="w-12 h-12 rounded-xl bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400 mb-2">
-                  <span className="material-symbols-outlined text-3xl">trending_up</span>
-                </div>
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white">通過率アップ</h3>
-                <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
-                  採用トレンドを分析したAIが、通過率の高い表現・構成を自動提案。貴社の紹介実績向上に貢献します。
-                </p>
-              </div>
-
-              {/* Card 3 */}
-              <div className="glass-card bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-sm hover:shadow-xl transition-shadow border border-slate-100 dark:border-slate-700 flex flex-col gap-4">
-                <div className="w-12 h-12 rounded-xl bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 dark:text-purple-400 mb-2">
-                  <span className="material-symbols-outlined text-3xl">verified_user</span>
-                </div>
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white">
-                  万全のセキュリティ
-                </h3>
-                <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
-                  金融機関レベルのデータ暗号化を採用。候補者の個人情報を厳重に保護し、コンプライアンスにも対応しています。
-                </p>
+            {/* Mobile: Vertical Remotion Player — stacked card layout */}
+            <div className="md:hidden max-w-[500px] mx-auto w-full">
+              <div className="w-full aspect-[400/1400]">
+                {featuresInView && (
+                  <VideoPlayer
+                    composition="features-showcase-mobile"
+                    autoPlay
+                    loop
+                    theme={currentTheme}
+                    className="w-full h-full"
+                  />
+                )}
               </div>
             </div>
           </section>
