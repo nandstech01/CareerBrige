@@ -6,12 +6,12 @@ import {
   spring,
 } from 'remotion'
 
-const HEADING_LINES = ['退職後のキャリアを', '確実なものへ']
+const HEADING_LINES = ['書類作成を自動化し', '紹介効率を最大化']
 
 const DESCRIPTION_LINES = [
-  '通過率を高める「履歴書完成保証」プログラム。',
-  '最新のAI技術とプロの知見を融合したモニタープログラムで、',
-  'あなたの経験を最大限に評価される職務経歴書へ。',
+  'AI × プロのノウハウで、候補者の応募書類を高品質に自動生成。',
+  '書類作成の工数を削減し、',
+  '紹介業務に集中できる環境を提供します。',
 ]
 
 interface HeroTextAnimationProps {
