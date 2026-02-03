@@ -20,8 +20,8 @@ const supabase = createClient(supabaseUrl, serviceRoleKey, {
 })
 
 async function createAdmin() {
-  const email = 'contacy@nands.tech'
-  const password = 'portpia'
+  const email = 'contact@nands.tech'
+  const password = 'youtopia1234'
   const role = 'admin'
 
   console.log(`Creating admin user: ${email} ...`)
@@ -49,7 +49,7 @@ async function createAdmin() {
     // Also update profiles table
     const { error: profileError } = await supabase
       .from('profiles')
-      .upsert({ id: existing.id, role, email }, { onConflict: 'id' })
+      .upsert({ id: existing.id, role, email, display_name: 'Admin' }, { onConflict: 'id' })
     if (profileError) {
       console.error('Failed to upsert profile:', profileError.message)
     } else {
@@ -78,7 +78,7 @@ async function createAdmin() {
   // Insert into profiles table
   const { error: profileError } = await supabase
     .from('profiles')
-    .upsert({ id: data.user.id, role, email }, { onConflict: 'id' })
+    .upsert({ id: data.user.id, role, email, display_name: 'Admin' }, { onConflict: 'id' })
   if (profileError) {
     console.error('Failed to upsert profile:', profileError.message)
   } else {

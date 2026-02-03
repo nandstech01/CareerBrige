@@ -19,15 +19,12 @@ export async function POST(request: Request) {
       )
     }
 
-    // Use admin client to create user
-    // In production, set AUTO_CONFIRM_EMAIL=false to require email verification
     const supabase = createAdminClient()
-    const autoConfirmEmail = process.env.AUTO_CONFIRM_EMAIL === 'true'
 
     const { data: authData, error: authError } = await supabase.auth.admin.createUser({
       email,
       password,
-      email_confirm: autoConfirmEmail,
+      email_confirm: true,
       user_metadata: {
         display_name: displayName,
         role,
