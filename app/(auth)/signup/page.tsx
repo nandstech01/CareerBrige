@@ -11,12 +11,14 @@ function SignupContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const defaultRole = searchParams.get('role') || 'engineer'
+  const redirect = searchParams.get('redirect') || ''
+  const isMonitorFlow = redirect.includes('monitor-program')
 
   const [displayName, setDisplayName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [role, setRole] = useState<'engineer' | 'company'>(
-    defaultRole === 'company' ? 'company' : 'engineer'
+    isMonitorFlow ? 'company' : (defaultRole === 'company' ? 'company' : 'engineer')
   )
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -81,22 +83,41 @@ function SignupContent() {
 
         <div className="max-w-md">
           <h1 className="text-4xl font-bold text-slate-900 dark:text-white mb-6 leading-tight">
-            今すぐ始めて、
-            <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-cyan-400">理想の仕事を見つけよう</span>
+            {isMonitorFlow ? (
+              <>
+                書類作成を自動化し、
+                <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-cyan-400">紹介効率を最大化</span>
+              </>
+            ) : (
+              <>
+                今すぐ始めて、
+                <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-cyan-400">理想の仕事を見つけよう</span>
+              </>
+            )}
           </h1>
           <p className="text-slate-600 dark:text-slate-300 text-lg leading-relaxed mb-8">
-            CareerBridgeは、全国50万件以上の求人からあなたにぴったりの仕事をマッチング。
-            職種・勤務地・給与など、希望条件で簡単検索。
+            {isMonitorFlow
+              ? 'CareerBridgeは、AIで候補者の履歴書・職務経歴書を高品質に自動生成。書類作成の工数を削減し、紹介業務に集中できます。'
+              : 'CareerBridgeは、全国50万件以上の求人からあなたにぴったりの仕事をマッチング。職種・勤務地・給与など、希望条件で簡単検索。'
+            }
           </p>
 
           {/* Benefits */}
           <div className="space-y-4">
-            {[
-              '全国50万件以上の求人',
-              '希望条件で簡単検索',
-              '無料で何件でも応募可能',
-            ].map((benefit, index) => (
+            {(isMonitorFlow
+              ? [
+                  'AIで履歴書・職務経歴書を自動生成',
+                  'ダッシュボードで候補者を一括管理',
+                  '無料トライアルですぐに開始',
+                ]
+              : [
+                  '全国50万件以上の求人',
+                  '希望条件で簡単検索',
+                  '無料で何件でも応募可能',
+                ]
+            ).map((benefit, index) => (
               <div key={index} className="flex items-center gap-3">
                 <div className="w-6 h-6 rounded-full bg-sky-500/20 flex items-center justify-center">
                   <Check className="w-3.5 h-3.5 text-sky-500" />
@@ -130,10 +151,13 @@ function SignupContent() {
           <div className="bg-white dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200 dark:border-slate-700/50 rounded-2xl p-8 md:p-10 shadow-xl">
             <div className="text-center mb-8">
               <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
-                アカウント作成
+                {isMonitorFlow ? '企業アカウント作成' : 'アカウント作成'}
               </h2>
               <p className="text-slate-500 dark:text-slate-300">
-                CareerBridgeに登録して始めましょう
+                {isMonitorFlow
+                  ? '無料トライアルで書類作成AIを体験'
+                  : 'CareerBridgeに登録して始めましょう'
+                }
               </p>
             </div>
 
@@ -144,83 +168,85 @@ function SignupContent() {
                 </div>
               )}
 
-              {/* Role Selection */}
-              <div className="space-y-3">
-                <label className="block text-sm font-medium text-slate-700 dark:text-slate-200">
-                  登録タイプ
-                </label>
-                <div className="grid grid-cols-2 gap-3">
-                  <button
-                    type="button"
-                    onClick={() => setRole('engineer')}
-                    className={`relative p-4 rounded-xl border-2 transition-all ${
-                      role === 'engineer'
-                        ? 'border-sky-500 bg-sky-500/10'
-                        : 'border-slate-200 dark:border-slate-600/50 bg-slate-50 dark:bg-slate-800/30 hover:border-slate-300 dark:hover:border-slate-500'
-                    }`}
-                  >
-                    <div className="flex flex-col items-center gap-2">
-                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors ${
+              {/* Role Selection - hidden when coming from monitor-program (company only) */}
+              {!isMonitorFlow && (
+                <div className="space-y-3">
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-200">
+                    登録タイプ
+                  </label>
+                  <div className="grid grid-cols-2 gap-3">
+                    <button
+                      type="button"
+                      onClick={() => setRole('engineer')}
+                      className={`relative p-4 rounded-xl border-2 transition-all ${
                         role === 'engineer'
-                          ? 'bg-sky-500/20'
-                          : 'bg-slate-200 dark:bg-slate-700/50'
-                      }`}>
-                        <Users className={`w-5 h-5 transition-colors ${
-                          role === 'engineer' ? 'text-sky-500' : 'text-slate-400'
-                        }`} />
-                      </div>
-                      <div>
-                        <div className={`font-medium transition-colors ${
-                          role === 'engineer' ? 'text-slate-900 dark:text-white' : 'text-slate-600 dark:text-slate-300'
+                          ? 'border-sky-500 bg-sky-500/10'
+                          : 'border-slate-200 dark:border-slate-600/50 bg-slate-50 dark:bg-slate-800/30 hover:border-slate-300 dark:hover:border-slate-500'
+                      }`}
+                    >
+                      <div className="flex flex-col items-center gap-2">
+                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors ${
+                          role === 'engineer'
+                            ? 'bg-sky-500/20'
+                            : 'bg-slate-200 dark:bg-slate-700/50'
                         }`}>
-                          エンジニア
+                          <Users className={`w-5 h-5 transition-colors ${
+                            role === 'engineer' ? 'text-sky-500' : 'text-slate-400'
+                          }`} />
                         </div>
-                        <div className="text-xs text-slate-500">案件を探す</div>
+                        <div>
+                          <div className={`font-medium transition-colors ${
+                            role === 'engineer' ? 'text-slate-900 dark:text-white' : 'text-slate-600 dark:text-slate-300'
+                          }`}>
+                            エンジニア
+                          </div>
+                          <div className="text-xs text-slate-500">案件を探す</div>
+                        </div>
                       </div>
-                    </div>
-                    {role === 'engineer' && (
-                      <div className="absolute top-2 right-2 w-5 h-5 rounded-full bg-sky-500 flex items-center justify-center">
-                        <Check className="w-3 h-3 text-white" />
-                      </div>
-                    )}
-                  </button>
+                      {role === 'engineer' && (
+                        <div className="absolute top-2 right-2 w-5 h-5 rounded-full bg-sky-500 flex items-center justify-center">
+                          <Check className="w-3 h-3 text-white" />
+                        </div>
+                      )}
+                    </button>
 
-                  <button
-                    type="button"
-                    onClick={() => setRole('company')}
-                    className={`relative p-4 rounded-xl border-2 transition-all ${
-                      role === 'company'
-                        ? 'border-orange-500 bg-orange-500/10'
-                        : 'border-slate-200 dark:border-slate-600/50 bg-slate-50 dark:bg-slate-800/30 hover:border-slate-300 dark:hover:border-slate-500'
-                    }`}
-                  >
-                    <div className="flex flex-col items-center gap-2">
-                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors ${
+                    <button
+                      type="button"
+                      onClick={() => setRole('company')}
+                      className={`relative p-4 rounded-xl border-2 transition-all ${
                         role === 'company'
-                          ? 'bg-orange-500/20'
-                          : 'bg-slate-200 dark:bg-slate-700/50'
-                      }`}>
-                        <Building2 className={`w-5 h-5 transition-colors ${
-                          role === 'company' ? 'text-orange-500' : 'text-slate-400'
-                        }`} />
-                      </div>
-                      <div>
-                        <div className={`font-medium transition-colors ${
-                          role === 'company' ? 'text-slate-900 dark:text-white' : 'text-slate-600 dark:text-slate-300'
+                          ? 'border-orange-500 bg-orange-500/10'
+                          : 'border-slate-200 dark:border-slate-600/50 bg-slate-50 dark:bg-slate-800/30 hover:border-slate-300 dark:hover:border-slate-500'
+                      }`}
+                    >
+                      <div className="flex flex-col items-center gap-2">
+                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors ${
+                          role === 'company'
+                            ? 'bg-orange-500/20'
+                            : 'bg-slate-200 dark:bg-slate-700/50'
                         }`}>
-                          企業
+                          <Building2 className={`w-5 h-5 transition-colors ${
+                            role === 'company' ? 'text-orange-500' : 'text-slate-400'
+                          }`} />
                         </div>
-                        <div className="text-xs text-slate-500">人材を探す</div>
+                        <div>
+                          <div className={`font-medium transition-colors ${
+                            role === 'company' ? 'text-slate-900 dark:text-white' : 'text-slate-600 dark:text-slate-300'
+                          }`}>
+                            企業
+                          </div>
+                          <div className="text-xs text-slate-500">人材を探す</div>
+                        </div>
                       </div>
-                    </div>
-                    {role === 'company' && (
-                      <div className="absolute top-2 right-2 w-5 h-5 rounded-full bg-orange-500 flex items-center justify-center">
-                        <Check className="w-3 h-3 text-white" />
-                      </div>
-                    )}
-                  </button>
+                      {role === 'company' && (
+                        <div className="absolute top-2 right-2 w-5 h-5 rounded-full bg-orange-500 flex items-center justify-center">
+                          <Check className="w-3 h-3 text-white" />
+                        </div>
+                      )}
+                    </button>
+                  </div>
                 </div>
-              </div>
+              )}
 
               <div className="space-y-2">
                 <label htmlFor="displayName" className="block text-sm font-medium text-slate-700 dark:text-slate-200">
@@ -233,7 +259,7 @@ function SignupContent() {
                     type="text"
                     value={displayName}
                     onChange={(e) => setDisplayName(e.target.value)}
-                    placeholder={role === 'company' ? '株式会社○○' : '山田 太郎'}
+                    placeholder={isMonitorFlow || role === 'company' ? '株式会社○○' : '山田 太郎'}
                     required
                     className="w-full pl-12 pr-4 py-3.5 rounded-xl bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-600/50 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 transition-all"
                   />
@@ -290,7 +316,7 @@ function SignupContent() {
                     </>
                   ) : (
                     <>
-                      登録する
+                      {isMonitorFlow ? '無料トライアルを開始' : '登録する'}
                       <ArrowRight className="w-4 h-4" />
                     </>
                   )}
