@@ -80,7 +80,7 @@ export default function AdminSessionsPage() {
   const [isLoading, setIsLoading] = useState(true)
   const [statusFilter, setStatusFilter] = useState('')
   const [sourceFilter, setSourceFilter] = useState('')
-  const [viewMode, setViewMode] = useState<'list' | 'gallery'>('list')
+  const [viewMode, setViewMode] = useState<'list' | 'gallery'>('gallery')
 
   const fetchSessions = async () => {
     setIsLoading(true)
