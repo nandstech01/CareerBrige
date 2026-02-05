@@ -33,8 +33,49 @@ export type MonitorSessionStatus =
   | 'reviewing'
   | 'completed'
   | 'abandoned'
+  | 'stage1_recording'
+  | 'stage1_complete'
+  | 'stage2_recording'
+  | 'stage2_complete'
 export type MonitorSessionSource = 'public' | 'company_hearing' | 'apply_form'
 export type MonitorConsentType = 'data_collection' | 'ai_processing' | 'anonymized_ml'
+
+// Stage1 AI生成データ: 志望動機、本人希望記入欄、自己PR
+export interface Stage1Data {
+  motivation: string        // 志望の動機
+  preferences: string       // 本人希望記入欄
+  selfPR: string           // 自己PR
+  generatedAt: string      // 生成日時
+}
+
+// Stage2 AI生成データ: 学歴、職歴（日付計算済み）
+export interface Stage2Data {
+  education: Array<{
+    schoolName: string      // 学校名
+    department?: string     // 学部・学科
+    graduationYear: number  // 卒業年
+    graduationMonth: number // 卒業月
+    isGraduated: boolean    // 卒業/中退/在学中
+    status: '卒業' | '中退' | '在学中' | '卒業見込'
+  }>
+  workHistory: Array<{
+    companyName: string     // 会社名
+    position?: string       // 役職
+    department?: string     // 部署
+    startYear: number       // 入社年
+    startMonth: number      // 入社月
+    endYear?: number        // 退社年
+    endMonth?: number       // 退社月
+    isCurrent: boolean      // 現職かどうか
+    description?: string    // 業務内容
+  }>
+  qualifications: Array<{
+    name: string            // 資格名
+    year?: number           // 取得年
+    month?: number          // 取得月
+  }>
+  generatedAt: string       // 生成日時
+}
 
 export interface Database {
   public: {
@@ -651,6 +692,14 @@ export interface Database {
           completed_at: string | null
           created_at: string
           updated_at: string
+          // 2-stage hearing columns
+          stage1_data: Json | null
+          stage1_transcript: string | null
+          stage2_data: Json | null
+          stage2_transcript: string | null
+          headshot_url: string | null
+          headshot_original_url: string | null
+          current_stage: number
         }
         Insert: {
           id?: string
@@ -673,6 +722,14 @@ export interface Database {
           completed_at?: string | null
           created_at?: string
           updated_at?: string
+          // 2-stage hearing columns
+          stage1_data?: Json | null
+          stage1_transcript?: string | null
+          stage2_data?: Json | null
+          stage2_transcript?: string | null
+          headshot_url?: string | null
+          headshot_original_url?: string | null
+          current_stage?: number
         }
         Update: {
           id?: string
@@ -695,6 +752,14 @@ export interface Database {
           completed_at?: string | null
           created_at?: string
           updated_at?: string
+          // 2-stage hearing columns
+          stage1_data?: Json | null
+          stage1_transcript?: string | null
+          stage2_data?: Json | null
+          stage2_transcript?: string | null
+          headshot_url?: string | null
+          headshot_original_url?: string | null
+          current_stage?: number
         }
         Relationships: []
       }

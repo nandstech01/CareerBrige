@@ -14,6 +14,10 @@ interface SessionRow {
   pdf_downloaded: boolean
   started_at: string
   completed_at: string | null
+  // 2-stage hearing columns
+  stage1_data?: unknown
+  stage2_data?: unknown
+  current_stage?: number
 }
 
 interface AdminSessionListProps {
@@ -38,6 +42,11 @@ export const STATUS_LABELS: Record<MonitorSessionStatus, { label: string; color:
   reviewing: { label: 'レビュー中', color: 'bg-brand-cyan/10 text-brand-cyan' },
   completed: { label: '完了', color: 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400' },
   abandoned: { label: '離脱', color: 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400' },
+  // 2-stage hearing statuses
+  stage1_recording: { label: 'Stage1録音中', color: 'bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400' },
+  stage1_complete: { label: '志望動機完了', color: 'bg-indigo-100 text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-400' },
+  stage2_recording: { label: 'Stage2録音中', color: 'bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400' },
+  stage2_complete: { label: '履歴書完成', color: 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400' },
 }
 
 const STATUS_PROGRESS_COLOR: Partial<Record<MonitorSessionStatus, string>> = {
@@ -52,6 +61,11 @@ const STATUS_PROGRESS_COLOR: Partial<Record<MonitorSessionStatus, string>> = {
   basic_info: 'bg-blue-500',
   completed: 'bg-green-500',
   abandoned: 'bg-red-400',
+  // 2-stage hearing
+  stage1_recording: 'bg-amber-500',
+  stage1_complete: 'bg-indigo-500',
+  stage2_recording: 'bg-amber-500',
+  stage2_complete: 'bg-green-500',
 }
 
 const STATUS_PROGRESS_WIDTH: Partial<Record<MonitorSessionStatus, string>> = {
@@ -62,6 +76,29 @@ const STATUS_PROGRESS_WIDTH: Partial<Record<MonitorSessionStatus, string>> = {
   screening: 'w-[75%]',
   decided: 'w-full',
   dropped: 'w-[5%]',
+  // 2-stage hearing progress
+  stage1_recording: 'w-[20%]',
+  stage1_complete: 'w-[40%]',
+  stage2_recording: 'w-[60%]',
+  stage2_complete: 'w-full',
+}
+
+// Get hearing stage progress for display
+function getHearingProgress(session: SessionRow): { label: string; percent: number } {
+  if (session.stage2_data) return { label: '履歴書完成', percent: 100 }
+  if (session.status === 'stage2_recording') return { label: '経歴入力待ち', percent: 60 }
+  if (session.stage1_data) return { label: '志望動機完了', percent: 40 }
+  if (session.status === 'stage1_recording') return { label: 'Stage1待ち', percent: 20 }
+  return { label: '応募受付', percent: 8 }
+}
+
+// Determine the correct link for a session
+function getSessionLink(session: SessionRow): string {
+  // If session is in hearing flow (applied from LINE and ready for hearing)
+  if (session.source === 'apply_form' && ['applied', 'scheduling', 'interview_waiting', 'interviewed', 'stage1_recording', 'stage1_complete', 'stage2_recording', 'stage2_complete'].includes(session.status)) {
+    return `/admin/monitor/hearing/${session.id}`
+  }
+  return `/admin/monitor/sessions/${session.id}`
 }
 
 function formatDate(dateStr: string) {
@@ -125,11 +162,12 @@ function ListView({ sessions, total }: { sessions: SessionRow[]; total: number }
         {sessions.map((session) => {
           const statusInfo = STATUS_LABELS[session.status]
           const name = session.basic_info?.name || '匿名'
+          const hearingProgress = getHearingProgress(session)
 
           return (
             <Link
               key={session.id}
-              href={`/admin/monitor/sessions/${session.id}`}
+              href={getSessionLink(session)}
               className="flex items-center justify-between p-4 hover:bg-slate-50 dark:hover:bg-midnight-700/50 transition-colors"
             >
               <div className="flex items-center gap-4">
@@ -148,7 +186,11 @@ function ListView({ sessions, total }: { sessions: SessionRow[]; total: number }
                     <SourceBadge source={session.source} />
                   </div>
                   <div className="flex items-center gap-3 mt-1 text-xs text-slate-500 dark:text-slate-300">
-                    <span>Step {session.step_reached}/4</span>
+                    {session.source === 'apply_form' ? (
+                      <span className="text-brand-cyan font-medium">{hearingProgress.label}</span>
+                    ) : (
+                      <span>Step {session.step_reached}/4</span>
+                    )}
                     <span>AI呼出: {session.ai_calls_count}回</span>
                     <span>{formatDate(session.started_at)}</span>
                   </div>
@@ -172,13 +214,19 @@ function GalleryView({ sessions }: { sessions: SessionRow[] }) {
         const statusInfo = STATUS_LABELS[session.status]
         const name = session.basic_info?.name || '匿名'
         const info = session.basic_info
-        const progressColor = STATUS_PROGRESS_COLOR[session.status] || 'bg-slate-400'
-        const progressWidth = STATUS_PROGRESS_WIDTH[session.status] || `w-[${Math.max(5, session.step_reached * 25)}%]`
+        const hearingProgress = getHearingProgress(session)
+        const isApplyForm = session.source === 'apply_form'
+        const progressColor = isApplyForm
+          ? (hearingProgress.percent === 100 ? 'bg-green-500' : hearingProgress.percent >= 40 ? 'bg-indigo-500' : 'bg-emerald-500')
+          : (STATUS_PROGRESS_COLOR[session.status] || 'bg-slate-400')
+        const progressWidth = isApplyForm
+          ? `w-[${hearingProgress.percent}%]`
+          : (STATUS_PROGRESS_WIDTH[session.status] || `w-[${Math.max(5, session.step_reached * 25)}%]`)
 
         return (
           <Link
             key={session.id}
-            href={`/admin/monitor/sessions/${session.id}`}
+            href={getSessionLink(session)}
             className="group bg-white dark:bg-midnight-800 rounded-xl border border-slate-200 dark:border-midnight-600 overflow-hidden hover:shadow-lg hover:border-slate-300 dark:hover:border-midnight-500 transition-all duration-200"
           >
             {/* Card Header */}
@@ -226,10 +274,15 @@ function GalleryView({ sessions }: { sessions: SessionRow[] }) {
               <div>
                 <div className="flex justify-between text-[11px] mb-1.5">
                   <span className="text-slate-400 dark:text-slate-400">進捗</span>
-                  <span className="text-slate-600 dark:text-slate-300 font-medium">Step {session.step_reached}/4</span>
+                  <span className="text-slate-600 dark:text-slate-300 font-medium">
+                    {isApplyForm ? hearingProgress.label : `Step ${session.step_reached}/4`}
+                  </span>
                 </div>
                 <div className="w-full bg-slate-100 dark:bg-midnight-700 rounded-full h-1.5">
-                  <div className={`${progressColor} h-1.5 rounded-full transition-all ${progressWidth}`} />
+                  <div
+                    className={`${progressColor} h-1.5 rounded-full transition-all`}
+                    style={{ width: isApplyForm ? `${hearingProgress.percent}%` : undefined }}
+                  />
                 </div>
               </div>
             </div>

@@ -1,5 +1,5 @@
 import { createMonitorAdminClient } from '@/lib/supabase/admin'
-import type { MonitorSessionStatus } from '@/types/database'
+import type { MonitorSessionStatus, Stage1Data, Stage2Data } from '@/types/database'
 import type { ResumeData } from '@/lib/gemini'
 
 /**
@@ -322,5 +322,186 @@ export async function updateSessionStatus(
     .single()
 
   if (error) throw new Error(`Failed to update session status: ${error.message}`)
+  return data
+}
+
+// ============================================================
+// 2-Stage Hearing Functions
+// ============================================================
+
+/**
+ * Update session basic info for hearing (name, age, prefecture only - no phone)
+ */
+export async function updateSessionHearingBasicInfo(
+  sessionId: string,
+  basicInfo: { name: string; age: string; prefecture: string }
+) {
+  const supabase = createMonitorAdminClient()
+
+  const session = await getSessionById(sessionId)
+  if (!session) throw new Error('Session not found')
+
+  // Merge with existing basic_info to preserve LINE apply data
+  const currentInfo = (session.basic_info || {}) as Record<string, unknown>
+  const updatedInfo = { ...currentInfo, ...basicInfo }
+
+  const { data, error } = await supabase
+    .from('monitor_sessions')
+    .update({
+      basic_info: updatedInfo,
+      current_stage: 1,
+    })
+    .eq('id', sessionId)
+    .select()
+    .single()
+
+  if (error) throw new Error(`Failed to update hearing basic info: ${error.message}`)
+  return data
+}
+
+/**
+ * Update session with Stage1 data (志望動機、本人希望記入欄、自己PR)
+ */
+export async function updateSessionStage1(
+  sessionId: string,
+  stage1Data: Stage1Data,
+  transcript: string
+) {
+  const supabase = createMonitorAdminClient()
+
+  const { data, error } = await supabase
+    .from('monitor_sessions')
+    .update({
+      stage1_data: stage1Data as unknown as Record<string, unknown>,
+      stage1_transcript: transcript,
+      status: 'stage1_complete' as MonitorSessionStatus,
+      current_stage: 1,
+      ai_calls_count: 1,
+    })
+    .eq('id', sessionId)
+    .select()
+    .single()
+
+  if (error) throw new Error(`Failed to update stage1 data: ${error.message}`)
+  return data
+}
+
+/**
+ * Update session with Stage2 data (学歴、職歴、資格)
+ */
+export async function updateSessionStage2(
+  sessionId: string,
+  stage2Data: Stage2Data,
+  transcript: string
+) {
+  const supabase = createMonitorAdminClient()
+
+  // Get current AI calls count
+  const session = await getSessionById(sessionId)
+  if (!session) throw new Error('Session not found')
+
+  const { data, error } = await supabase
+    .from('monitor_sessions')
+    .update({
+      stage2_data: stage2Data as unknown as Record<string, unknown>,
+      stage2_transcript: transcript,
+      status: 'stage2_complete' as MonitorSessionStatus,
+      current_stage: 2,
+      ai_calls_count: session.ai_calls_count + 1,
+    })
+    .eq('id', sessionId)
+    .select()
+    .single()
+
+  if (error) throw new Error(`Failed to update stage2 data: ${error.message}`)
+  return data
+}
+
+/**
+ * Update session headshot URLs
+ */
+export async function updateSessionHeadshot(
+  sessionId: string,
+  headshotUrl: string,
+  originalUrl?: string
+) {
+  const supabase = createMonitorAdminClient()
+
+  const updateData: Record<string, unknown> = {
+    headshot_url: headshotUrl,
+  }
+  if (originalUrl) {
+    updateData.headshot_original_url = originalUrl
+  }
+
+  const { data, error } = await supabase
+    .from('monitor_sessions')
+    .update(updateData)
+    .eq('id', sessionId)
+    .select()
+    .single()
+
+  if (error) throw new Error(`Failed to update headshot: ${error.message}`)
+  return data
+}
+
+/**
+ * Mark session as Stage1 recording in progress
+ */
+export async function startStage1Recording(sessionId: string) {
+  const supabase = createMonitorAdminClient()
+
+  const { data, error } = await supabase
+    .from('monitor_sessions')
+    .update({
+      status: 'stage1_recording' as MonitorSessionStatus,
+      current_stage: 1,
+    })
+    .eq('id', sessionId)
+    .select()
+    .single()
+
+  if (error) throw new Error(`Failed to start stage1 recording: ${error.message}`)
+  return data
+}
+
+/**
+ * Mark session as Stage2 recording in progress
+ */
+export async function startStage2Recording(sessionId: string) {
+  const supabase = createMonitorAdminClient()
+
+  const { data, error } = await supabase
+    .from('monitor_sessions')
+    .update({
+      status: 'stage2_recording' as MonitorSessionStatus,
+      current_stage: 2,
+    })
+    .eq('id', sessionId)
+    .select()
+    .single()
+
+  if (error) throw new Error(`Failed to start stage2 recording: ${error.message}`)
+  return data
+}
+
+/**
+ * Complete hearing session (both stages done, PDF downloaded)
+ */
+export async function completeHearingSession(sessionId: string) {
+  const supabase = createMonitorAdminClient()
+
+  const { data, error } = await supabase
+    .from('monitor_sessions')
+    .update({
+      status: 'completed' as MonitorSessionStatus,
+      pdf_downloaded: true,
+      completed_at: new Date().toISOString(),
+    })
+    .eq('id', sessionId)
+    .select()
+    .single()
+
+  if (error) throw new Error(`Failed to complete hearing session: ${error.message}`)
   return data
 }
