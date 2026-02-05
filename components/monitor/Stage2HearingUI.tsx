@@ -1,13 +1,13 @@
 'use client'
 
 import { useState, useRef, useCallback, useEffect } from 'react'
-import { Mic, Square, Upload, Play, Pause, Trash2, AlertCircle, CheckCircle, Loader2, ChevronRight, Briefcase, GraduationCap, Award } from 'lucide-react'
+import { Mic, Square, Upload, Play, Pause, Trash2, AlertCircle, CheckCircle, Loader2, ChevronRight, Briefcase, GraduationCap, Award, Calendar } from 'lucide-react'
 import type { Stage1Data, Stage2Data } from '@/types/database'
 
 interface Stage2HearingUIProps {
   sessionId: string
   stage1Data: Stage1Data
-  basicInfo: { name: string; age: string; prefecture: string }
+  basicInfo: { name: string; prefecture: string }
   onComplete: (stage2Data: Stage2Data, transcript: string) => void
 }
 
@@ -197,13 +197,14 @@ export function Stage2HearingUI({ sessionId, stage1Data, basicInfo, onComplete }
         <div className="bg-brand-cyan/5 border border-brand-cyan/20 rounded-lg p-4">
           <p className="text-sm text-slate-700 dark:text-slate-300 font-medium mb-2">話す内容の例:</p>
           <ul className="text-sm text-slate-600 dark:text-slate-400 space-y-1">
-            <li>・「{basicInfo.age}歳、○○高校卒業」</li>
+            <li>・「1996年4月15日生まれです」（生年月日）</li>
+            <li>・「○○高校を卒業しました」</li>
             <li>・「大学は○○大学の△△学部を卒業」</li>
             <li>・「4ヶ月前まで○○株式会社で営業をしていた」</li>
             <li>・「普通自動車免許を持っています」</li>
           </ul>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-3">
-            ※ 年月はAIが自動計算します（例: 「4ヶ月前」→ 2025年10月）
+            ※ 生年月日から卒業年をAIが自動計算します
           </p>
         </div>
 
@@ -248,6 +249,20 @@ export function Stage2HearingUI({ sessionId, stage1Data, basicInfo, onComplete }
         </div>
 
         <div className="space-y-4">
+          {/* Birth Date */}
+          {result.stage2Data.birthDate && result.stage2Data.birthDate.year > 0 && (
+            <div className="bg-slate-50 dark:bg-midnight-700/50 rounded-lg p-4">
+              <h4 className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">
+                <Calendar className="w-4 h-4" />
+                生年月日
+              </h4>
+              <p className="text-sm text-slate-900 dark:text-white">
+                {result.stage2Data.birthDate.year}年{result.stage2Data.birthDate.month}月
+                {result.stage2Data.birthDate.day && `${result.stage2Data.birthDate.day}日`}生まれ
+              </p>
+            </div>
+          )}
+
           {/* Education */}
           <div className="bg-slate-50 dark:bg-midnight-700/50 rounded-lg p-4">
             <h4 className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">

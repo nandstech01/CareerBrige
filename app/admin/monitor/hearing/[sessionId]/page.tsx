@@ -11,11 +11,21 @@ import { RirekishoPdf } from '@/components/monitor/RirekishoPdf'
 import { ShokumukeirekishoPdf } from '@/components/monitor/ShokumukeirekishoPdf'
 import type { Stage1Data, Stage2Data } from '@/types/database'
 
+interface BasicInfo {
+  name?: string
+  postalCode?: string
+  prefecture?: string
+  city?: string
+  streetAddress?: string
+  gender?: string
+  lineId?: string
+}
+
 interface SessionData {
   id: string
   status: string
   source: string
-  basic_info: { name?: string; age?: string; prefecture?: string; gender?: string; lineId?: string } | null
+  basic_info: BasicInfo | null
   stage1_data: Stage1Data | null
   stage1_transcript: string | null
   stage2_data: Stage2Data | null
@@ -37,6 +47,13 @@ export default function HearingSessionPage() {
   const [stage1Data, setStage1Data] = useState<Stage1Data | null>(null)
   const [stage2Data, setStage2Data] = useState<Stage2Data | null>(null)
   const [headshotUrl, setHeadshotUrl] = useState<string | null>(null)
+  const [basicInfo, setBasicInfo] = useState<BasicInfo>({
+    name: '',
+    postalCode: '',
+    prefecture: '',
+    city: '',
+    streetAddress: '',
+  })
 
   // Fetch session data
   useEffect(() => {
@@ -48,6 +65,17 @@ export default function HearingSessionPage() {
         }
         const data = await response.json()
         setSession(data)
+
+        // Set basicInfo from session data
+        if (data.basic_info) {
+          setBasicInfo({
+            name: data.basic_info.name || '',
+            postalCode: data.basic_info.postalCode || '',
+            prefecture: data.basic_info.prefecture || '',
+            city: data.basic_info.city || '',
+            streetAddress: data.basic_info.streetAddress || '',
+          })
+        }
 
         // Determine current step based on session data
         if (data.stage2_data && data.headshot_url) {
@@ -76,8 +104,9 @@ export default function HearingSessionPage() {
     }
   }, [sessionId])
 
-  const handleStage1Complete = useCallback((data: Stage1Data) => {
+  const handleStage1Complete = useCallback((data: Stage1Data, _transcript: string, updatedBasicInfo: BasicInfo) => {
     setStage1Data(data)
+    setBasicInfo(updatedBasicInfo)
     setStep('stage2')
   }, [])
 
@@ -126,8 +155,6 @@ export default function HearingSessionPage() {
     )
   }
 
-  const basicInfo = session?.basic_info || { name: '', age: '', prefecture: '' }
-
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-midnight-900">
       {/* Header */}
@@ -145,8 +172,7 @@ export default function HearingSessionPage() {
                 {basicInfo.name || '匿名'} さんのヒアリング
               </h1>
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                {basicInfo.age && `${basicInfo.age}歳`}
-                {basicInfo.prefecture && ` / ${basicInfo.prefecture}`}
+                {basicInfo.prefecture && basicInfo.prefecture}
               </p>
             </div>
           </div>
@@ -172,8 +198,10 @@ export default function HearingSessionPage() {
               sessionId={sessionId}
               initialBasicInfo={{
                 name: basicInfo.name || '',
-                age: basicInfo.age || '',
+                postalCode: basicInfo.postalCode || '',
                 prefecture: basicInfo.prefecture || '',
+                city: basicInfo.city || '',
+                streetAddress: basicInfo.streetAddress || '',
               }}
               onComplete={handleStage1Complete}
             />
@@ -185,7 +213,6 @@ export default function HearingSessionPage() {
               stage1Data={stage1Data}
               basicInfo={{
                 name: basicInfo.name || '',
-                age: basicInfo.age || '',
                 prefecture: basicInfo.prefecture || '',
               }}
               onComplete={handleStage2Complete}
@@ -229,8 +256,10 @@ export default function HearingSessionPage() {
                 <RirekishoPdf
                   basicInfo={{
                     name: basicInfo.name || '',
-                    age: basicInfo.age || '',
+                    postalCode: basicInfo.postalCode || '',
                     prefecture: basicInfo.prefecture || '',
+                    city: basicInfo.city || '',
+                    streetAddress: basicInfo.streetAddress || '',
                   }}
                   stage1Data={stage1Data}
                   stage2Data={stage2Data}
@@ -241,8 +270,10 @@ export default function HearingSessionPage() {
                 <ShokumukeirekishoPdf
                   basicInfo={{
                     name: basicInfo.name || '',
-                    age: basicInfo.age || '',
+                    postalCode: basicInfo.postalCode || '',
                     prefecture: basicInfo.prefecture || '',
+                    city: basicInfo.city || '',
+                    streetAddress: basicInfo.streetAddress || '',
                   }}
                   stage1Data={stage1Data}
                   stage2Data={stage2Data}

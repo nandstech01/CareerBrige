@@ -195,7 +195,13 @@ const styles = StyleSheet.create({
 })
 
 interface RirekishoData {
-  basicInfo: { name: string; age: string; prefecture: string }
+  basicInfo: {
+    name: string
+    postalCode?: string
+    prefecture: string
+    city?: string
+    streetAddress?: string
+  }
   stage1: Stage1Data
   stage2: Stage2Data
   headshotUrl?: string | null
@@ -205,9 +211,29 @@ function RirekishoDocument({ data }: { data: RirekishoData }) {
   const today = new Date()
   const dateStr = `${today.getFullYear()}年${today.getMonth() + 1}月${today.getDate()}日現在`
 
-  // 年齢から生年月日を推定
-  const age = parseInt(data.basicInfo.age, 10)
-  const birthYear = today.getFullYear() - age
+  // 生年月日と年齢を計算
+  const birthDate = data.stage2.birthDate
+  const birthYear = birthDate?.year || 0
+  const birthMonth = birthDate?.month || 1
+  const birthDay = birthDate?.day
+
+  // 年齢計算
+  let age = 0
+  if (birthYear > 0) {
+    age = today.getFullYear() - birthYear
+    if (today.getMonth() + 1 < birthMonth ||
+        (today.getMonth() + 1 === birthMonth && birthDay && today.getDate() < birthDay)) {
+      age -= 1
+    }
+  }
+
+  // 住所を組み立て
+  const fullAddress = [
+    data.basicInfo.postalCode ? `〒${data.basicInfo.postalCode.slice(0, 3)}-${data.basicInfo.postalCode.slice(3)}` : '',
+    data.basicInfo.prefecture,
+    data.basicInfo.city,
+    data.basicInfo.streetAddress,
+  ].filter(Boolean).join(' ')
 
   return (
     <Document>
@@ -243,7 +269,12 @@ function RirekishoDocument({ data }: { data: RirekishoData }) {
           <View style={styles.infoGrid}>
             <View style={styles.infoItem}>
               <Text style={styles.infoLabel}>生年月日</Text>
-              <Text style={styles.infoValue}>{birthYear}年生（{data.basicInfo.age}歳）</Text>
+              <Text style={styles.infoValue}>
+                {birthYear > 0
+                  ? `${birthYear}年${birthMonth}月${birthDay ? `${birthDay}日` : ''}生（${age}歳）`
+                  : ''
+                }
+              </Text>
             </View>
             <View style={[styles.infoItem, { borderRight: 0 }]}>
               <Text style={styles.infoLabel}>性別</Text>
@@ -251,7 +282,7 @@ function RirekishoDocument({ data }: { data: RirekishoData }) {
             </View>
             <View style={[styles.infoItem, { width: '100%', borderRight: 0 }]}>
               <Text style={styles.infoLabel}>現住所</Text>
-              <Text style={styles.infoValue}>{data.basicInfo.prefecture}</Text>
+              <Text style={styles.infoValue}>{fullAddress || data.basicInfo.prefecture}</Text>
             </View>
           </View>
         </View>
@@ -376,7 +407,13 @@ function RirekishoDocument({ data }: { data: RirekishoData }) {
 }
 
 interface RirekishoPdfProps {
-  basicInfo: { name: string; age: string; prefecture: string }
+  basicInfo: {
+    name: string
+    postalCode?: string
+    prefecture: string
+    city?: string
+    streetAddress?: string
+  }
   stage1Data: Stage1Data
   stage2Data: Stage2Data
   headshotUrl?: string | null

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useCallback, useEffect } from 'react'
-import { Mic, Square, Upload, Play, Pause, Trash2, AlertCircle, CheckCircle, Loader2, User, MapPin, Calendar, ChevronRight } from 'lucide-react'
+import { Mic, Square, Upload, Play, Pause, Trash2, AlertCircle, CheckCircle, Loader2, User, MapPin, ChevronRight, Home } from 'lucide-react'
 import type { Stage1Data } from '@/types/database'
 
 const PREFECTURES = [
@@ -17,19 +17,27 @@ const PREFECTURES = [
 
 interface BasicInfo {
   name: string
-  age: string
+  postalCode: string
   prefecture: string
+  city: string
+  streetAddress: string
 }
 
 interface Stage1HearingUIProps {
   sessionId: string
-  initialBasicInfo?: BasicInfo
-  onComplete: (stage1Data: Stage1Data, transcript: string) => void
+  initialBasicInfo?: Partial<BasicInfo>
+  onComplete: (stage1Data: Stage1Data, transcript: string, basicInfo: BasicInfo) => void
 }
 
 export function Stage1HearingUI({ sessionId, initialBasicInfo, onComplete }: Stage1HearingUIProps) {
   const [step, setStep] = useState<'basic' | 'recording' | 'processing' | 'result'>('basic')
-  const [basicInfo, setBasicInfo] = useState<BasicInfo>(initialBasicInfo || { name: '', age: '', prefecture: '' })
+  const [basicInfo, setBasicInfo] = useState<BasicInfo>({
+    name: initialBasicInfo?.name || '',
+    postalCode: initialBasicInfo?.postalCode || '',
+    prefecture: initialBasicInfo?.prefecture || '',
+    city: initialBasicInfo?.city || '',
+    streetAddress: initialBasicInfo?.streetAddress || '',
+  })
   const [mode, setMode] = useState<'idle' | 'recording' | 'recorded' | 'uploaded'>('idle')
   const [recordingTime, setRecordingTime] = useState(0)
   const [audioBlob, setAudioBlob] = useState<Blob | null>(null)
@@ -58,7 +66,30 @@ export function Stage1HearingUI({ sessionId, initialBasicInfo, onComplete }: Sta
     setBasicInfo(prev => ({ ...prev, [name]: value }))
   }
 
-  const isBasicInfoValid = basicInfo.name && basicInfo.age && basicInfo.prefecture
+  // 郵便番号から住所を自動入力
+  const handlePostalCodeChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/[^0-9]/g, '')
+    setBasicInfo(prev => ({ ...prev, postalCode: value }))
+
+    if (value.length === 7) {
+      try {
+        const response = await fetch(`https://zipcloud.ibsnet.co.jp/api/search?zipcode=${value}`)
+        const data = await response.json()
+        if (data.results && data.results[0]) {
+          const result = data.results[0]
+          setBasicInfo(prev => ({
+            ...prev,
+            prefecture: result.address1,
+            city: result.address2 + result.address3,
+          }))
+        }
+      } catch (err) {
+        console.error('Postal code lookup error:', err)
+      }
+    }
+  }
+
+  const isBasicInfoValid = basicInfo.name && basicInfo.postalCode && basicInfo.prefecture && basicInfo.city
 
   const handleBasicInfoSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -163,8 +194,11 @@ export function Stage1HearingUI({ sessionId, initialBasicInfo, onComplete }: Sta
       formData.append('audio', audioBlob, `recording.${mimeType.split('/')[1]}`)
       formData.append('sessionId', sessionId)
       formData.append('name', basicInfo.name)
-      formData.append('age', basicInfo.age)
+      // 住所情報も送信
+      formData.append('postalCode', basicInfo.postalCode)
       formData.append('prefecture', basicInfo.prefecture)
+      formData.append('city', basicInfo.city)
+      formData.append('streetAddress', basicInfo.streetAddress)
 
       const response = await fetch('/api/monitor/hearing/stage1', {
         method: 'POST',
@@ -190,7 +224,7 @@ export function Stage1HearingUI({ sessionId, initialBasicInfo, onComplete }: Sta
 
   const handleComplete = () => {
     if (result) {
-      onComplete(result.stage1Data, result.transcript)
+      onComplete(result.stage1Data, result.transcript, basicInfo)
     }
   }
 
@@ -198,6 +232,14 @@ export function Stage1HearingUI({ sessionId, initialBasicInfo, onComplete }: Sta
     const mins = Math.floor(seconds / 60)
     const secs = seconds % 60
     return `${mins}:${secs.toString().padStart(2, '0')}`
+  }
+
+  // 郵便番号フォーマット表示
+  const formatPostalCode = (code: string) => {
+    if (code.length > 3) {
+      return `${code.slice(0, 3)}-${code.slice(3)}`
+    }
+    return code
   }
 
   // Basic Info Form
@@ -212,11 +254,12 @@ export function Stage1HearingUI({ sessionId, initialBasicInfo, onComplete }: Sta
             基本情報を入力
           </h2>
           <p className="text-sm text-slate-600 dark:text-slate-400">
-            志望動機ヒアリングの準備をします
+            履歴書に記載する氏名と住所を入力してください
           </p>
         </div>
 
         <form onSubmit={handleBasicInfoSubmit} className="space-y-5">
+          {/* 氏名 */}
           <div>
             <label className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
               <User className="w-4 h-4" />
@@ -233,27 +276,28 @@ export function Stage1HearingUI({ sessionId, initialBasicInfo, onComplete }: Sta
             />
           </div>
 
-          <div>
-            <label className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-              <Calendar className="w-4 h-4" />
-              年齢 <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="number"
-              name="age"
-              value={basicInfo.age}
-              onChange={handleBasicInfoChange}
-              placeholder="28"
-              min="18"
-              max="99"
-              required
-              className="w-full px-4 py-3 bg-white dark:bg-midnight-700 border border-slate-300 dark:border-midnight-600 rounded-lg text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:border-brand-cyan focus:ring-1 focus:ring-brand-cyan transition-colors"
-            />
-          </div>
-
+          {/* 郵便番号 */}
           <div>
             <label className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
               <MapPin className="w-4 h-4" />
+              郵便番号 <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              name="postalCode"
+              value={formatPostalCode(basicInfo.postalCode)}
+              onChange={handlePostalCodeChange}
+              placeholder="123-4567"
+              maxLength={8}
+              required
+              className="w-full px-4 py-3 bg-white dark:bg-midnight-700 border border-slate-300 dark:border-midnight-600 rounded-lg text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:border-brand-cyan focus:ring-1 focus:ring-brand-cyan transition-colors"
+            />
+            <p className="text-xs text-slate-500 mt-1">7桁入力で住所を自動入力</p>
+          </div>
+
+          {/* 都道府県 */}
+          <div>
+            <label className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
               都道府県 <span className="text-red-500">*</span>
             </label>
             <select
@@ -268,6 +312,38 @@ export function Stage1HearingUI({ sessionId, initialBasicInfo, onComplete }: Sta
                 <option key={pref} value={pref}>{pref}</option>
               ))}
             </select>
+          </div>
+
+          {/* 市区町村 */}
+          <div>
+            <label className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+              市区町村 <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              name="city"
+              value={basicInfo.city}
+              onChange={handleBasicInfoChange}
+              placeholder="渋谷区渋谷"
+              required
+              className="w-full px-4 py-3 bg-white dark:bg-midnight-700 border border-slate-300 dark:border-midnight-600 rounded-lg text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:border-brand-cyan focus:ring-1 focus:ring-brand-cyan transition-colors"
+            />
+          </div>
+
+          {/* 番地・建物名 */}
+          <div>
+            <label className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+              <Home className="w-4 h-4" />
+              番地・建物名
+            </label>
+            <input
+              type="text"
+              name="streetAddress"
+              value={basicInfo.streetAddress}
+              onChange={handleBasicInfoChange}
+              placeholder="1-2-3 〇〇マンション101号室"
+              className="w-full px-4 py-3 bg-white dark:bg-midnight-700 border border-slate-300 dark:border-midnight-600 rounded-lg text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:border-brand-cyan focus:ring-1 focus:ring-brand-cyan transition-colors"
+            />
           </div>
 
           <button

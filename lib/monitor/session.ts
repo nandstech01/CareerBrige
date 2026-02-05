@@ -330,11 +330,17 @@ export async function updateSessionStatus(
 // ============================================================
 
 /**
- * Update session basic info for hearing (name, age, prefecture only - no phone)
+ * Update session basic info for hearing (name, address fields - no phone/age)
  */
 export async function updateSessionHearingBasicInfo(
   sessionId: string,
-  basicInfo: { name: string; age: string; prefecture: string }
+  basicInfo: {
+    name: string
+    postalCode?: string
+    prefecture: string
+    city?: string
+    streetAddress?: string
+  }
 ) {
   const supabase = createMonitorAdminClient()
 

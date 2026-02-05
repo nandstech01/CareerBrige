@@ -17,8 +17,10 @@ export async function POST(request: NextRequest) {
     const audioFile = formData.get('audio') as File | null
     const sessionId = formData.get('sessionId') as string | null
     const name = formData.get('name') as string | null
-    const age = formData.get('age') as string | null
+    const postalCode = formData.get('postalCode') as string | null
     const prefecture = formData.get('prefecture') as string | null
+    const city = formData.get('city') as string | null
+    const streetAddress = formData.get('streetAddress') as string | null
 
     if (!sessionId) {
       return NextResponse.json(
@@ -51,14 +53,24 @@ export async function POST(request: NextRequest) {
     }
 
     // Update basic info if provided
-    const personalInfo = {
-      name: name || (session.basic_info as Record<string, string>)?.name || '',
-      age: age || (session.basic_info as Record<string, string>)?.age || '',
-      prefecture: prefecture || (session.basic_info as Record<string, string>)?.prefecture || '',
+    const existingBasicInfo = session.basic_info as Record<string, string> | null
+    const basicInfo = {
+      name: name || existingBasicInfo?.name || '',
+      postalCode: postalCode || existingBasicInfo?.postalCode || '',
+      prefecture: prefecture || existingBasicInfo?.prefecture || '',
+      city: city || existingBasicInfo?.city || '',
+      streetAddress: streetAddress || existingBasicInfo?.streetAddress || '',
     }
 
-    if (name || age || prefecture) {
-      await updateSessionHearingBasicInfo(sessionId, personalInfo)
+    // For generateStage1Data, we only need name and prefecture
+    const personalInfo = {
+      name: basicInfo.name,
+      age: '', // Age is no longer used, birth date extracted in Stage2
+      prefecture: basicInfo.prefecture,
+    }
+
+    if (name || postalCode || prefecture || city || streetAddress) {
+      await updateSessionHearingBasicInfo(sessionId, basicInfo)
     }
 
     // Mark as recording in progress

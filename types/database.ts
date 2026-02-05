@@ -48,8 +48,13 @@ export interface Stage1Data {
   generatedAt: string      // 生成日時
 }
 
-// Stage2 AI生成データ: 学歴、職歴（日付計算済み）
+// Stage2 AI生成データ: 生年月日、学歴、職歴（日付計算済み）
 export interface Stage2Data {
+  birthDate: {
+    year: number            // 生年
+    month: number           // 生月
+    day?: number            // 生日（任意）
+  }
   education: Array<{
     schoolName: string      // 学校名
     department?: string     // 学部・学科

@@ -182,7 +182,13 @@ const styles = StyleSheet.create({
 })
 
 interface ShokumukeirekishoData {
-  basicInfo: { name: string; age: string; prefecture: string }
+  basicInfo: {
+    name: string
+    postalCode?: string
+    prefecture: string
+    city?: string
+    streetAddress?: string
+  }
   stage1: Stage1Data
   stage2: Stage2Data
 }
@@ -287,7 +293,13 @@ function ShokumukeirekishoDocument({ data }: { data: ShokumukeirekishoData }) {
 }
 
 interface ShokumukeirekishoPdfProps {
-  basicInfo: { name: string; age: string; prefecture: string }
+  basicInfo: {
+    name: string
+    postalCode?: string
+    prefecture: string
+    city?: string
+    streetAddress?: string
+  }
   stage1Data: Stage1Data
   stage2Data: Stage2Data
   onDownloadComplete?: () => void

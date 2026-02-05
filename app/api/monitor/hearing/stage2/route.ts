@@ -54,11 +54,10 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Get personal info from session
+    // Get personal info from session (name and prefecture only, birth date will be extracted from voice)
     const basicInfo = session.basic_info as Record<string, string> | null
     const personalInfo = {
       name: basicInfo?.name || '',
-      age: basicInfo?.age || '',
       prefecture: basicInfo?.prefecture || '',
     }
 

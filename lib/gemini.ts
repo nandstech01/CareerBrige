@@ -323,78 +323,74 @@ ${transcript}
 }
 
 /**
- * 現在の日付から年齢を使って生年を計算する
- */
-function calculateBirthYear(age: number, currentYear: number): number {
-  return currentYear - age;
-}
-
-/**
- * Stage2: 学歴、職歴、資格を生成する（日付計算含む）
+ * Stage2: 生年月日、学歴、職歴、資格を生成する（音声から抽出）
  */
 export async function generateStage2Data(
   transcript: string,
-  personalInfo: { name: string; age: string; prefecture: string }
+  personalInfo: { name: string; prefecture: string }
 ): Promise<Stage2Data> {
   const model = genAI.getGenerativeModel({ model: MODEL_NAME });
 
   const now = new Date();
   const currentYear = now.getFullYear();
   const currentMonth = now.getMonth() + 1;
-  const age = parseInt(personalInfo.age, 10);
-  const birthYear = calculateBirthYear(age, currentYear);
 
   const prompt = `あなたは履歴書作成アシスタントです。
-以下の音声書き起こしから、学歴・職歴・資格情報を正確に抽出し、日付を計算してください。
+以下の音声書き起こしから、生年月日・学歴・職歴・資格情報を正確に抽出し、日付を計算してください。
 
 【重要な日付計算情報】
 - 今日は${currentYear}年${currentMonth}月です
-- 本人の年齢: ${age}歳（生年: ${birthYear}年）
 - 「4ヶ月前」という表現 → ${currentYear}年${currentMonth - 4 > 0 ? currentMonth - 4 : currentMonth - 4 + 12}月
 - 「去年」という表現 → ${currentYear - 1}年
 - 「3年前」という表現 → ${currentYear - 3}年
 
-【日付計算の例】
-- ${age}歳で高校卒業の場合 → ${birthYear + 18}年3月卒業（18歳時点）
-- ${age}歳で大学卒業（4年制）の場合 → ${birthYear + 22}年3月卒業（22歳時点）
-- ${age}歳で専門学校卒業（2年制）の場合 → ${birthYear + 20}年3月卒業（20歳時点）
-
 【基本情報】
 - 氏名: ${personalInfo.name}
-- 年齢: ${age}歳
 - 都道府県: ${personalInfo.prefecture}
 
 【音声書き起こし内容】
 ${transcript}
 
 【抽出項目】
-1. 学歴（education）
+1. 生年月日（birthDate）
+   - 「1996年4月15日生まれ」「平成8年生まれ」などから抽出
+   - 年は西暦で返してください
+   - 平成・昭和などの和暦は西暦に変換（例: 平成8年 → 1996年）
+   - 日が不明な場合は省略可
+
+2. 学歴（education）
    - 中学校は省略、高校以降を記載
-   - 卒業年月は年齢から逆算して正確に計算
+   - 生年月日から卒業年を計算（高校卒業 = 生年 + 18、大学卒業 = 生年 + 22）
    - status: 「卒業」「中退」「在学中」「卒業見込」のいずれか
 
-2. 職歴（workHistory）
+3. 職歴（workHistory）
    - 新しい順に並べる
    - 「〜ヶ月前まで」「〜年前まで」は今日の日付から計算
    - isCurrent: 現職の場合はtrue、退職済みはfalse
 
-3. 資格（qualifications）
+4. 資格（qualifications）
    - 取得時期が分かる場合は年月を記載
 
 【重要事項】
 - 日付は必ず数値（年: number, 月: number）で返してください
 - 不明な情報は推測せず、空欄またはnullにしてください
 - 「頃」「約」などの曖昧な表現は避け、計算で導き出してください
+- 生年月日が抽出できない場合は、birthDate を null にしてください
 
 【出力形式】
 以下のJSON形式で出力してください。JSONのみを出力し、説明は不要です。
 \`\`\`json
 {
+  "birthDate": {
+    "year": 1996,
+    "month": 4,
+    "day": 15
+  },
   "education": [
     {
       "schoolName": "○○高等学校",
       "department": "普通科",
-      "graduationYear": ${birthYear + 18},
+      "graduationYear": 2014,
       "graduationMonth": 3,
       "isGraduated": true,
       "status": "卒業"
@@ -444,10 +440,12 @@ ${transcript}
     const data = JSON.parse(jsonString) as Omit<Stage2Data, 'generatedAt'>;
     return {
       ...data,
+      birthDate: data.birthDate || { year: 0, month: 1 },
       generatedAt: new Date().toISOString(),
     };
   } catch {
     return {
+      birthDate: { year: 0, month: 1 },
       education: [],
       workHistory: [],
       qualifications: [],
