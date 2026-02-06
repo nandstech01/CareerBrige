@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { generateResumeFromText, refineResume, ResumeData } from '@/lib/gemini'
+import { generateResumeFromText, refineResume } from '@/lib/monitor/ai'
+import type { ResumeData } from '@/lib/gemini'
 import { updateSessionResume, incrementAiCalls, getSessionByToken } from '@/lib/monitor/session'
 
 export const maxDuration = 60

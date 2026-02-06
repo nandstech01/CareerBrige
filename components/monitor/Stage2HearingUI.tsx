@@ -36,6 +36,17 @@ export function Stage2HearingUI({ sessionId, stage1Data, basicInfo, onComplete }
     }
   }, [audioUrl])
 
+  // 録音中・処理中のページ離脱を警告
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (mode === 'recording' || mode === 'recorded' || isProcessing) {
+        e.preventDefault()
+      }
+    }
+    window.addEventListener('beforeunload', handleBeforeUnload)
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload)
+  }, [mode, isProcessing])
+
   const startRecording = useCallback(async () => {
     try {
       setError(null)
@@ -451,10 +462,17 @@ export function Stage2HearingUI({ sessionId, stage1Data, basicInfo, onComplete }
               <audio ref={audioRef} src={audioUrl} onEnded={() => setIsPlaying(false)} className="hidden" />
             </div>
 
-            <div className="flex items-center gap-2 text-sm text-green-600 dark:text-green-400">
-              <CheckCircle className="w-4 h-4" />
-              音声の準備ができました
-            </div>
+            {mode === 'recorded' && recordingTime < 10 ? (
+              <div className="flex items-center gap-2 text-sm text-amber-600 dark:text-amber-400">
+                <AlertCircle className="w-4 h-4" />
+                録音が短すぎます（最低10秒以上必要です）
+              </div>
+            ) : (
+              <div className="flex items-center gap-2 text-sm text-green-600 dark:text-green-400">
+                <CheckCircle className="w-4 h-4" />
+                音声の準備ができました
+              </div>
+            )}
 
             <div className="flex gap-3">
               <button
@@ -465,7 +483,7 @@ export function Stage2HearingUI({ sessionId, stage1Data, basicInfo, onComplete }
               </button>
               <button
                 onClick={handleSubmit}
-                disabled={isProcessing}
+                disabled={isProcessing || (mode === 'recorded' && recordingTime < 10)}
                 className="flex-1 py-3 bg-gradient-to-r from-brand-cyan to-brand-cyan-dark text-white font-semibold rounded-lg shadow-lg transition-all disabled:opacity-50 flex items-center justify-center gap-2"
               >
                 {isProcessing ? (

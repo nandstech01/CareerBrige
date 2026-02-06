@@ -60,6 +60,7 @@ export async function transcribeAudio(audioBase64: string, mimeType: string): Pr
 }
 
 /**
+ * @deprecated lib/monitor/ai/index.ts の generateResumeFromText() を使用してください
  * 文字起こしテキストから履歴書データを生成する
  */
 export async function generateResumeFromText(
@@ -184,6 +185,7 @@ ${transcript}
 }
 
 /**
+ * @deprecated lib/monitor/ai/index.ts の refineResume() を使用してください
  * 履歴書データを再構成する（編集後の再生成用）
  */
 export async function refineResume(
@@ -240,6 +242,7 @@ ${additionalInstructions}
 // ============================================================
 
 /**
+ * @deprecated lib/monitor/ai/index.ts の processHearingStage1() を使用してください
  * Stage1: 志望動機、本人希望記入欄、自己PRを生成する
  */
 export async function generateStage1Data(
@@ -323,6 +326,7 @@ ${transcript}
 }
 
 /**
+ * @deprecated lib/monitor/ai/index.ts の processHearingStage2() を使用してください
  * Stage2: 生年月日、学歴、職歴、資格を生成する（音声から抽出）
  */
 export async function generateStage2Data(

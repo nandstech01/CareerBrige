@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { transcribeAudio, generateStage2Data } from '@/lib/gemini'
+import { processHearingStage2 } from '@/lib/monitor/ai'
 import { getSessionById, updateSessionStage2, startStage2Recording } from '@/lib/monitor/session'
 
 export const maxDuration = 120
@@ -80,13 +80,10 @@ export async function POST(request: NextRequest) {
       else mimeType = 'audio/mpeg'
     }
 
-    // Step 1: Transcribe audio
-    const transcript = await transcribeAudio(base64Audio, mimeType)
+    // Process Stage2: transcribe → extract → validate → finalize (LangGraph)
+    const { transcript, stage2Data } = await processHearingStage2(base64Audio, mimeType, personalInfo)
 
-    // Step 2: Generate Stage2 data (education, workHistory, qualifications with date calculation)
-    const stage2Data = await generateStage2Data(transcript, personalInfo)
-
-    // Step 3: Save to database
+    // Save to database
     await updateSessionStage2(sessionId, stage2Data, transcript)
 
     return NextResponse.json({

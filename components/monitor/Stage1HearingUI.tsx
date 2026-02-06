@@ -47,6 +47,7 @@ export function Stage1HearingUI({ sessionId, initialBasicInfo, onComplete }: Sta
   const [isProcessing, setIsProcessing] = useState(false)
   const [mimeType, setMimeType] = useState<string>('audio/webm')
   const [result, setResult] = useState<{ stage1Data: Stage1Data; transcript: string } | null>(null)
+  const [postalCodeError, setPostalCodeError] = useState<string | null>(null)
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null)
   const audioChunksRef = useRef<Blob[]>([])
@@ -61,6 +62,17 @@ export function Stage1HearingUI({ sessionId, initialBasicInfo, onComplete }: Sta
     }
   }, [audioUrl])
 
+  // 録音中・処理中のページ離脱を警告
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (mode === 'recording' || mode === 'recorded' || isProcessing) {
+        e.preventDefault()
+      }
+    }
+    window.addEventListener('beforeunload', handleBeforeUnload)
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload)
+  }, [mode, isProcessing])
+
   const handleBasicInfoChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target
     setBasicInfo(prev => ({ ...prev, [name]: value }))
@@ -70,6 +82,7 @@ export function Stage1HearingUI({ sessionId, initialBasicInfo, onComplete }: Sta
   const handlePostalCodeChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/[^0-9]/g, '')
     setBasicInfo(prev => ({ ...prev, postalCode: value }))
+    setPostalCodeError(null)
 
     if (value.length === 7) {
       try {
@@ -82,9 +95,12 @@ export function Stage1HearingUI({ sessionId, initialBasicInfo, onComplete }: Sta
             prefecture: result.address1,
             city: result.address2 + result.address3,
           }))
+        } else {
+          setPostalCodeError('該当する住所が見つかりませんでした。手動で入力してください')
         }
       } catch (err) {
         console.error('Postal code lookup error:', err)
+        setPostalCodeError('住所の自動入力に失敗しました。手動で入力してください')
       }
     }
   }
@@ -292,7 +308,11 @@ export function Stage1HearingUI({ sessionId, initialBasicInfo, onComplete }: Sta
               required
               className="w-full px-4 py-3 bg-white dark:bg-midnight-700 border border-slate-300 dark:border-midnight-600 rounded-lg text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:border-brand-cyan focus:ring-1 focus:ring-brand-cyan transition-colors"
             />
-            <p className="text-xs text-slate-500 mt-1">7桁入力で住所を自動入力</p>
+            {postalCodeError ? (
+              <p className="text-xs text-red-500 mt-1">{postalCodeError}</p>
+            ) : (
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">7桁入力で住所を自動入力</p>
+            )}
           </div>
 
           {/* 都道府県 */}
@@ -535,10 +555,17 @@ export function Stage1HearingUI({ sessionId, initialBasicInfo, onComplete }: Sta
               <audio ref={audioRef} src={audioUrl} onEnded={() => setIsPlaying(false)} className="hidden" />
             </div>
 
-            <div className="flex items-center gap-2 text-sm text-green-600 dark:text-green-400">
-              <CheckCircle className="w-4 h-4" />
-              音声の準備ができました
-            </div>
+            {mode === 'recorded' && recordingTime < 10 ? (
+              <div className="flex items-center gap-2 text-sm text-amber-600 dark:text-amber-400">
+                <AlertCircle className="w-4 h-4" />
+                録音が短すぎます（最低10秒以上必要です）
+              </div>
+            ) : (
+              <div className="flex items-center gap-2 text-sm text-green-600 dark:text-green-400">
+                <CheckCircle className="w-4 h-4" />
+                音声の準備ができました
+              </div>
+            )}
 
             <div className="flex gap-3">
               <button
@@ -549,7 +576,7 @@ export function Stage1HearingUI({ sessionId, initialBasicInfo, onComplete }: Sta
               </button>
               <button
                 onClick={handleSubmit}
-                disabled={isProcessing}
+                disabled={isProcessing || (mode === 'recorded' && recordingTime < 10)}
                 className="flex-1 py-3 bg-gradient-to-r from-brand-cyan to-brand-cyan-dark text-white font-semibold rounded-lg shadow-lg transition-all disabled:opacity-50 flex items-center justify-center gap-2"
               >
                 {isProcessing ? (
