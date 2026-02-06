@@ -155,7 +155,6 @@ const styles = StyleSheet.create({
   noData: {
     fontSize: 10,
     color: '#94a3b8',
-    fontStyle: 'italic',
   },
   footer: {
     position: 'absolute',
